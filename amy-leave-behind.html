@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amy Birks — Integration Risk Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ddd9d0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 60px;
+  gap: 14px;
+}
+
+.hint {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.72rem;
+  color: #666;
+  background: white;
+  padding: 9px 18px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+@media print { .hint { display: none; } body { background: white; padding: 0; } }
+
+/* CARD */
+.card {
+  background: #0b0f1e;
+  width: 100%;
+  max-width: 840px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+}
+
+.top-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #0b0f1e, #c9a84c, #0b0f1e);
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.nav-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0eee8;
+}
+
+.nav-brand span { color: #c9a84c; }
+
+.nav-pill {
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-weight: 600;
+  padding: 4px 12px;
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 20px;
+}
+
+/* TWO COLUMN BODY */
+.body {
+  display: grid;
+  grid-template-columns: 1fr 290px;
+}
+
+/* LEFT */
+.lp {
+  padding: 44px 40px 40px;
+  border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.eyebrow {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 18px;
+  height: 1px;
+  background: #c9a84c;
+  flex-shrink: 0;
+}
+
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #f0eee8;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+h1 .gold { color: #c9a84c; }
+
+.sub {
+  font-size: 0.85rem;
+  color: #8a94aa;
+  line-height: 1.75;
+  margin-bottom: 28px;
+  max-width: 400px;
+}
+
+.quote-box {
+  background: rgba(201,168,76,0.09);
+  border-left: 3px solid #c9a84c;
+  padding: 16px 20px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 28px;
+}
+
+.quote-box p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  color: #f0eee8;
+  line-height: 1.65;
+  font-style: italic;
+}
+
+.quote-attr {
+  font-size: 0.57rem;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+/* METHOD STRIP */
+.method {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 32px;
+  background: rgba(255,255,255,0.02);
+}
+
+.mc {
+  padding: 14px 12px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.07);
+}
+
+.mc:last-child { border-right: none; }
+
+.mc-num {
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.mc-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 4px;
+}
+
+.mc-desc {
+  font-size: 0.64rem;
+  color: #8a94aa;
+  line-height: 1.45;
+}
+
+/* STATS */
+.stats {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.sn {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #c9a84c;
+  display: block;
+  line-height: 1;
+}
+
+.sd {
+  font-size: 0.62rem;
+  color: #8a94aa;
+  line-height: 1.45;
+  margin-top: 3px;
+  max-width: 88px;
+}
+
+/* RIGHT PANEL */
+.rp {
+  background: #111624;
+  padding: 32px 26px;
+}
+
+.rs {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.rs:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+.rl {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* PROOF */
+.pi {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.pd {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #c9a84c;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.pt {
+  font-size: 0.75rem;
+  color: #8a94aa;
+  line-height: 1.6;
+}
+
+.pt strong {
+  color: #f0eee8;
+  display: block;
+  font-size: 0.77rem;
+  margin-bottom: 2px;
+}
+
+/* PILLS */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.pill {
+  font-size: 0.61rem;
+  padding: 3px 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  color: #8a94aa;
+}
+
+/* FEATURE */
+.feat {
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.22);
+  border-radius: 4px;
+  padding: 14px;
+}
+
+.feat-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.feat-body {
+  font-size: 0.71rem;
+  color: #8a94aa;
+  line-height: 1.6;
+  margin-bottom: 9px;
+}
+
+.feat-link {
+  font-size: 0.67rem;
+  font-weight: 700;
+  color: #c9a84c;
+  text-decoration: none;
+}
+
+/* CONTACT */
+.cname {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 2px;
+}
+
+.crole {
+  font-size: 0.71rem;
+  color: #8a94aa;
+  margin-bottom: 8px;
+}
+
+.clinks { display: flex; flex-direction: column; gap: 3px; }
+
+.cl {
+  font-size: 0.71rem;
+  color: #c9a84c;
+  text-decoration: none;
+}
+
+/* FOOTER */
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 40px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  background: #141929;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.foot-brand {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.76rem;
+  color: rgba(240,238,232,0.45);
+}
+
+.foot-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: rgba(155,163,184,0.35);
+}
+
+.foot-credit {
+  font-size: 0.57rem;
+  color: rgba(155,163,184,0.25);
+  font-style: italic;
+}
+
+@media (max-width: 680px) {
+  .body { grid-template-columns: 1fr; }
+  .lp { padding: 32px 24px; }
+  .rp { padding: 28px 24px; border-top: 1px solid rgba(255,255,255,0.05); }
+  h1 { font-size: 1.7rem; }
+  .nav { padding: 16px 24px; }
+  .foot { padding: 13px 24px; }
+}
+</style>
+</head>
+<body>
+
+<p class="hint">🖨️ Print or save as PDF to share &mdash; Cmd+P (Mac) &nbsp;·&nbsp; Ctrl+P (Windows)</p>
+
+<div class="card">
+  <div class="top-bar"></div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-brand">Amy <span>Birks</span></div>
+    <div class="nav-pill">Integration Risk Intelligence</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- LEFT -->
+    <div class="lp">
+      <div class="eyebrow">Strategic Advisory &middot; M&amp;A &middot; Organizational Transition</div>
+
+      <h1>Your integration plan<br>is technically sound.<br><span class="gold">That's not what will<br>determine its outcome.</span></h1>
+
+      <p class="sub">I work upstream of traditional change management &mdash; addressing the human dynamics that determine whether your integration strategy actually performs as designed. Not culture programs. Risk mitigation at the deal-thesis level.</p>
+
+      <div class="quote-box">
+        <p>"The performance dip organizations expect during integration isn't inevitable. It's a symptom of unaddressed fear distorting the plan. Address the fear &mdash; and you get rocket fuel instead of drag."</p>
+        <div class="quote-attr">&mdash; Integration Intelligence</div>
+      </div>
+
+      <div class="method">
+        <div class="mc">
+          <span class="mc-num">01</span>
+          <div class="mc-name">Assess</div>
+          <div class="mc-desc">Surface where human dynamics are distorting the plan</div>
+        </div>
+        <div class="mc">
+          <span class="mc-num">02</span>
+          <div class="mc-name">Co-Design</div>
+          <div class="mc-desc">Build culturally intelligent strategy with the people who own it</div>
+        </div>
+        <div class="mc">
+          <span class="mc-num">03</span>
+          <div class="mc-name">Advise</div>
+          <div class="mc-desc">Strategic counsel as execution meets reality</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div>
+          <span class="sn">70&ndash;90%</span>
+          <div class="sd">of M&amp;A deals fail to deliver expected value</div>
+        </div>
+        <div>
+          <span class="sn">#1</span>
+          <div class="sd">cited cause: people &amp; culture issues</div>
+        </div>
+        <div>
+          <span class="sn">852&times;</span>
+          <div class="sd">avg ROI on an Integration Intelligence engagement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="rp">
+
+      <div class="rs">
+        <div class="rl">Live Engagement</div>
+        <div class="pi">
+          <div class="pd"></div>
+          <div class="pt">
+            <strong>IQVIA / Charles River Carve-Out</strong>
+            5 sites &middot; 4 European countries &middot; 750 employees &middot; $65K engagement. Discovery, communications architecture, leadership alignment &amp; regional sessions across EMEA.
+          </div>
+        </div>
+      </div>
+
+      <div class="rs">
+        <div class="rl">Past Clients</div>
+        <div class="pills">
+          <span class="pill">Wells Fargo</span>
+          <span class="pill">Xerox</span>
+          <span class="pill">Dallas Mavericks</span>
+          <span class="pill">PA Turnpike Commission</span>
+          <span class="pill">20+ yrs experience</span>
+          <span class="pill">Corporate finance background</span>
+        </div>
+      </div>
+
+      <div class="rs">
+        <div class="rl">The Entry Point</div>
+        <div class="feat">
+          <div class="feat-title">30-Day Integration Risk Assessment</div>
+          <div class="feat-body">A standalone pre-close diagnostic that maps where human dynamics are most likely to distort your strategy &mdash; delivered in the language of your financial workstream.</div>
+          <a href="https://amybirks.com" class="feat-link">Calculate your risk exposure &rarr;</a>
+        </div>
+      </div>
+
+      <div class="rs">
+        <div class="rl">Get in Touch</div>
+        <div class="cname">Amy Birks</div>
+        <div class="crole">Integration Risk Intelligence Advisor</div>
+        <div class="clinks">
+          <a href="https://amybirks.com" class="cl">amybirks.com</a>
+          <a href="mailto:hello@amybirks.com" class="cl">hello@amybirks.com</a>
+          <a href="https://linkedin.com/in/amybirks" class="cl">linkedin.com/in/amybirks</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="foot-brand">Amy Birks &middot; Integration Risk Intelligence</div>
+    <div class="foot-tag">Protecting the deal thesis.</div>
+    <div class="foot-credit">Created with love by Snyper Agency</div>
+  </div>
+</div>
+
+</body>
+</html>

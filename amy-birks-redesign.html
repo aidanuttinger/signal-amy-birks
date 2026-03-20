@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amy Birks — Integration Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0b0f1e;
+    --navy-mid: #141929;
+    --navy-light: #1e2640;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --white: #f5f4f0;
+    --grey: #9ba3b8;
+    --body-bg: #fafaf8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--body-bg);
+    color: #1a1e2e;
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 60px;
+    background: rgba(11,15,30,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--white);
+    letter-spacing: 0.04em;
+    font-weight: 600;
+  }
+
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--grey);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold) !important;
+    padding: 10px 22px;
+    border-radius: 2px;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--gold); color: var(--navy) !important; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 140px 60px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    max-width: 780px;
+    margin-bottom: 28px;
+  }
+
+  .hero-headline em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--grey);
+    max-width: 540px;
+    line-height: 1.75;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 16px 36px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--grey);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--white); }
+  .btn-ghost::after { content: '→'; }
+
+  .hero-proof {
+    position: absolute;
+    bottom: 52px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    opacity: 0.6;
+  }
+
+  .hero-proof-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--grey);
+    white-space: nowrap;
+  }
+
+  .hero-proof-logos {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .proof-logo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--grey);
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--navy-mid);
+    padding: 40px 60px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 6px;
+    display: block;
+    max-width: 160px;
+    line-height: 1.5;
+  }
+
+  /* SECTION */
+  section { padding: 100px 60px; }
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    max-width: 700px;
+    margin-bottom: 28px;
+    color: #0f1320;
+  }
+
+  .section-body {
+    font-size: 1.05rem;
+    color: #4a5272;
+    max-width: 620px;
+    line-height: 1.85;
+  }
+
+  /* PROBLEM SECTION */
+  .problem {
+    background: var(--body-bg);
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .problem-left .big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #1a1e2e;
+    font-weight: 400;
+    position: relative;
+    padding-left: 28px;
+    border-left: 3px solid var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .problem-right {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 8px;
+  }
+
+  .problem-card {
+    background: white;
+    border: 1px solid #e8e6e0;
+    padding: 28px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  .problem-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: -12px;
+    left: 28px;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .problem-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #0f1320;
+  }
+
+  .problem-card p {
+    font-size: 0.88rem;
+    color: #6b7290;
+    line-height: 1.7;
+  }
+
+  /* FEAR SECTION */
+  .fear-section {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .fear-section .section-headline { color: var(--white); max-width: 800px; }
+  .fear-section .section-body { color: var(--grey); max-width: 660px; }
+
+  .fear-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+    background: rgba(201,168,76,0.1);
+  }
+
+  .fear-card {
+    background: var(--navy-light);
+    padding: 40px 36px;
+    position: relative;
+  }
+
+  .fear-icon {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .fear-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .fear-card p {
+    font-size: 0.85rem;
+    color: var(--grey);
+    line-height: 1.75;
+  }
+
+  .fear-divider {
+    border: none;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    margin: 56px 0 0;
+  }
+
+  .fear-thesis {
+    margin-top: 40px;
+    padding: 40px;
+    background: rgba(201,168,76,0.07);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+    max-width: 780px;
+  }
+
+  .fear-thesis p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--white);
+    line-height: 1.65;
+    font-weight: 400;
+  }
+
+  .fear-thesis .attribution {
+    margin-top: 16px;
+    font-size: 0.78rem;
+    color: var(--gold);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+  }
+
+  /* METHODOLOGY */
+  .methodology {
+    background: white;
+  }
+
+  .method-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 72px;
+  }
+
+  .method-phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: #e8e6e0;
+  }
+
+  .phase {
+    background: white;
+    padding: 48px 36px;
+    position: relative;
+  }
+
+  .phase-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .phase h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0f1320;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .phase p {
+    font-size: 0.87rem;
+    color: #6b7290;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .phase-deliverables {
+    list-style: none;
+    font-size: 0.8rem;
+    color: #4a5272;
+  }
+
+  .phase-deliverables li {
+    padding: 6px 0;
+    padding-left: 16px;
+    position: relative;
+    border-top: 1px solid #f0eeea;
+  }
+
+  .phase-deliverables li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  .method-bridge {
+    margin-top: 40px;
+    background: #f7f5f0;
+    padding: 32px 36px;
+    border-radius: 4px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .bridge-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .method-bridge h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #0f1320;
+  }
+
+  .method-bridge p {
+    font-size: 0.85rem;
+    color: #6b7290;
+    line-height: 1.7;
+  }
+
+  /* WHO SECTION */
+  .who-section {
+    background: #f7f5f0;
+  }
+
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+    max-width: 900px;
+  }
+
+  .who-card {
+    background: white;
+    padding: 32px;
+    border-radius: 4px;
+    border: 1px solid #e8e6e0;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .who-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .who-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .who-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f1320;
+    margin-bottom: 8px;
+  }
+
+  .who-card p {
+    font-size: 0.83rem;
+    color: #6b7290;
+    line-height: 1.7;
+  }
+
+  /* LIVE ENGAGEMENT */
+  .engagement-section {
+    background: var(--navy-mid);
+    color: var(--white);
+  }
+
+  .engagement-section .section-headline { color: var(--white); }
+  .engagement-section .section-body { color: var(--grey); }
+
+  .engagement-card {
+    margin-top: 56px;
+    background: var(--navy-light);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    max-width: 900px;
+  }
+
+  .engagement-header {
+    background: rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .engagement-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .engagement-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .engagement-body {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .engagement-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--white);
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .engagement-body p {
+    font-size: 0.87rem;
+    color: var(--grey);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  .scope-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .scope-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .scope-marker {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-weight: 700;
+  }
+
+  .scope-text {
+    font-size: 0.84rem;
+    color: var(--grey);
+    line-height: 1.6;
+  }
+
+  .scope-text strong {
+    color: var(--white);
+    display: block;
+    font-size: 0.88rem;
+    margin-bottom: 4px;
+  }
+
+  /* DIAGNOSTIC CTA */
+  .diagnostic {
+    background: var(--gold);
+    padding: 80px 60px;
+    text-align: center;
+  }
+
+  .diagnostic-eyebrow {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(11,15,30,0.6);
+    margin-bottom: 20px;
+  }
+
+  .diagnostic h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--navy);
+    max-width: 680px;
+    margin: 0 auto 20px;
+    line-height: 1.2;
+  }
+
+  .diagnostic p {
+    font-size: 1rem;
+    color: rgba(11,15,30,0.65);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.75;
+  }
+
+  .btn-dark {
+    background: var(--navy);
+    color: var(--white);
+    padding: 18px 44px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .btn-dark:hover { background: var(--navy-light); transform: translateY(-1px); }
+
+  /* ABOUT */
+  .about-section {
+    background: white;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .about-image {
+    position: relative;
+  }
+
+  .about-image-placeholder {
+    background: var(--navy-light);
+    aspect-ratio: 4/5;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(201,168,76,0.3);
+  }
+
+  .about-image-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 20px 24px;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .badge-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: block;
+  }
+
+  .badge-text {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .about-content .section-body {
+    margin-bottom: 32px;
+  }
+
+  .about-creds {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .cred-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .cred-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .cred-text {
+    font-size: 0.82rem;
+    color: #4a5272;
+    font-weight: 500;
+  }
+
+  .about-quote {
+    margin-top: 36px;
+    padding: 28px;
+    background: #f7f5f0;
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+  }
+
+  .about-quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: #1a1e2e;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-tagline {
+    font-size: 0.75rem;
+    color: var(--grey);
+    margin-top: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--grey);
+    text-decoration: none;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(155,163,184,0.5);
+    text-align: right;
+  }
+
+  /* COMPARISON BANNER */
+  .comparison-banner {
+    background: #fff8e7;
+    border-bottom: 2px solid var(--gold);
+    padding: 14px 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.78rem;
+  }
+
+  .comparison-banner strong {
+    color: var(--navy);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.68rem;
+  }
+
+  .comparison-banner span { color: #5a5240; }
+
+  .comp-pill {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 20px 28px; }
+    .nav-links { display: none; }
+    section { padding: 60px 28px; }
+    .hero { padding: 120px 28px 60px; }
+    .stats-bar { padding: 32px 28px; gap: 32px; flex-wrap: wrap; justify-content: flex-start; }
+    .problem-grid, .method-header, .fear-grid, .method-phases,
+    .who-grid, .engagement-body, .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-proof { display: none; }
+    footer { flex-direction: column; gap: 28px; text-align: center; }
+    .footer-copy { text-align: center; }
+    .comparison-banner { padding: 12px 20px; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CONTEXT BANNER (for presentation only) -->
+<div class="comparison-banner">
+  <span class="comp-pill">New Positioning Concept</span>
+  <strong>Redesign Concept</strong>
+  <span>Repositioned from "change management" → "Integration Risk Intelligence" — targeting CFOs, corporate development directors, and PE operating partners.</span>
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">Amy <span>Birks</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Approach</a></li>
+    <li><a href="#">Who It's For</a></li>
+    <li><a href="#">Engagements</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#" class="nav-cta">Request Assessment</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Integration Risk Intelligence</div>
+    <h1 class="hero-headline">
+      Your integration plan is<br>
+      technically sound.<br>
+      <em>That's not what will<br>determine its outcome.</em>
+    </h1>
+    <p class="hero-sub">
+      The hidden variable in every M&A integration isn't in your playbook. It's in the nervous systems of every person your deal depends on. I address that — before it quietly destroys the thesis that justified your price.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">Request a Risk Assessment</a>
+      <a href="#" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+
+  <div class="hero-proof">
+    <span class="hero-proof-label">Trusted by</span>
+    <div class="hero-proof-logos">
+      <span class="proof-logo">IQVIA</span>
+      <span class="proof-logo">Wells Fargo</span>
+      <span class="proof-logo">Xerox</span>
+      <span class="proof-logo">Dallas Mavericks</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-number">70–90%</span>
+    <span class="stat-label">of M&A deals fail to deliver expected value</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">#1</span>
+    <span class="stat-label">cited cause: people and culture issues during integration</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">30–47%</span>
+    <span class="stat-label">average talent attrition within 24 months of close</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">2×</span>
+    <span class="stat-label">longer than planned for synergies to materialize</span>
+  </div>
+</div>
+
+<!-- THE PROBLEM -->
+<section class="problem">
+  <div class="section-eyebrow">The Real Problem</div>
+  <h2 class="section-headline">The performance dip isn't a cost of doing business. It's a symptom of an unaddressed variable.</h2>
+
+  <div class="problem-grid">
+    <div class="problem-left">
+      <p class="big-quote">
+        "Every integration plan accounts for systems, timelines, and deliverables. The ones that fail do so because of something that never appears on any project tracker."
+      </p>
+      <p class="section-body">
+        The moment people hear that change is coming, their nervous systems activate. Fear — of losing role, identity, team, safety — begins quietly distorting how decisions get made, how messages land, how fast people move, and whether the talent that justified your deal thesis stays or walks.<br><br>
+        This isn't a culture problem. It's a performance problem with a measurable cost.
+      </p>
+    </div>
+    <div class="problem-right">
+      <div class="problem-card" data-num="The Pattern">
+        <h4>The Integration Paradox</h4>
+        <p>Organizations that invest heavily in integration planning still experience systematic underperformance — not because the plan was wrong, but because the human conditions required for it to execute were never established.</p>
+      </div>
+      <div class="problem-card" data-num="The Oversight">
+        <h4>Where Traditional Approaches Fall Short</h4>
+        <p>Change management is typically treated as a workstream — a line item running parallel to the "real" integration work. But human dynamics don't run parallel to strategy. They run through it. Every communication. Every decision. Every stakeholder interaction.</p>
+      </div>
+      <div class="problem-card" data-num="The Opportunity">
+        <h4>The Performance That's Being Left on the Table</h4>
+        <p>When you address the human dynamics directly — before they distort the plan — integration timelines compress, retention stabilizes, and leadership alignment accelerates. The strategy you already built starts performing the way it was designed to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEAR SECTION -->
+<section class="fear-section">
+  <div class="section-eyebrow">The Hidden Constant</div>
+  <h2 class="section-headline">Fear is the through-line running beneath every integration plan that underperforms.</h2>
+  <p class="section-body">
+    It's not a soft concept. It's a neurological reality with hard business consequences. And it shows up the same way across every deal, every industry, every size of organization.
+  </p>
+
+  <div class="fear-grid">
+    <div class="fear-card">
+      <span class="fear-icon">⚡</span>
+      <h4>It Distorts Decisions</h4>
+      <p>Leaders in threat response make different choices than leaders operating from safety. The quality of decision-making during integration drops precisely when you need it most.</p>
+    </div>
+    <div class="fear-card">
+      <span class="fear-icon">📡</span>
+      <h4>It Scrambles Communication</h4>
+      <p>Messages designed to reassure can land as threat signals. Every communication either activates the nervous system or calms it. Most integration comms do the former.</p>
+    </div>
+    <div class="fear-card">
+      <span class="fear-icon">🏃</span>
+      <h4>It Walks Your Best People Out</h4>
+      <p>High performers have options. When they sense instability, they don't wait to see how it resolves. The talent attrition that kills synergy cases starts quietly, months before close.</p>
+    </div>
+  </div>
+
+  <div class="fear-thesis">
+    <p>"The performance dip that organizations expect during integration isn't inevitable. It's a symptom of unaddressed fear distorting the plan. Address the fear — and you get rocket fuel instead of drag."</p>
+    <div class="attribution">— Amy Birks, Integration Intelligence</div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="methodology">
+  <div class="method-header">
+    <div>
+      <div class="section-eyebrow">Integration Intelligence</div>
+      <h2 class="section-headline">A methodology built for the upstream work that determines whether everything else succeeds.</h2>
+    </div>
+    <div>
+      <p class="section-body">
+        I'm not a change management implementer. I'm a strategic advisor who works at the intersection of deal mechanics and human dynamics — the layer where the actual outcome of your integration is being decided.<br><br>
+        My role: surface what leadership teams already know but haven't said out loud, identify where intention and execution are likely to diverge, and create the alignment that holds under pressure.
+      </p>
+    </div>
+  </div>
+
+  <div class="method-phases">
+    <div class="phase">
+      <span class="phase-num">Phase 01 · Assess</span>
+      <h3>Assess the Field</h3>
+      <p>Surface where fear, friction, and misalignment are already distorting the existing strategy — before they cost you execution speed or talent.</p>
+      <ul class="phase-deliverables">
+        <li>Integration strategy review through a human-dynamics lens</li>
+        <li>Discovery sessions with key stakeholders</li>
+        <li>Offline gap analysis and friction mapping</li>
+        <li>Diagnostic report: where the plan is most at risk</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <span class="phase-num">Phase 02 · Co-Design</span>
+      <h3>Co-Design the Approach</h3>
+      <p>Facilitate the creation of a culturally intelligent integration strategy — with the people who will own executing it. Not a playbook handed down. A plan built in the room.</p>
+      <ul class="phase-deliverables">
+        <li>Leadership culture alignment sessions</li>
+        <li>Communications architecture and framework</li>
+        <li>Regional engagement session design</li>
+        <li>Two-layer facilitation: leadership → cross-functional</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <span class="phase-num">Phase 03 · Advise</span>
+      <h3>Advise + Optimize</h3>
+      <p>Ongoing strategic counsel as execution meets reality. Pattern recognition, real-time course correction, and a living feedback loop from regional intelligence back to leadership.</p>
+      <ul class="phase-deliverables">
+        <li>Bi-monthly strategic advisory sessions</li>
+        <li>Real-time friction identification</li>
+        <li>Communications refinement as conditions evolve</li>
+        <li>Pulse/survey interpretation and response design</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="method-bridge">
+    <div class="bridge-icon">🔁</div>
+    <div>
+      <h4>The Living Feedback Loop</h4>
+      <p>Most integration communications are one-way cascades. Mine flow both directions. Regional intelligence surfaces back up to refine leadership strategy in real time — so the plan stays calibrated to what's actually happening on the ground, not what the org chart says should be happening.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHO I WORK WITH -->
+<section class="who-section">
+  <div class="section-eyebrow">Who This Is For</div>
+  <h2 class="section-headline">The executives who can't afford to find out the hard way.</h2>
+  <p class="section-body">Integration risk at the human level is invisible until it's expensive. I work with the leaders who want to see it before they're managing the fallout.</p>
+
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-icon">📊</div>
+      <div>
+        <h4>Corporate Development Directors</h4>
+        <p>Managing active integrations where the synergy thesis is on the line. Typically $100M+ deal value. The people risk is real and the timeline pressure is real.</p>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">🏦</div>
+      <div>
+        <h4>PE Operating Partners</h4>
+        <p>Driving value creation at portfolio companies through consolidations, reorgs, and growth transitions. Where talent retention and cultural fit determine whether the thesis holds.</p>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">👥</div>
+      <div>
+        <h4>CHROs at Acquiring Organizations</h4>
+        <p>Responsible for the workforce integration strategy and culture outcomes. Needs a methodology that's rigorous enough to stand alongside the financial and operational workstreams.</p>
+      </div>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">⚙️</div>
+      <div>
+        <h4>Integration Program Leads</h4>
+        <p>Running the day-to-day integration. Dealing with the human friction that's slowing down every other workstream and looking for a strategic frame to address it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE ENGAGEMENT -->
+<section class="engagement-section">
+  <div class="section-eyebrow">Current Engagement</div>
+  <h2 class="section-headline">Integration Intelligence in practice: IQVIA / Charles River Carve-Out</h2>
+  <p class="section-body">A live engagement demonstrating the methodology across a complex, multi-site European acquisition.</p>
+
+  <div class="engagement-card">
+    <div class="engagement-header">
+      <div>
+        <div class="engagement-tag">Active Engagement · EMEA</div>
+        <div style="color: var(--white); font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; margin-top: 6px;">IQVIA Acquires 5 Charles River Drug Discovery Sites</div>
+        <div style="font-size: 0.82rem; color: var(--grey); margin-top: 4px;">UK · Finland · Netherlands · Germany · ~750 incoming employees</div>
+      </div>
+      <div style="text-align: right;">
+        <div class="engagement-value">$65K</div>
+        <div style="font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey);">Engagement Value</div>
+      </div>
+    </div>
+    <div class="engagement-body">
+      <div>
+        <h3>The Challenge</h3>
+        <p>Five sites across four European countries, each with distinct cultural dynamics. A leadership team navigating the complexity of a carve-out while maintaining operational continuity. 750 people whose performance — and retention — will determine whether the deal thesis holds.</p>
+        <p>Standard change management would produce cascading communications and a one-size-fits-all engagement plan. Integration Intelligence produces something different.</p>
+      </div>
+      <div>
+        <ul class="scope-list">
+          <li class="scope-item">
+            <div class="scope-marker">1</div>
+            <div class="scope-text">
+              <strong>Discovery & Culture Deep Dive</strong>
+              Full-day leadership summit at April close — surfacing the real dynamics before the official integration clock starts.
+            </div>
+          </li>
+          <li class="scope-item">
+            <div class="scope-marker">2</div>
+            <div class="scope-text">
+              <strong>Pre-Close Communications Framework</strong>
+              Architecture, stakeholder mapping, tone/cadence design — calibrated to reduce threat activation, not just inform.
+            </div>
+          </li>
+          <li class="scope-item">
+            <div class="scope-marker">3</div>
+            <div class="scope-text">
+              <strong>4 Regional Engagement Sessions</strong>
+              Cascading leadership decisions into lived regional reality — with a feedback loop back up to strategy.
+            </div>
+          </li>
+          <li class="scope-item">
+            <div class="scope-marker">4</div>
+            <div class="scope-text">
+              <strong>Ongoing Advisory Through August</strong>
+              Real-time strategic counsel as the integration unfolds — with potential for extended partnership.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIAGNOSTIC CTA -->
+<section class="diagnostic">
+  <div class="diagnostic-eyebrow">The First Step</div>
+  <h2>What's the integration risk hiding in your current plan?</h2>
+  <p>
+    A 30-day Integration Risk Assessment surfaces where human dynamics are most likely to distort your strategy — ideally before close, when the cost of addressing it is lowest.
+  </p>
+  <a href="#" class="btn-dark">Request Your Risk Assessment</a>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="about-grid">
+    <div class="about-image">
+      <div class="about-image-placeholder">A</div>
+      <div class="about-image-badge">
+        <span class="badge-num">20+</span>
+        <span class="badge-text">Years of Pattern<br>Recognition</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-eyebrow">About Amy</div>
+      <h2 class="section-headline">Built from the inside out — not from a methodology manual.</h2>
+      <p class="section-body">
+        Twenty years across corporate finance strategy, organizational change, and performance consulting gave me a front-row seat to what actually determines whether organizations reach their potential during high-stakes transitions.<br><br>
+        I came up through a major bank during multiple mergers — which means I watched integration plans work and fail in real time, from inside the machine. I know what the spreadsheet misses because I've seen it miss it, over and over.
+      </p>
+
+      <div class="about-creds">
+        <div class="cred-item"><div class="cred-dot"></div><span class="cred-text">Wells Fargo</span></div>
+        <div class="cred-item"><div class="cred-dot"></div><span class="cred-text">Xerox</span></div>
+        <div class="cred-item"><div class="cred-dot"></div><span class="cred-text">Dallas Mavericks (NBA)</span></div>
+        <div class="cred-item"><div class="cred-dot"></div><span class="cred-text">Pennsylvania Turnpike Commission</span></div>
+        <div class="cred-item"><div class="cred-dot"></div><span class="cred-text">Corporate finance background</span></div>
+        <div class="cred-item"><div class="cred-dot"></div><span class="cred-text">12+ years culture transformation</span></div>
+      </div>
+
+      <div class="about-quote">
+        <p>"I walk into a room and within twenty minutes I can feel where the friction is. That's not intuition — it's pattern recognition from two decades of watching organizations succeed and fail at exactly this."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Amy <span>Birks</span></div>
+    <div class="footer-tagline">Integration Intelligence · Protecting the deal thesis.</div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#">Approach</a></li>
+    <li><a href="#">Who It's For</a></li>
+    <li><a href="#">Engagements</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2026 Amy Birks<br>
+    <span style="color: rgba(155,163,184,0.3); font-size: 0.65rem;">Created with love by Snyper Agency</span>
+  </div>
+</footer>
+
+</body>
+</html>

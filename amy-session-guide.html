@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session Guide — Amy Birks Call</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0b0f1e;
+  --navy-mid: #141929;
+  --navy-panel: #1a2236;
+  --gold: #c9a84c;
+  --gold-bg: #fff8e7;
+  --gold-border: rgba(201,168,76,0.25);
+  --white: #f5f4f0;
+  --grey: #9ba3b8;
+  --text: #1a1e2e;
+  --muted: #6b7290;
+  --border: #e8e6e0;
+  --green: #2a7a3b;
+  --green-bg: #f0fdf4;
+  --red: #991b1b;
+  --red-bg: #fef2f2;
+  --blue: #1e3a5f;
+  --blue-bg: #eff6ff;
+  --purple: #4c1d95;
+  --purple-bg: #f5f3ff;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f0ede8;
+  color: var(--text);
+  line-height: 1.6;
+  padding: 0;
+}
+
+/* PAGE HEADER */
+.page-header {
+  background: var(--navy);
+  padding: 32px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--gold);
+}
+
+.header-left .doc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.header-left .doc-sub {
+  font-size: 0.78rem;
+  color: var(--grey);
+  margin-top: 4px;
+  letter-spacing: 0.04em;
+}
+
+.header-right {
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--grey);
+  line-height: 1.8;
+}
+
+.header-right strong { color: var(--gold); display: block; font-size: 0.8rem; }
+
+/* PROGRESS BAR */
+.progress-bar {
+  background: var(--navy-mid);
+  padding: 14px 60px;
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  overflow-x: auto;
+}
+
+.progress-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.progress-step::after {
+  content: '→';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(201,168,76,0.3);
+  font-size: 0.8rem;
+}
+
+.progress-step:last-child::after { display: none; }
+
+.progress-step .step-num {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.5);
+  display: block;
+}
+
+.progress-step .step-name {
+  font-size: 0.75rem;
+  color: var(--grey);
+  font-weight: 500;
+}
+
+.progress-step .step-time {
+  font-size: 0.65rem;
+  color: rgba(155,163,184,0.5);
+}
+
+/* CONTENT */
+.content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 40px 100px;
+}
+
+/* PHASE BLOCK */
+.phase {
+  margin-bottom: 56px;
+}
+
+.phase-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+
+.phase-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.phase-badge.phase-1 { background: var(--navy); color: var(--gold); border: 2px solid var(--gold); }
+.phase-badge.phase-2 { background: var(--blue-bg); color: var(--blue); border: 2px solid #93c5fd; }
+.phase-badge.phase-3 { background: var(--purple-bg); color: var(--purple); border: 2px solid #c4b5fd; }
+.phase-badge.phase-4 { background: var(--green-bg); color: var(--green); border: 2px solid #86efac; }
+.phase-badge.phase-5 { background: var(--gold-bg); color: #7a6020; border: 2px solid var(--gold); }
+
+.phase-meta {}
+
+.phase-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.phase-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.phase-timing {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.phase-timing strong { color: var(--navy); }
+
+/* SCRIPT BLOCK */
+.script-block {
+  background: var(--navy);
+  border-radius: 6px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.script-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.script-label::before {
+  content: '🎙️';
+  font-size: 0.85rem;
+}
+
+.script-text {
+  font-size: 0.93rem;
+  color: var(--white);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+.script-text strong {
+  font-style: normal;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* NOTE BLOCK */
+.note-block {
+  background: var(--gold-bg);
+  border-left: 3px solid var(--gold);
+  padding: 16px 20px;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 20px;
+  font-size: 0.83rem;
+  color: #5a4a20;
+  line-height: 1.7;
+}
+
+.note-block strong { color: #3a2e10; }
+
+/* QUESTION BLOCK */
+.question-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.question-header {
+  padding: 14px 20px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+  user-select: none;
+}
+
+.q-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.q-num.discovery { background: #dbeafe; color: var(--blue); }
+.q-num.deep { background: var(--purple-bg); color: var(--purple); }
+.q-num.confirm { background: var(--green-bg); color: var(--green); }
+
+.question-text {
+  font-size: 0.93rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.q-intent {
+  padding: 0 20px 16px 62px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.65;
+  border-top: 1px solid #f0eeea;
+  padding-top: 12px;
+}
+
+.q-intent strong { color: var(--text); }
+
+.q-followup {
+  padding: 10px 20px 16px 62px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.q-followup-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.q-followup ul {
+  padding-left: 16px;
+}
+
+.q-followup li {
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+/* REVEAL STEP */
+.reveal-step {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.reveal-step-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.reveal-step-icon.strategy { background: var(--navy); }
+.reveal-step-icon.website { background: var(--purple-bg); }
+.reveal-step-icon.calculator { background: var(--gold-bg); }
+.reveal-step-icon.offer { background: var(--green-bg); }
+
+.reveal-step-content {}
+.reveal-step-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+.reveal-step-body {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.reveal-step-script {
+  margin-top: 12px;
+  background: #f7f5f0;
+  border-radius: 4px;
+  padding: 12px 14px;
+  font-size: 0.83rem;
+  color: var(--text);
+  line-height: 1.7;
+  font-style: italic;
+  border-left: 2px solid var(--gold);
+}
+
+/* OFFER SECTION */
+.offer-box {
+  background: var(--navy);
+  border-radius: 6px;
+  padding: 32px;
+  color: var(--white);
+  margin-bottom: 20px;
+}
+
+.offer-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.offer-sub {
+  font-size: 0.85rem;
+  color: var(--grey);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.offer-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.offer-item-icon {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.offer-item-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.offer-item-desc {
+  font-size: 0.75rem;
+  color: var(--grey);
+  line-height: 1.55;
+}
+
+.offer-cta-script {
+  background: rgba(201,168,76,0.08);
+  border-left: 3px solid var(--gold);
+  padding: 20px 24px;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.88rem;
+  color: var(--white);
+  line-height: 1.8;
+  font-style: italic;
+}
+
+.offer-cta-script strong {
+  font-style: normal;
+  color: var(--gold);
+}
+
+/* LIVE NOTES SECTION */
+.live-section {
+  background: var(--gold-bg);
+  border: 2px solid var(--gold);
+  border-radius: 6px;
+  padding: 28px;
+  margin-bottom: 32px;
+}
+
+.live-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #e05252;
+  box-shadow: 0 0 8px #e05252;
+  animation: blink 1.5s infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.live-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7a6020;
+}
+
+.live-instructions {
+  font-size: 0.83rem;
+  color: #5a4a20;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+
+.live-instructions code {
+  background: rgba(201,168,76,0.2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.85em;
+}
+
+/* CHECKLIST */
+.checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.check-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.84rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.check-box {
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.check-box:hover { border-color: var(--gold); }
+.check-box.checked { background: var(--green); border-color: var(--green); }
+.check-box.checked::after { content: '✓'; color: white; font-size: 0.7rem; font-weight: 700; }
+
+/* TIMING BADGE */
+.timing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+.tb-blue { background: var(--blue-bg); color: var(--blue); }
+.tb-purple { background: var(--purple-bg); color: var(--purple); }
+.tb-green { background: var(--green-bg); color: var(--green); }
+.tb-gold { background: var(--gold-bg); color: #7a6020; }
+
+/* DIVIDER */
+.phase-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 40px 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.phase-divider::before, .phase-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .page-header { padding: 20px 20px; flex-direction: column; gap: 12px; }
+  .progress-bar { padding: 12px 20px; }
+  .content { padding: 28px 20px; }
+  .offer-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="header-left">
+    <div class="doc-title">Session Guide: Amy Birks</div>
+    <div class="doc-sub">Facilitation Script · Discovery Questions · Strategy Reveal · Snyper Offer</div>
+  </div>
+  <div class="header-right">
+    <strong>Friday, March 13, 2026</strong>
+    Created with love by Snyper Agency for Amy Birks
+    <br>Keep open during call
+  </div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+  <div class="progress-step">
+    <span class="step-num">Phase 1</span>
+    <span class="step-name">Opening</span>
+    <span class="step-time">~10 min</span>
+  </div>
+  <div class="progress-step">
+    <span class="step-num">Phase 2</span>
+    <span class="step-name">Discovery</span>
+    <span class="step-time">~25 min</span>
+  </div>
+  <div class="progress-step">
+    <span class="step-num">Phase 3</span>
+    <span class="step-name">Deep Dive</span>
+    <span class="step-time">~15 min</span>
+  </div>
+  <div class="progress-step">
+    <span class="step-num">Phase 4</span>
+    <span class="step-name">The Reveal</span>
+    <span class="step-time">~20 min</span>
+  </div>
+  <div class="progress-step">
+    <span class="step-num">Phase 5</span>
+    <span class="step-name">The Offer</span>
+    <span class="step-time">~10 min</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- LIVE NOTES SHORTCUT -->
+  <div class="live-section">
+    <div class="live-header">
+      <div class="live-dot"></div>
+      <div class="live-title">Live Note-Taking Instructions</div>
+    </div>
+    <div class="live-instructions">
+      During the call, <strong>just type notes into the chat</strong> as you go. Use simple shorthand — I'll understand context. Examples:<br><br>
+      <code>note: Amy says she's done 3 PE deals, never had a framework for it</code><br>
+      <code>note: She hesitates around the word "fear" — try "threat response" instead</code><br>
+      <code>note: Her strongest story is the Wells Fargo merger, 18 months saved</code><br>
+      <code>add to strategy: Her diagnostic actually has 5 dimensions she can name</code><br>
+      <code>update website: Change hero line to "X"</code><br><br>
+      I'll update the strategy doc, website copy, and the summary document in real time as you feed me intel. At the end of the call, type <code>build summary doc</code> and I'll produce a polished, personalized deliverable she can keep.
+    </div>
+  </div>
+
+  <!-- ======================== PHASE 1: OPENING ======================== -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-badge phase-1">1</div>
+      <div class="phase-meta">
+        <div class="phase-eyebrow">Phase 1 · Opening</div>
+        <div class="phase-title">Set the Stage <span class="timing-badge tb-blue">~10 minutes</span></div>
+        <div class="phase-timing">Goal: Build authority, create intrigue, set the frame for what's coming</div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">Opening — Your Introduction</div>
+      <div class="script-text">
+        "Amy — before we get into your work, I want to give you a little context on who I am and how I see the world, because it'll make what we're about to do together make more sense.<br><br>
+        I've spent most of my career doing one thing: <strong>finding the gap between where someone is positioned and where they could be</strong>. The gap between what makes them extraordinary and what they're actually saying to the world. Most people — even brilliant ones — are invisible in their own category because they're speaking the language of the category rather than the language of the people they're trying to reach.<br><br>
+        I've done this across industries — for companies, consultants, nonprofits. I have a nose for it. And when I read your briefing, something jumped out at me immediately. You're not what you're calling yourself. And that gap — between what you actually do and how you're currently positioned — is the thing we're going to close today."
+      </div>
+    </div>
+
+    <div class="note-block">
+      <strong>🎯 Your goal here:</strong> Create genuine curiosity. She should be leaning in before you've told her anything. The phrase "you're not what you're calling yourself" is designed to do that. Pause after it. Let it land.
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">Framing the Session</div>
+      <div class="script-text">
+        "Here's how this is going to go. I'm going to ask you some questions — some of them might feel unexpected. I'm not doing discovery for its own sake. I'm looking for something specific: the thing that makes you genuinely irreplaceable to the people who need you most. When I find it, you'll know.<br><br>
+        And at the end of today's conversation, I'm going to show you something. A new version of your positioning — the website, the strategy, the tools that prove it — built specifically around what I've learned about you. So this isn't just a conversation. It's a working session. Let's go."
+      </div>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Introduced yourself and your positioning lens</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Created intrigue around the gap between her positioning and her actual value</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Set expectation that something will be revealed at the end</span></div>
+    </div>
+  </div>
+
+  <div class="phase-divider">Phase 2 · Discovery</div>
+
+  <!-- ======================== PHASE 2: DISCOVERY ======================== -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-badge phase-2">2</div>
+      <div class="phase-meta">
+        <div class="phase-eyebrow">Phase 2 · Surface Discovery</div>
+        <div class="phase-title">Find the Gold <span class="timing-badge tb-blue">~25 minutes</span></div>
+        <div class="phase-timing">Goal: Uncover the stories, specifics, and instincts that make Amy's methodology genuinely unique</div>
+      </div>
+    </div>
+
+    <div class="note-block">
+      <strong>Facilitation principle:</strong> Don't talk much here. Ask the question. Listen. Reflect back. Then go deeper. The gold is always one layer below the first answer. Every time she says something interesting, ask: <em>"Say more about that."</em> or <em>"What does that actually look like in practice?"</em>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num discovery">Q1</div>
+        <div class="question-text">Take me back to the moment — the earliest one you can remember — when you realized that you were seeing something in an organization that everyone else was missing. What was happening? What did you see?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> Gets her into a specific memory rather than a generalization. The story she tells here is likely her best origin story — and probably the most powerful version of what makes her different. Listen for the specific language she uses to describe what she saw.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">If she goes abstract, push her into the specific:</div>
+        <ul>
+          <li>"Give me the actual scene — where were you, who was in the room?"</li>
+          <li>"What was everyone else focused on while you were seeing this?"</li>
+          <li>"What happened next — when you named what you saw?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num discovery">Q2</div>
+        <div class="question-text">You've described your "GPS-Brain" — the ability to walk into a room and feel where the friction is within 20 minutes. Walk me through that. What are you actually picking up on? What are the signals?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> This is the diagnostic framework in embryonic form. Every signal she names is a potential dimension of her proprietary assessment. Listen closely — this is the intellectual property she hasn't articulated yet.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Drilling deeper:</div>
+        <ul>
+          <li>"Is it what people say, or is it what they don't say?"</li>
+          <li>"Can you name the thing you're looking for — even if it's hard to put into words?"</li>
+          <li>"If you had to build a checklist of what to look for in a room — what's on it?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num discovery">Q3</div>
+        <div class="question-text">Tell me about a time your work made the biggest difference — the engagement where you can point to before and after and say: "that happened because I was there." What changed? What would have happened if you hadn't been there?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> This is the case study she needs. Also — the language she uses to describe the outcome is the language her prospects need to hear. Write down exact phrases.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Follow-up probes:</div>
+        <ul>
+          <li>"How much do you think that outcome was worth in dollar terms — rough guess?"</li>
+          <li>"Does that client know what you actually did for them?"</li>
+          <li>"Would they go on record saying that? Could that become a case study?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num discovery">Q4</div>
+        <div class="question-text">What's the most common thing you walk into that the organization doesn't even realize is a problem yet?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> This surfaces her proprietary insight — the pattern she recognizes that others don't. Whatever she says here is the heart of her diagnostic framework and probably the strongest message for her website.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Then ask:</div>
+        <ul>
+          <li>"And when they realize it's a problem — how far along are they usually by then?"</li>
+          <li>"What does it cost them between the moment it starts and the moment they finally see it?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num discovery">Q5</div>
+        <div class="question-text">Who is your absolute dream client? Not a category — a person. The specific type of human being who gets maximum value from working with you, where the work flows, where you feel most alive in the engagement.</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> The texture of her answer will sharpen the target buyer section of the strategy. Also — her excitement level here tells you whether she's chasing the right buyer or the safe one.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Push for specificity:</div>
+        <ul>
+          <li>"What's their title? What's keeping them up at 2am?"</li>
+          <li>"Have you had this client? Who was closest to this ideal?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num discovery">Q6</div>
+        <div class="question-text">What do you never want to do again? The type of work, or the type of client, that leaves you feeling like a vendor rather than an advisor?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> Boundaries define positioning. What she wants to exclude is as important as what she wants to attract. This also reveals any mismatch between how she's currently positioned and where she wants to go.
+      </div>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Origin story captured — the moment she first saw what others missed</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>GPS-Brain signals identified — potential diagnostic dimensions named</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Best outcome story captured with rough dollar impact</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>The hidden pattern she always sees — named in her words</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Dream client profile painted with specificity</span></div>
+    </div>
+  </div>
+
+  <div class="phase-divider">Phase 3 · Deep Dive</div>
+
+  <!-- ======================== PHASE 3: DEEP DIVE ======================== -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-badge phase-3">3</div>
+      <div class="phase-meta">
+        <div class="phase-eyebrow">Phase 3 · Strategic Deep Dive</div>
+        <div class="phase-title">Challenge the Assumptions <span class="timing-badge tb-purple">~15 minutes</span></div>
+        <div class="phase-timing">Goal: Surface what she hasn't said out loud — the hidden positioning and unspoken constraints</div>
+      </div>
+    </div>
+
+    <div class="note-block">
+      <strong>Shift in energy here:</strong> Move from warm discovery to sharper, more provocative questions. You're not being harsh — you're treating her like a strategic peer. This is where breakthroughs happen. The frame: "I'm going to push you a bit here."
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num deep">Q7</div>
+        <div class="question-text">What are you undercharging for? Where do you know — intuitively — that the value you deliver is an order of magnitude larger than the fee you're comfortable asking for?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> Almost every high-performing independent advisor undercharges. This surfaces pricing confidence gaps — and the answer usually reveals where she does her best work. Also opens the conversation about fee structures.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Follow up with:</div>
+        <ul>
+          <li>"What stops you from charging what you know it's worth?"</li>
+          <li>"If you had the evidence — the ROI numbers — what would you charge?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num deep">Q8</div>
+        <div class="question-text">What's the thing you know about M&A integration that nobody else in this space is saying out loud? The inconvenient truth that most consultants won't touch?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> This is her thought leadership thesis. Whatever she says here becomes a LinkedIn post, a keynote, or a piece of content that establishes her as the category definer — not just a practitioner.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">If she hesitates:</div>
+        <ul>
+          <li>"You don't have to be diplomatic here. What do you actually believe that the industry pretends isn't true?"</li>
+          <li>"What would you say to a room of corporate development directors if you knew you'd never work with them again?"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num deep">Q9</div>
+        <div class="question-text">What's the thing you're most afraid of getting wrong as you build this practice? The risk you're quietly managing?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> Surfaces her actual constraints and fears — which we need to address in the strategy. Also builds trust: you're not just here to pump her up, you're interested in the real picture.
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num deep">Q10</div>
+        <div class="question-text">If you had three clients like IQVIA running concurrently right now — full pipeline — what would you need to have in place that you don't have yet?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> This is the setup for the Snyper Agency offer. Her answer tells you exactly where the infrastructure gap is — and frames what you're about to offer as the specific solution to what she just named.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Listen for these gaps:</div>
+        <ul>
+          <li>Lead generation / consistent pipeline</li>
+          <li>Marketing / positioning that reaches the right buyers</li>
+          <li>Back-end systems / automations / CRM</li>
+          <li>Credibility / case studies / social proof</li>
+          <li>Time — she can't do delivery AND business development</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="question-block">
+      <div class="question-header">
+        <div class="q-num confirm">Q11</div>
+        <div class="question-text">When I say "Integration Risk Intelligence" — the idea that your work sits upstream of change management as a financial risk mitigation play, not a culture program — how does that land for you?</div>
+      </div>
+      <div class="q-intent">
+        <strong>Why this question:</strong> This is the positioning test. You're introducing the new frame and watching her reaction. If her eyes light up, you've found it. If she hesitates, you'll learn why — and you can adjust before the full reveal.
+      </div>
+      <div class="q-followup">
+        <div class="q-followup-label">Listen for the energy in her response:</div>
+        <ul>
+          <li>🔥 Immediate "yes" energy → amplify it, go straight to the reveal</li>
+          <li>🤔 Thoughtful hesitation → probe what's missing or what feels off</li>
+          <li>😬 Resistance → ask what language SHE would use — then incorporate it</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Pricing gap surfaced — where she knows she undercharges</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Her provocative industry truth named — future thought leadership</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Real constraints and fears on the table</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Infrastructure gaps identified — sets up the Snyper offer</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>New positioning tested — her reaction noted</span></div>
+    </div>
+  </div>
+
+  <div class="phase-divider">Phase 4 · The Reveal</div>
+
+  <!-- ======================== PHASE 4: REVEAL ======================== -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-badge phase-4">4</div>
+      <div class="phase-meta">
+        <div class="phase-eyebrow">Phase 4 · The Grand Reveal</div>
+        <div class="phase-title">Show Her What's Possible <span class="timing-badge tb-green">~20 minutes</span></div>
+        <div class="phase-timing">Goal: Deliver a tangible, jaw-dropping vision of what her practice looks like repositioned</div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">The Transition Into the Reveal</div>
+      <div class="script-text">
+        "Amy — before we got on this call today, I did some work. I wanted to understand not just what you told me, but what the market is missing, where the white space is, and what the version of Amy Birks looks like that commands the clients and fees you actually deserve.<br><br>
+        I'm going to share my screen. What you're about to see isn't a mood board or a concept deck. It's a working strategy, a working website, and a working tool — all built around a single idea I want to share with you first."
+      </div>
+    </div>
+
+    <div class="reveal-step">
+      <div class="reveal-step-icon strategy">📋</div>
+      <div class="reveal-step-content">
+        <div class="reveal-step-title">Step 1 — Open the Strategy Document</div>
+        <div class="reveal-step-body">Open <code>amy-birks-strategy.html</code> first. Walk her through the core repositioning — the before/after comparison. Let her react before you move on.</div>
+        <div class="reveal-step-script">"The single most important move is a category shift. Right now you're in 'change management' — a category where you're competing against firms with 500 consultants and Prosci-certified practitioners. What I'm proposing is that you leave that category entirely. You're not a change manager. You're an Integration Risk Intelligence advisor. You protect the deal thesis. That's not a rebrand — it's a reclassification. And it changes every conversation you have with a CFO or Corporate Development Director."</div>
+      </div>
+    </div>
+
+    <div class="reveal-step">
+      <div class="reveal-step-icon website">🖥️</div>
+      <div class="reveal-step-content">
+        <div class="reveal-step-title">Step 2 — Show the Website Redesign</div>
+        <div class="reveal-step-body">Open <code>amy-birks-redesign.html</code>. Scroll slowly. Don't explain everything — let her feel it first. Then walk through the key decisions.</div>
+        <div class="reveal-step-script">"This is what your website looks like when it's talking to the right people — Corporate Development Directors, PE Operating Partners, CHROs with integration budgets. Notice the headline: <em>'Your integration plan is technically sound. That's not what will determine its outcome.'</em> That's not a culture conversation. That's a boardroom conversation. Every word on this page is a positioning decision."</div>
+      </div>
+    </div>
+
+    <div class="reveal-step">
+      <div class="reveal-step-icon calculator">🧮</div>
+      <div class="reveal-step-content">
+        <div class="reveal-step-title">Step 3 — The Integration Risk Calculator</div>
+        <div class="reveal-step-body">Open <code>integration-risk-calculator.html</code>. Enter the IQVIA numbers first — let her see her own deal. Then let her play with the sliders.</div>
+        <div class="reveal-step-script">"This is your lead magnet. A prospect runs their deal through this calculator — and they see, in their own numbers, what's at risk. On a $250M deal with 750 employees, it's showing $181 million in potential value leakage. Amy's fee is $65K. The return multiple is 852 times. No one who sees that is calling Deloitte first. This goes on your website, on LinkedIn, in your emails. 'Find out what your integration is costing you — 60 seconds.' That's your ad."</div>
+      </div>
+    </div>
+
+    <div class="note-block">
+      <strong>🎯 After the reveal — ask this:</strong> <em>"What's landing for you? And what — if anything — feels like it needs to be adjusted to sound more like you?"</em><br><br>
+      Feed her answers back to me live. I'll update the docs in real time during the conversation.
+    </div>
+
+    <div class="checklist">
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Strategy document walked through — repositioning landed</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Website redesign shown — her reaction captured</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Calculator demo'd with her actual numbers (IQVIA)</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Feedback collected — updates fed back to AI</span></div>
+    </div>
+  </div>
+
+  <div class="phase-divider">Phase 5 · The Offer</div>
+
+  <!-- ======================== PHASE 5: THE OFFER ======================== -->
+  <div class="phase">
+    <div class="phase-header">
+      <div class="phase-badge phase-5">5</div>
+      <div class="phase-meta">
+        <div class="phase-eyebrow">Phase 5 · The Offer</div>
+        <div class="phase-title">Snyper Agency as Her Execution Partner <span class="timing-badge tb-gold">~10 minutes</span></div>
+        <div class="phase-timing">Goal: Make it obvious that the natural next step is to let Snyper execute everything you've just shown her</div>
+      </div>
+    </div>
+
+    <div class="script-block">
+      <div class="script-label">The Setup</div>
+      <div class="script-text">
+        "Amy — everything I've just shown you exists. The strategy is built. The website concept is designed. The calculator is live. The category is defined.<br><br>
+        But here's the thing: <strong>none of this will move the needle sitting on a hard drive.</strong> The website has to be built. The calculator has to be deployed. The ads have to run. The funnel has to convert. The CRM has to follow up. The content has to go out every week. And you can't do that and run a high-touch advisory practice at the same time. Nobody can.<br><br>
+        So let me tell you what I do."
+      </div>
+    </div>
+
+    <div class="offer-box">
+      <div class="offer-headline">Snyper Agency — Your Entire Back End, Built and Running</div>
+      <div class="offer-sub">We execute the infrastructure that fills your pipeline so you can focus on the work only you can do — being in the room, running the sessions, delivering the results.</div>
+      <div class="offer-grid">
+        <div class="offer-item">
+          <div class="offer-item-icon">🌐</div>
+          <div class="offer-item-title">Website Build</div>
+          <div class="offer-item-desc">We take today's redesign concept and build it into a live, professional site with the new positioning, the calculator embedded, and SEO targeting corporate development keywords.</div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-item-icon">🧲</div>
+          <div class="offer-item-title">Lead Generation</div>
+          <div class="offer-item-desc">Targeted ads driving CFOs and Corporate Dev Directors to the Risk Calculator. When they complete it, they're pre-qualified. No cold calls. Warm leads who've already seen the ROI.</div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-item-icon">🔁</div>
+          <div class="offer-item-title">Funnel & Automation</div>
+          <div class="offer-item-desc">Calculator → email sequence → booking link → consultation. Automated follow-up that nurtures leads until they're ready. You show up to a call, not a cold outreach.</div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-item-icon">📱</div>
+          <div class="offer-item-title">LinkedIn Strategy</div>
+          <div class="offer-item-desc">Content that establishes Amy as the voice of Integration Risk Intelligence. One post a week that positions the category, shares insight, and builds the audience that becomes pipeline.</div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-item-icon">📊</div>
+          <div class="offer-item-title">CRM & Follow-Up</div>
+          <div class="offer-item-desc">GoHighLevel setup — every lead tracked, every conversation logged, every follow-up automated. Nothing falls through the cracks. Your practice runs like a business, not a consulting gig.</div>
+        </div>
+        <div class="offer-item">
+          <div class="offer-item-icon">🏆</div>
+          <div class="offer-item-title">Case Studies + Proof</div>
+          <div class="offer-item-desc">When IQVIA closes, we turn it into a case study in the language that matters — deal size, outcomes, timeline impact. That case study goes into ads, LinkedIn, and the sales sequence.</div>
+        </div>
+      </div>
+      <div class="offer-cta-script">
+        "And the way Snyper works is simple: <strong>you only pay for results.</strong> We don't charge a big agency retainer and hope it works. We align on what 'results' means for your practice — qualified conversations with the right buyers — and we build the machine that delivers them. If it doesn't deliver, we haven't earned the fee.<br><br>
+        What I'm proposing is a partnership: you bring the methodology and the expertise that can't be replicated. We build and run the infrastructure that puts you in front of the people who need what you have. Together, we build the practice you actually want — 3–5 engagements a year, at your price point, with clients who already believe in what you do before you even get on the call."
+      </div>
+    </div>
+
+    <div class="note-block">
+      <strong>🎯 Close the offer with a question, not a pitch:</strong><br>
+      <em>"Does this feel like the right direction for where you want to take the practice? And if we were to work together, what would need to be true for you to feel confident about the next step?"</em><br><br>
+      Then stop talking. Her answer tells you exactly how to close.
+    </div>
+
+    <div class="checklist">
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Transitioned from insight to offer naturally — "none of this moves sitting on a hard drive"</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Snyper scope presented — 6 execution areas covered</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>"Pay only for results" model explained</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Closed with a question, not a pitch — her answer received</span></div>
+      <div class="check-item"><div class="check-box" onclick="this.classList.toggle('checked')"></div><span>Next step agreed — follow-up / proposal / call</span></div>
+    </div>
+  </div>
+
+  <!-- SESSION CLOSE -->
+  <div class="live-section" style="margin-top: 48px;">
+    <div class="live-header">
+      <div class="live-dot"></div>
+      <div class="live-title">End of Session — Build the Summary</div>
+    </div>
+    <div class="live-instructions">
+      When the call is wrapping up, type <code>build summary doc</code> into the chat.<br><br>
+      I'll produce a polished, personalized one-page summary document that includes:<br>
+      ✦ Her new positioning statement (refined with anything she said during the call)<br>
+      ✦ The USP and key talking points in her language<br>
+      ✦ The category strategy — Integration Risk Intelligence<br>
+      ✦ The diagnostic product — 30-Day Risk Assessment<br>
+      ✦ The go-to-market sequence — what to do in the next 30, 60, 90 days<br>
+      ✦ Clear action points, numbered and prioritized<br>
+      ✦ All three tools she's seen today, described with their use cases<br><br>
+      <strong>Send this to Amy within 10 minutes of hanging up.</strong> That speed is part of the demonstration.
+    </div>
+  </div>
+
+</div><!-- /content -->
+</body>
+</html>

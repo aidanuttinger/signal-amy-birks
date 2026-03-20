@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Diagnostic Framework — Integration Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b0f1e;--navy-card:#1a2236;--gold:#c9a84c;--gold-bg:#fffcf3;
+  --white:#fdfcf8;--warm:#f5f2eb;--text:#1a1a2e;--muted:#6b6b8a;--border:#e8e4da;
+}
+body{font-family:'Inter',sans-serif;background:var(--warm);color:var(--text);padding:0 0 80px}
+.top-stripe{height:4px;background:linear-gradient(90deg,var(--navy),var(--gold),var(--navy))}
+.page-header{background:var(--navy);padding:40px 60px;border-bottom:1px solid rgba(201,168,76,.15)}
+.header-eyebrow{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.header-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
+.header-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#f0eee8;line-height:1.2}
+.header-sub{font-size:.88rem;color:#8a94aa;margin-top:10px;max-width:580px;line-height:1.75}
+
+.content{max-width:860px;margin:0 auto;padding:40px 60px}
+.section-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);max-width:60px}
+
+.intro-box{background:white;border:1px solid var(--border);border-radius:6px;padding:28px 32px;margin-bottom:36px}
+.intro-box p{font-size:.92rem;color:var(--text);line-height:1.85;margin-bottom:16px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-quote{background:var(--navy);border-radius:4px;padding:20px 24px;margin:20px 0;font-family:'Playfair Display',serif;font-size:1.05rem;color:#f0eee8;line-height:1.65;font-style:italic}
+.intro-quote strong{font-style:normal;color:var(--gold)}
+
+.dimension-card{background:white;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:24px}
+.dim-header{background:var(--navy);padding:18px 28px;display:flex;align-items:center;gap:16px}
+.dim-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;flex-shrink:0}
+.dim-title-wrap{}
+.dim-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:600;color:#f0eee8}
+.dim-subtitle{font-size:.75rem;color:#8a94aa;margin-top:2px}
+
+.dim-body{padding:24px 28px;display:flex;flex-direction:column;gap:20px}
+
+.dim-section{}
+.dim-section-title{font-size:.65rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.dim-signals{display:flex;flex-direction:column;gap:6px}
+.signal{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--text);line-height:1.55}
+.signal-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px}
+
+.dim-questions{display:flex;flex-direction:column;gap:8px}
+.dim-question{background:#f7f5f0;border-radius:4px;padding:10px 14px;font-size:.83rem;color:var(--text);line-height:1.6;border-left:2px solid var(--gold)}
+
+.dim-write-space{margin-top:4px}
+.write-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.write-area{width:100%;min-height:70px;border:1.5px solid var(--border);border-radius:4px;padding:10px 12px;font-family:'Inter',sans-serif;font-size:.85rem;color:var(--text);resize:vertical;outline:none;background:var(--white);transition:border-color .2s}
+.write-area:focus{border-color:var(--gold)}
+.write-area::placeholder{color:#c4bdb0;font-style:italic}
+
+.output-section{margin-top:48px}
+.output-card{background:var(--navy);border-radius:6px;padding:32px;margin-top:20px}
+.output-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#f0eee8;margin-bottom:8px}
+.output-sub{font-size:.83rem;color:#8a94aa;margin-bottom:20px;line-height:1.65}
+.output-preview{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.15);border-radius:4px;padding:20px;font-size:.85rem;color:#c8cdd8;line-height:1.8;font-family:'Playfair Display',serif;font-style:italic;min-height:100px;white-space:pre-wrap;cursor:text}
+.output-preview .placeholder{color:rgba(201,168,76,.5)}
+.btn-generate{margin-top:14px;background:var(--gold);color:var(--navy);padding:12px 28px;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;border-radius:3px;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-generate:hover{background:#e8c97a}
+.btn-copy-output{margin-top:10px;margin-left:10px;background:transparent;color:var(--gold);padding:12px 20px;font-size:.75rem;font-weight:600;border:1px solid rgba(201,168,76,.3);cursor:pointer;border-radius:3px;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-copy-output:hover{border-color:var(--gold);background:rgba(201,168,76,.08)}
+
+footer{max-width:860px;margin:40px auto 0;padding:20px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted)}
+.footer-brand{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--navy);font-weight:600}
+.footer-brand span{color:var(--gold)}
+
+@media(max-width:700px){.content,.page-header,footer{padding:28px 20px}.dim-body{padding:18px}}
+</style>
+</head>
+<body>
+<div class="top-stripe"></div>
+<div class="page-header">
+  <div class="header-eyebrow">Diagnostic Framework Builder</div>
+  <div class="header-title">Name Your GPS-Brain.</div>
+  <div class="header-sub">You've always known what you see when you walk into a room. This exercise helps you name it, structure it, and turn it into the proprietary diagnostic at the heart of Integration Intelligence. Work through this together — out loud.</div>
+</div>
+
+<div class="content">
+
+  <div class="intro-box">
+    <p>Your GPS-Brain — the ability to walk into a room and within 20 minutes feel where the friction is — is the most valuable and most proprietary thing about your practice. It's the thing no one else can replicate, certify, or commoditize.</p>
+    <p>But right now it lives in your intuition. To build Integration Intelligence into a product — something you can communicate, price, and scale — it needs to live on paper too.</p>
+    <div class="intro-quote">
+      "The goal isn't to build a checklist that constrains you. It's to give language to what you already see — so you can communicate it to the people who need it, and charge what it's actually worth."
+    </div>
+    <p>Work through each dimension below. For each one, answer the questions in your own words. At the end, you'll have a first draft of your proprietary Integration Intelligence Diagnostic Framework — the thing that makes every conversation with a prospect feel like you already know their organization.</p>
+  </div>
+
+  <div class="section-label">The 5 Dimensions</div>
+
+  <!-- DIMENSION 1 -->
+  <div class="dimension-card">
+    <div class="dim-header">
+      <div class="dim-num">1</div>
+      <div class="dim-title-wrap">
+        <div class="dim-title">Leadership Alignment Reality</div>
+        <div class="dim-subtitle">Are the senior teams genuinely aligned — or performing alignment?</div>
+      </div>
+    </div>
+    <div class="dim-body">
+      <div class="dim-section">
+        <div class="dim-section-title">The signals you're already reading</div>
+        <div class="dim-signals">
+          <div class="signal"><div class="signal-dot"></div><span>What leaders say in the room vs. what they say in the hallway</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>How quickly decisions get made — or re-opened</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>Whether both sides of the deal are actually in the room, or one side is performing for the other</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>The degree to which leaders can finish each other's sentences — or avoid completing each other's</span></div>
+        </div>
+      </div>
+      <div class="dim-section">
+        <div class="dim-section-title">Questions to unlock your version of this dimension</div>
+        <div class="dim-questions">
+          <div class="dim-question">When you walk into a leadership session, what's the first thing you notice that tells you alignment is real vs. performed?</div>
+          <div class="dim-question">What does misalignment sound like at the leadership level — not the words, but the pattern?</div>
+          <div class="dim-question">What's the most dangerous form of false alignment you've encountered — and how did you spot it?</div>
+        </div>
+      </div>
+      <div class="dim-write-space">
+        <div class="write-label">Your answer — in your own words <span style="font-weight:300;text-transform:none;letter-spacing:0">This becomes your proprietary definition</span></div>
+        <textarea class="write-area" id="dim-1" placeholder="How do YOU define and measure leadership alignment reality? What are your 2-3 clearest signals?"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIMENSION 2 -->
+  <div class="dimension-card">
+    <div class="dim-header">
+      <div class="dim-num">2</div>
+      <div class="dim-title-wrap">
+        <div class="dim-title">Fear Index</div>
+        <div class="dim-subtitle">What is the threat level in the room — and where is it distorting the plan?</div>
+      </div>
+    </div>
+    <div class="dim-body">
+      <div class="dim-section">
+        <div class="dim-section-title">The signals you're already reading</div>
+        <div class="dim-signals">
+          <div class="signal"><div class="signal-dot"></div><span>Who speaks and who goes quiet when leadership enters</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>The quality of questions being asked — or not asked</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>Whether people are protecting information or sharing it</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>How people talk about "the other side" of the deal when they think leadership isn't listening</span></div>
+        </div>
+      </div>
+      <div class="dim-section">
+        <div class="dim-section-title">Questions to unlock your version of this dimension</div>
+        <div class="dim-questions">
+          <div class="dim-question">How do you distinguish productive tension from threat response in a room full of senior people?</div>
+          <div class="dim-question">What does fear look like in a CFO or Corporate Dev Director — it's not always obvious. What are your tells?</div>
+          <div class="dim-question">Where does fear show up FIRST in an integration — what's the leading indicator before it becomes visible?</div>
+        </div>
+      </div>
+      <div class="dim-write-space">
+        <div class="write-label">Your answer — in your own words</div>
+        <textarea class="write-area" id="dim-2" placeholder="How do you measure the fear index? What's your clearest early signal?"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIMENSION 3 -->
+  <div class="dimension-card">
+    <div class="dim-header">
+      <div class="dim-num">3</div>
+      <div class="dim-title-wrap">
+        <div class="dim-title">Communication Health</div>
+        <div class="dim-subtitle">Is information flowing cleanly — or being distorted, filtered, or weaponized?</div>
+      </div>
+    </div>
+    <div class="dim-body">
+      <div class="dim-section">
+        <div class="dim-section-title">The signals you're already reading</div>
+        <div class="dim-signals">
+          <div class="signal"><div class="signal-dot"></div><span>The gap between what leadership intends to communicate and what people actually receive</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>Whether the tone of communications activates safety or threat in the reader</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>How many layers a message passes through before it reaches front-line employees</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>The ratio of "here's what we know" to "here's what we don't know yet" in announcements</span></div>
+        </div>
+      </div>
+      <div class="dim-section">
+        <div class="dim-section-title">Questions to unlock your version of this dimension</div>
+        <div class="dim-questions">
+          <div class="dim-question">When you read a client's integration communications before you've met anyone — what are the two or three things that immediately tell you something's wrong?</div>
+          <div class="dim-question">What does "communications that activate safety" actually look like vs. "communications that activate threat"? Can you give a specific example of each?</div>
+        </div>
+      </div>
+      <div class="dim-write-space">
+        <div class="write-label">Your answer — in your own words</div>
+        <textarea class="write-area" id="dim-3" placeholder="What are your communication health markers? How do you assess it in the first 20 minutes?"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIMENSION 4 -->
+  <div class="dimension-card">
+    <div class="dim-header">
+      <div class="dim-num">4</div>
+      <div class="dim-title-wrap">
+        <div class="dim-title">Cultural Compatibility & Distance</div>
+        <div class="dim-subtitle">How different are the two cultures — and does anyone actually know?</div>
+      </div>
+    </div>
+    <div class="dim-body">
+      <div class="dim-section">
+        <div class="dim-section-title">The signals you're already reading</div>
+        <div class="dim-signals">
+          <div class="signal"><div class="signal-dot"></div><span>How each side talks about the other when the other isn't in the room</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>The degree to which each organization has explicit vs. unspoken norms</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>How decisions get made in each culture — consensus vs. hierarchy vs. speed</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>Whether leadership has done any deliberate cultural assessment or is "assuming fit"</span></div>
+        </div>
+      </div>
+      <div class="dim-section">
+        <div class="dim-section-title">Questions to unlock your version of this dimension</div>
+        <div class="dim-questions">
+          <div class="dim-question">In your experience, what's the most common cultural mismatch that deal teams underestimate — and why?</div>
+          <div class="dim-question">What does "cultural distance" actually feel like in a room? How do you sense it before anyone names it?</div>
+        </div>
+      </div>
+      <div class="dim-write-space">
+        <div class="write-label">Your answer — in your own words</div>
+        <textarea class="write-area" id="dim-4" placeholder="How do you assess cultural compatibility and distance? What are the most dangerous gaps to watch for?"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIMENSION 5 -->
+  <div class="dimension-card">
+    <div class="dim-header">
+      <div class="dim-num">5</div>
+      <div class="dim-title-wrap">
+        <div class="dim-title">Execution Ownership</div>
+        <div class="dim-subtitle">Who actually owns this integration — and do they believe it will work?</div>
+      </div>
+    </div>
+    <div class="dim-body">
+      <div class="dim-section">
+        <div class="dim-section-title">The signals you're already reading</div>
+        <div class="dim-signals">
+          <div class="signal"><div class="signal-dot"></div><span>Whether the people responsible for execution were involved in designing the plan</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>The degree to which ownership is distributed vs. concentrated at the top</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>Whether frontline managers believe the strategy will actually work in practice</span></div>
+          <div class="signal"><div class="signal-dot"></div><span>The gap between official accountability and real influence</span></div>
+        </div>
+      </div>
+      <div class="dim-section">
+        <div class="dim-section-title">Questions to unlock your version of this dimension</div>
+        <div class="dim-questions">
+          <div class="dim-question">How do you know within the first session whether an integration team has real ownership vs. performative ownership?</div>
+          <div class="dim-question">What does it look like when the people executing the plan secretly don't believe it will work — and how do you surface that?</div>
+        </div>
+      </div>
+      <div class="dim-write-space">
+        <div class="write-label">Your answer — in your own words</div>
+        <textarea class="write-area" id="dim-5" placeholder="How do you assess execution ownership? What are the tells that tell you it's real vs. delegated?"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- YOUR FRAMEWORK OUTPUT -->
+  <div class="output-section">
+    <div class="section-label">Your Proprietary Framework</div>
+    <div class="output-card">
+      <div class="output-title">Integration Intelligence Diagnostic — First Draft</div>
+      <div class="output-sub">Click "Generate Framework" below to turn your answers into a first-draft proprietary framework statement you can refine and use.</div>
+      <div class="output-preview" id="framework-output"><span class="placeholder">Your framework will appear here once you've filled in your dimensions above and clicked Generate...</span></div>
+      <div>
+        <button class="btn-generate" onclick="generateFramework()">Generate My Framework →</button>
+        <button class="btn-copy-output" onclick="copyFramework()">Copy to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">Snyper <span>Agency</span></div>
+  <div>Created with love for you · Pay only for results.</div>
+</footer>
+
+<script>
+function generateFramework() {
+  const d1 = document.getElementById('dim-1').value.trim();
+  const d2 = document.getElementById('dim-2').value.trim();
+  const d3 = document.getElementById('dim-3').value.trim();
+  const d4 = document.getElementById('dim-4').value.trim();
+  const d5 = document.getElementById('dim-5').value.trim();
+
+  const filled = [d1,d2,d3,d4,d5].filter(x => x.length > 0).length;
+  const output = document.getElementById('framework-output');
+
+  if (filled < 3) {
+    output.innerHTML = '<span style="color:rgba(201,168,76,.5);font-style:italic">Fill in at least 3 dimensions above to generate your framework draft...</span>';
+    return;
+  }
+
+  const framework = `THE INTEGRATION INTELLIGENCE DIAGNOSTIC FRAMEWORK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Integration Intelligence assesses five dimensions of human dynamics risk that determine whether an integration plan performs as designed. Each dimension represents a compounding failure vector that traditional integration planning does not account for.
+
+DIMENSION 1 · LEADERSHIP ALIGNMENT REALITY
+${d1 || '[To be completed — describe your definition and key signals]'}
+
+DIMENSION 2 · FEAR INDEX
+${d2 || '[To be completed — describe your definition and key signals]'}
+
+DIMENSION 3 · COMMUNICATION HEALTH
+${d3 || '[To be completed — describe your definition and key signals]'}
+
+DIMENSION 4 · CULTURAL COMPATIBILITY & DISTANCE
+${d4 || '[To be completed — describe your definition and key signals]'}
+
+DIMENSION 5 · EXECUTION OWNERSHIP
+${d5 || '[To be completed — describe your definition and key signals]'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DIAGNOSTIC STATEMENT:
+
+The Integration Intelligence Diagnostic assesses an organization's integration risk profile across five dimensions of human dynamics. Where traditional integration planning addresses systems, timelines, and deliverables, this diagnostic surfaces the invisible variables — the patterns of fear, misalignment, and disengagement — that determine whether those plans actually execute as designed.
+
+The diagnostic is delivered in three forms:
+· A 30-Day Integration Risk Assessment (standalone, pre-close)
+· An embedded diagnostic within Phase 1 facilitation
+· Ongoing pulse assessment through Phase 2 advisory
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+© Integration Intelligence · Amy Birks`;
+
+  output.style.fontFamily = "'JetBrains Mono', 'Courier New', monospace";
+  output.style.fontSize = '0.75rem';
+  output.style.color = '#c8cdd8';
+  output.style.fontStyle = 'normal';
+  output.textContent = framework;
+}
+
+function copyFramework() {
+  const text = document.getElementById('framework-output').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-copy-output');
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = 'Copy to Clipboard', 2000);
+  });
+}
+</script>
+</body>
+</html>

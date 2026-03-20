@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Note for You — Before We Begin</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0b0f1e;
+  --navy-mid: #141929;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-bg: #fffcf3;
+  --white: #fdfcf8;
+  --text: #1a1a2e;
+  --muted: #6b6b8a;
+  --border: #ece9e0;
+  --warm: #f7f4ed;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--warm);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.page {
+  background: var(--white);
+  max-width: 760px;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 8px 60px rgba(0,0,0,0.08), 0 2px 12px rgba(0,0,0,0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+/* TOP STRIPE */
+.top-stripe {
+  height: 4px;
+  background: linear-gradient(90deg, var(--navy), var(--gold), var(--navy));
+}
+
+/* HEADER */
+.header {
+  padding: 52px 64px 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.header-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.header-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.header-sub {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+.header-from {
+  position: absolute;
+  top: 52px;
+  right: 64px;
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.header-from strong {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--navy);
+  display: block;
+}
+
+/* BODY */
+.body {
+  padding: 48px 64px;
+}
+
+/* LETTER */
+.letter {
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.9;
+  margin-bottom: 44px;
+}
+
+.letter p {
+  margin-bottom: 20px;
+}
+
+.letter p:last-child { margin-bottom: 0; }
+
+.letter strong {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.letter em {
+  font-style: italic;
+  color: var(--text);
+}
+
+/* PULL QUOTE */
+.pull-quote {
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 32px 36px;
+  margin: 36px 0;
+  position: relative;
+}
+
+.pull-quote::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  color: rgba(201,168,76,0.15);
+  position: absolute;
+  top: -10px;
+  left: 28px;
+  line-height: 1;
+}
+
+.pull-quote p {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: #f0eee8;
+  line-height: 1.7;
+  font-style: italic;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
+.pull-quote p strong {
+  font-style: normal;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* OUTCOME BOX */
+.outcome-box {
+  background: var(--gold-bg);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 4px;
+  padding: 32px 36px;
+  margin: 36px 0;
+}
+
+.outcome-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a6e20;
+  font-weight: 700;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.outcome-eyebrow::before {
+  content: '★';
+  color: var(--gold);
+  font-size: 0.8rem;
+}
+
+.outcome-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+  line-height: 1.35;
+}
+
+.outcome-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.outcome-list li {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  color: #3a3020;
+  line-height: 1.6;
+}
+
+.outcome-marker {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* GIFT BOX */
+.gift-box {
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 32px 36px;
+  margin: 36px 0;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.gift-icon-wrap {
+  flex-shrink: 0;
+}
+
+.gift-icon {
+  font-size: 2.4rem;
+  display: block;
+  line-height: 1;
+}
+
+.gift-content {}
+
+.gift-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.gift-body {
+  font-size: 0.88rem;
+  color: #9ba3b8;
+  line-height: 1.75;
+}
+
+.gift-body strong {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.gift-value {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gift-value-strike {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: rgba(155,163,184,0.4);
+  text-decoration: line-through;
+}
+
+.gift-value-free {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.gift-value-label {
+  font-size: 0.7rem;
+  color: #6b7290;
+  letter-spacing: 0.08em;
+}
+
+/* PERMISSION SECTION */
+.permission {
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  padding: 32px 36px;
+  margin: 36px 0;
+  background: var(--gold-bg);
+  text-align: center;
+}
+
+.permission-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 16px;
+  line-height: 1.35;
+}
+
+.permission-body {
+  font-size: 0.9rem;
+  color: #5a4a20;
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto 24px;
+}
+
+.permission-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.6;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 4px;
+  border-left: 3px solid var(--gold);
+  text-align: left;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* CLOSING */
+.closing {
+  padding: 0 0 12px;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.9;
+}
+
+.closing p { margin-bottom: 16px; }
+.closing p:last-child { margin-bottom: 0; }
+
+.signature {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.sig-left {}
+
+.sig-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.sig-title {
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.sig-right {
+  text-align: right;
+}
+
+.sig-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.sig-brand span { color: var(--gold); }
+
+.sig-tagline {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* FOOTER */
+.footer {
+  padding: 20px 64px;
+  border-top: 1px solid var(--border);
+  background: #f7f4ed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.footer-credit {
+  font-style: italic;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .header, .body { padding: 36px 28px; }
+  .header-from { display: none; }
+  .footer { padding: 16px 28px; flex-direction: column; gap: 8px; text-align: center; }
+  .signature { flex-direction: column; }
+  .sig-right { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="top-stripe"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-eyebrow">Before We Begin</div>
+    <h1 class="header-title">A note for you —<br><em>and why today matters.</em></h1>
+    <p class="header-sub">What this session is, what it's designed to do for you, and why I wanted you to have it — before we say a word.</p>
+
+    <div class="header-from">
+      <strong>Aidan Uttinger</strong>
+      Founder, Snyper Agency<br>
+      March 13, 2026
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- OPENING LETTER -->
+    <div class="letter">
+      <p>Before we begin —</p>
+
+      <p>Before we start, I want to be transparent with you about something — about <strong>what this session actually is, why I designed it, and why you're the first person I'm bringing it to.</strong></p>
+
+      <p>Over the course of a lifetime building businesses, advising founders, and watching remarkable people struggle to communicate what makes them extraordinary — I've developed a particular kind of sight. I can walk into almost any conversation about someone's work and within minutes, I can see the gap. <strong>The gap between what they're actually doing and what they're telling the world they do.</strong> Between their real value and their visible positioning. Between where they are and where they should be.</p>
+
+      <p>Most people in this gap don't even know they're in it. They're working incredibly hard, doing genuinely exceptional things — and getting a fraction of the recognition, the clients, and the fees they deserve. Not because the work isn't good enough. Because the story isn't right yet.</p>
+
+      <p>When I came across your work — <em>that gap jumped out at me immediately.</em></p>
+    </div>
+
+    <!-- PULL QUOTE -->
+    <div class="pull-quote">
+      <p>"What you do is not what you're calling yourself. And the distance between those two things is the distance between where you are now — and the practice you're actually capable of building."</p>
+    </div>
+
+    <div class="letter">
+      <p>This session is the result of what I've spent years distilling — a process for taking someone from invisible-in-their-category to <strong>the only person doing what they do, in the way they do it, for the people who need it most.</strong></p>
+
+      <p>It's a process I'm preparing to offer at <strong>$20,000 for the initial engagement</strong>, with ongoing retainer partnerships for clients who want to build the full infrastructure — the brand, the pipeline, the funnel, the automations — that turns the strategy into a sustainable business.</p>
+
+      <p>But today is not that conversation. Today is a gift.</p>
+    </div>
+
+    <!-- GIFT BOX -->
+    <div class="gift-box">
+      <div class="gift-icon-wrap">
+        <span class="gift-icon">🎁</span>
+      </div>
+      <div class="gift-content">
+        <div class="gift-title">Everything we cover today is yours. Unconditionally.</div>
+        <div class="gift-body">
+          I wanted you to be the first person to experience this journey — because of who you are, the work you're doing, and where I believe you're heading. Everything we uncover, build, and design in this session is yours to keep, use, and run with — <strong>regardless of whether we ever work together in any formal capacity.</strong><br><br>
+          There is no catch. There is no pitch at the end that you need to say yes to. What I'll share with you today has genuine value, and I'm giving it freely. If at the end of the conversation you feel like there's more you want to build together — we can talk about that. But that's entirely your call.
+        </div>
+        <div class="gift-value">
+          <span class="gift-value-strike">$20,000</span>
+          <span class="gift-value-free">Gifted to you</span>
+          <span class="gift-value-label">— no strings attached</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE INTENDED OUTCOME -->
+    <div class="outcome-box">
+      <div class="outcome-eyebrow">The Intended Outcome of Today's Session</div>
+      <div class="outcome-title">By the time we finish, here's exactly what I want you to walk away with:</div>
+      <ul class="outcome-list">
+        <li>
+          <div class="outcome-marker">1</div>
+          <span><strong>Complete clarity on your positioning</strong> — a category, a USP, and a way of talking about your work that immediately resonates with the decision-makers who have budget and urgency.</span>
+        </li>
+        <li>
+          <div class="outcome-marker">2</div>
+          <span><strong>A new website concept</strong> — designed around the right message, targeting the right buyers, making the case your current site isn't quite making yet.</span>
+        </li>
+        <li>
+          <div class="outcome-marker">3</div>
+          <span><strong>An interactive ROI tool</strong> — a lead magnet that lets any prospect see, in their own numbers, what's at risk in their integration and exactly what working with you would protect.</span>
+        </li>
+        <li>
+          <div class="outcome-marker">4</div>
+          <span><strong>A clear go-to-market strategy</strong> — a sequenced game plan for how you establish your practice in a category you can own, with the clients you actually want to work with.</span>
+        </li>
+        <li>
+          <div class="outcome-marker">5</div>
+          <span><strong>A summary document to take forward</strong> — everything captured, organized, and ready to act on. Yours to keep, regardless of what comes next.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- THE ASK -->
+    <div class="letter closing">
+      <p>Before we go any further, I want to ask you two things.</p>
+
+      <p>First — <strong>is there anything you'd like to add to that list?</strong> Any outcome you'd want to make sure today delivers for you that isn't captured above? This is your session. If there's something specific you're hoping to get clarity on, I want to know it now so we can make sure it's woven in.</p>
+
+      <p>And second — and this is the important one:</p>
+    </div>
+
+    <!-- PERMISSION -->
+    <div class="permission">
+      <div class="permission-title">Will you trust the process?</div>
+      <div class="permission-body">
+        What I'm about to take you through is something I've designed carefully — built on a lifetime of experience spotting what others miss. Some of the questions will go deeper than you expect. Some of what I'll show you at the end will surprise you. All of it is designed to serve you.<br><br>
+        The only thing I need from you is to be open. To follow where the conversation goes. And to allow yourself, just for today, <strong>to be open to a miracle.</strong>
+      </div>
+      <div class="permission-question">
+        "If I can promise you that everything we do today is genuinely in service of your highest potential — and that you leave with something real, regardless of anything else — are you willing to trust the process and let the magic unfold?"
+      </div>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="letter closing">
+      <p>This is what I've spent a lifetime building towards — the ability to see what others can't, and to help extraordinary people become visible in the way they deserve to be. You are exactly the kind of person this was made for.</p>
+      <p>I'm genuinely excited for you to experience what comes next.</p>
+      <p>Let's begin.</p>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="signature">
+      <div class="sig-left">
+        <div class="sig-name">Aidan Uttinger</div>
+        <div class="sig-title">Founder, Snyper Agency · Positioning Strategist · Perpetual Dot-Connector</div>
+      </div>
+      <div class="sig-right">
+        <div class="sig-brand">Snyper <span>Agency</span></div>
+        <div class="sig-tagline">Pay only for results.</div>
+      </div>
+    </div>
+
+  </div><!-- /body -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Prepared exclusively for Amy Birks · March 13, 2026</span>
+    <span class="footer-credit">Created with love by Snyper Agency</span>
+  </div>
+
+</div><!-- /page -->
+
+</body>
+</html>

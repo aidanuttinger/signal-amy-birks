@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integration Risk Calculator — Amy Birks</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #080c18;
+  --navy-mid: #0f1525;
+  --navy-panel: #141c2e;
+  --navy-card: #1a2236;
+  --navy-border: #1e2a40;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --gold-glow: rgba(201,168,76,0.15);
+  --red: #e05252;
+  --red-dim: rgba(224,82,82,0.15);
+  --green: #4caf7d;
+  --green-dim: rgba(76,175,125,0.15);
+  --amber: #e09a3c;
+  --white: #f0eee8;
+  --grey: #8a94aa;
+  --text: #c8cdd8;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* TOP BAR */
+.topbar {
+  background: var(--navy-mid);
+  border-bottom: 1px solid var(--navy-border);
+  padding: 14px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.brand-name span { color: var(--gold); }
+
+.brand-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  padding: 3px 10px;
+  border: 1px solid var(--navy-border);
+  border-radius: 20px;
+}
+
+.topbar-status {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.72rem;
+  color: var(--grey);
+}
+
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  display: inline-block;
+  margin-right: 6px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* HERO BAND */
+.hero-band {
+  background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-panel) 100%);
+  border-bottom: 1px solid var(--navy-border);
+  padding: 48px 40px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-band::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 300px;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.hero-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  color: var(--white);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero-headline em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 0.9rem;
+  color: var(--grey);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.75;
+}
+
+/* MAIN LAYOUT */
+.main {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 0;
+  min-height: calc(100vh - 160px);
+}
+
+/* LEFT: INPUTS */
+.inputs-panel {
+  background: var(--navy-panel);
+  border-right: 1px solid var(--navy-border);
+  padding: 32px 28px;
+  position: sticky;
+  top: 0;
+  height: fit-content;
+}
+
+.panel-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--navy-border);
+}
+
+.input-group {
+  margin-bottom: 28px;
+}
+
+.input-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.input-label-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.input-label-hint {
+  font-size: 0.7rem;
+  color: var(--grey);
+  line-height: 1.3;
+}
+
+.input-value-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold);
+  text-align: right;
+}
+
+/* SLIDER */
+.slider-wrap {
+  position: relative;
+  padding: 4px 0;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--navy-border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  transition: box-shadow 0.2s;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 20px rgba(201,168,76,0.8);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gold);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 12px rgba(201,168,76,0.5);
+}
+
+.slider-track {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  height: 4px;
+  background: var(--gold);
+  border-radius: 2px;
+  pointer-events: none;
+  transition: width 0.1s;
+}
+
+.slider-range {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-size: 0.65rem;
+  color: var(--grey);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* TOGGLE */
+.toggle-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.toggle-btn {
+  flex: 1;
+  min-width: 70px;
+  padding: 8px 12px;
+  background: var(--navy);
+  border: 1px solid var(--navy-border);
+  color: var(--grey);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s;
+  text-align: center;
+}
+
+.toggle-btn.active {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* DIVIDER */
+.input-divider {
+  border: none;
+  border-top: 1px solid var(--navy-border);
+  margin: 24px 0;
+}
+
+/* RIGHT: RESULTS */
+.results-panel {
+  padding: 32px 36px;
+  background: var(--navy);
+}
+
+/* RISK SCORE */
+.risk-score-section {
+  background: var(--navy-panel);
+  border: 1px solid var(--navy-border);
+  border-radius: 6px;
+  padding: 32px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.gauge-wrap {
+  position: relative;
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.gauge-label-top {
+  text-align: center;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 8px;
+}
+
+.gauge-svg {
+  width: 160px;
+  height: 100px;
+  display: block;
+}
+
+.gauge-score-text {
+  text-align: center;
+  margin-top: -10px;
+}
+
+.gauge-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+  line-height: 1;
+}
+
+.gauge-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 4px;
+}
+
+.risk-info {
+  flex: 1;
+}
+
+.risk-category {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.risk-description {
+  font-size: 0.85rem;
+  color: var(--grey);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  max-width: 460px;
+}
+
+.risk-factors {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.risk-factor {
+  font-size: 0.68rem;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.rf-high { background: var(--red-dim); color: var(--red); border: 1px solid rgba(224,82,82,0.3); }
+.rf-med { background: rgba(224,154,60,0.12); color: var(--amber); border: 1px solid rgba(224,154,60,0.3); }
+.rf-low { background: var(--green-dim); color: var(--green); border: 1px solid rgba(76,175,125,0.3); }
+
+/* METRICS GRID */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.metric-card:hover { border-color: rgba(201,168,76,0.3); }
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+
+.metric-card.red::before { background: linear-gradient(90deg, var(--red), transparent); }
+.metric-card.amber::before { background: linear-gradient(90deg, var(--amber), transparent); }
+.metric-card.gold::before { background: linear-gradient(90deg, var(--gold), transparent); }
+
+.metric-icon {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.metric-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.metric-value.animating { color: var(--gold); }
+
+.metric-sub {
+  font-size: 0.72rem;
+  color: var(--grey);
+  line-height: 1.4;
+}
+
+/* TOTAL EXPOSURE */
+.total-exposure {
+  background: var(--navy-panel);
+  border: 1px solid var(--navy-border);
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+
+.exposure-left {}
+.exposure-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 8px;
+}
+
+.exposure-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--white);
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.exposure-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(30,42,64,0.8);
+}
+
+.breakdown-row:last-child { border-bottom: none; }
+
+.breakdown-label { color: var(--grey); }
+.breakdown-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.84rem;
+  color: var(--red);
+  font-weight: 600;
+}
+
+.breakdown-bar-wrap {
+  width: 80px;
+  height: 3px;
+  background: var(--navy-border);
+  border-radius: 2px;
+  margin-left: 12px;
+  overflow: hidden;
+}
+
+.breakdown-bar {
+  height: 100%;
+  background: var(--red);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.breakdown-row-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.exposure-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.total-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 8px;
+}
+
+.total-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 6px;
+  transition: color 0.3s;
+}
+
+.total-sub {
+  font-size: 0.72rem;
+  color: var(--grey);
+  line-height: 1.4;
+}
+
+/* ROI SECTION */
+.roi-section {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.03));
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 6px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+
+.roi-left {}
+
+.roi-eyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.roi-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--white);
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.roi-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.roi-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.roi-row:last-child { border-bottom: none; }
+.roi-label { color: var(--grey); }
+.roi-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.84rem;
+}
+
+.roi-val.green { color: var(--green); }
+.roi-val.gold { color: var(--gold); }
+.roi-val.dim { color: var(--grey); }
+
+.roi-right {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.roi-multiplier-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.roi-multiplier {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.roi-x {
+  font-size: 1rem;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.roi-note {
+  font-size: 0.68rem;
+  color: var(--grey);
+  max-width: 120px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* INSIGHT STRIP */
+.insight-strip {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.insight-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.insight-text {
+  font-size: 0.85rem;
+  color: var(--grey);
+  line-height: 1.7;
+}
+
+.insight-text strong { color: var(--white); }
+
+/* CTA SECTION */
+.cta-section {
+  background: var(--navy-panel);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px;
+  padding: 32px;
+  text-align: center;
+}
+
+.cta-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.cta-sub {
+  font-size: 0.87rem;
+  color: var(--grey);
+  margin-bottom: 28px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.75;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: var(--navy);
+  padding: 14px 32px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--gold);
+  padding: 14px 32px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(201,168,76,0.4);
+  cursor: pointer;
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover { border-color: var(--gold); background: var(--gold-glow); }
+
+/* STATS FOOTNOTE */
+.stats-note {
+  margin-top: 48px;
+  padding: 20px 24px;
+  background: var(--navy-panel);
+  border-radius: 6px;
+  border: 1px solid var(--navy-border);
+}
+
+.stats-note-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 12px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stat-item {}
+
+.stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-desc {
+  font-size: 0.72rem;
+  color: var(--grey);
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* FOOTER */
+.calc-footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--navy-border);
+  font-size: 0.72rem;
+  color: var(--grey);
+}
+
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  color: var(--white);
+}
+
+.footer-brand span { color: var(--gold); }
+
+/* ANIMATED NUMBER */
+@keyframes countUp {
+  from { opacity: 0.6; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.updating {
+  animation: countUp 0.3s ease;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1100px) {
+  .main { grid-template-columns: 1fr; }
+  .inputs-panel { position: relative; border-right: none; border-bottom: 1px solid var(--navy-border); }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .topbar, .hero-band, .results-panel, .inputs-panel { padding-left: 20px; padding-right: 20px; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .total-exposure, .roi-section { grid-template-columns: 1fr; gap: 20px; }
+  .risk-score-section { grid-template-columns: 1fr; gap: 20px; }
+  .gauge-wrap { margin: 0 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-name">Amy <span>Birks</span></div>
+    <div class="brand-tag">Integration Risk Intelligence</div>
+  </div>
+  <div class="topbar-status">
+    <span><span class="status-dot"></span>Live Calculator</span>
+    <span style="color: var(--navy-border);">|</span>
+    <span>Based on peer-reviewed M&A research</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero-band">
+  <div class="hero-eyebrow">Integration Risk Intelligence · Deal Thesis Protector</div>
+  <h1 class="hero-headline">What is your integration plan <em>actually</em> costing you?</h1>
+  <p class="hero-sub">Enter your deal parameters below. See the real financial risk hiding inside your integration — and what it would cost to address it before it costs you everything else.</p>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main">
+
+  <!-- INPUT PANEL -->
+  <div class="inputs-panel">
+    <div class="panel-title">Your Deal Parameters</div>
+
+    <!-- Deal Value -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Deal / Acquisition Value</div>
+          <div class="input-label-hint">Total transaction value</div>
+        </div>
+        <div class="input-value-display" id="display-deal">$250M</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="slider-deal" min="10" max="5000" value="250" step="10">
+      </div>
+      <div class="slider-range"><span>$10M</span><span>$5B</span></div>
+    </div>
+
+    <!-- Expected Synergies -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Expected Synergies</div>
+          <div class="input-label-hint">Annual run-rate once realized</div>
+        </div>
+        <div class="input-value-display" id="display-synergies">$35M</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="slider-synergies" min="1" max="500" value="35" step="1">
+      </div>
+      <div class="slider-range"><span>$1M</span><span>$500M</span></div>
+    </div>
+
+    <!-- Employees -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Employees Being Integrated</div>
+          <div class="input-label-hint">Total headcount across both orgs</div>
+        </div>
+        <div class="input-value-display" id="display-employees">750</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="slider-employees" min="50" max="10000" value="750" step="50">
+      </div>
+      <div class="slider-range"><span>50</span><span>10,000</span></div>
+    </div>
+
+    <!-- Average Salary -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Average Salary</div>
+          <div class="input-label-hint">Blended across integrated workforce</div>
+        </div>
+        <div class="input-value-display" id="display-salary">$95K</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="slider-salary" min="40" max="300" value="95" step="5">
+      </div>
+      <div class="slider-range"><span>$40K</span><span>$300K</span></div>
+    </div>
+
+    <!-- Integration Timeline -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Integration Timeline</div>
+          <div class="input-label-hint">Planned months to full integration</div>
+        </div>
+        <div class="input-value-display" id="display-timeline">18 mo</div>
+      </div>
+      <div class="slider-wrap">
+        <input type="range" id="slider-timeline" min="6" max="48" value="18" step="3">
+      </div>
+      <div class="slider-range"><span>6 mo</span><span>48 mo</span></div>
+    </div>
+
+    <hr class="input-divider">
+
+    <!-- Cross-border complexity -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Cross-Border Complexity</div>
+          <div class="input-label-hint">Number of countries involved</div>
+        </div>
+      </div>
+      <div class="toggle-group">
+        <button class="toggle-btn" data-key="countries" data-val="1" onclick="setToggle(this, 'countries', 1)">1</button>
+        <button class="toggle-btn active" data-key="countries" data-val="2" onclick="setToggle(this, 'countries', 2)">2–3</button>
+        <button class="toggle-btn" data-key="countries" data-val="4" onclick="setToggle(this, 'countries', 4)">4–6</button>
+        <button class="toggle-btn" data-key="countries" data-val="7" onclick="setToggle(this, 'countries', 7)">7+</button>
+      </div>
+    </div>
+
+    <!-- Leadership Alignment -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Pre-Close Leadership Alignment</div>
+          <div class="input-label-hint">How aligned are senior teams today?</div>
+        </div>
+      </div>
+      <div class="toggle-group">
+        <button class="toggle-btn" data-key="alignment" data-val="high" onclick="setToggle(this, 'alignment', 'high')">Strong</button>
+        <button class="toggle-btn active" data-key="alignment" data-val="medium" onclick="setToggle(this, 'alignment', 'medium')">Mixed</button>
+        <button class="toggle-btn" data-key="alignment" data-val="low" onclick="setToggle(this, 'alignment', 'low')">Fragile</button>
+      </div>
+    </div>
+
+    <!-- Prior Integration Experience -->
+    <div class="input-group">
+      <div class="input-label">
+        <div>
+          <div class="input-label-text">Prior Integration Experience</div>
+          <div class="input-label-hint">Does the acquiring team have history?</div>
+        </div>
+      </div>
+      <div class="toggle-group">
+        <button class="toggle-btn" data-key="experience" data-val="high" onclick="setToggle(this, 'experience', 'high')">Experienced</button>
+        <button class="toggle-btn active" data-key="experience" data-val="medium" onclick="setToggle(this, 'experience', 'medium')">Some</button>
+        <button class="toggle-btn" data-key="experience" data-val="low" onclick="setToggle(this, 'experience', 'low')">First M&A</button>
+      </div>
+    </div>
+
+  </div><!-- /inputs-panel -->
+
+  <!-- RESULTS PANEL -->
+  <div class="results-panel">
+
+    <!-- RISK SCORE GAUGE -->
+    <div class="risk-score-section">
+      <div class="gauge-wrap">
+        <div class="gauge-label-top">Integration Risk Score</div>
+        <svg class="gauge-svg" viewBox="0 0 160 100" id="gauge-svg">
+          <!-- Background arc -->
+          <path d="M 20 90 A 70 70 0 0 1 140 90" fill="none" stroke="#1e2a40" stroke-width="10" stroke-linecap="round"/>
+          <!-- Risk zones (color bands) -->
+          <path d="M 20 90 A 70 70 0 0 1 57 27" fill="none" stroke="rgba(76,175,125,0.3)" stroke-width="10" stroke-linecap="round"/>
+          <path d="M 57 27 A 70 70 0 0 1 103 27" fill="none" stroke="rgba(224,154,60,0.3)" stroke-width="10"/>
+          <path d="M 103 27 A 70 70 0 0 1 140 90" fill="none" stroke="rgba(224,82,82,0.3)" stroke-width="10" stroke-linecap="round"/>
+          <!-- Active arc -->
+          <path id="gauge-arc" d="M 20 90 A 70 70 0 0 1 20 90" fill="none" stroke="#e05252" stroke-width="10" stroke-linecap="round"/>
+          <!-- Needle -->
+          <line id="gauge-needle" x1="80" y1="90" x2="80" y2="28" stroke="var(--white)" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="80" cy="90" r="5" fill="var(--navy-panel)" stroke="var(--white)" stroke-width="1.5"/>
+        </svg>
+        <div class="gauge-score-text">
+          <span class="gauge-number" id="gauge-score">72</span>
+          <span class="gauge-label" id="gauge-risk-label" style="color: var(--red);">HIGH RISK</span>
+        </div>
+      </div>
+
+      <div class="risk-info">
+        <div class="risk-category" id="risk-category">Significant Exposure</div>
+        <div class="risk-description" id="risk-description">
+          Your integration presents significant human dynamics risk. Multiple factors — deal scale, workforce size, and cross-border complexity — create compounding failure vectors that most integration plans don't account for.
+        </div>
+        <div class="risk-factors" id="risk-factors">
+          <span class="risk-factor rf-high">Talent Attrition</span>
+          <span class="risk-factor rf-high">Synergy Delay</span>
+          <span class="risk-factor rf-med">Leadership Misalignment</span>
+          <span class="risk-factor rf-med">Communication Risk</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS GRID -->
+    <div class="metrics-grid">
+      <div class="metric-card red">
+        <span class="metric-icon">🏃</span>
+        <div class="metric-label">Talent Attrition Cost<br>(24-month projection)</div>
+        <div class="metric-value" id="metric-attrition">$0</div>
+        <div class="metric-sub" id="metric-attrition-sub">Employees projected to exit</div>
+      </div>
+      <div class="metric-card amber">
+        <span class="metric-icon">⏱️</span>
+        <div class="metric-label">Synergy Delay Cost<br>(per month of delay)</div>
+        <div class="metric-value" id="metric-synergy-delay">$0</div>
+        <div class="metric-sub" id="metric-synergy-sub">Avg delay: 2× planned timeline</div>
+      </div>
+      <div class="metric-card amber">
+        <span class="metric-icon">📉</span>
+        <div class="metric-label">Productivity Loss<br>(integration period)</div>
+        <div class="metric-value" id="metric-productivity">$0</div>
+        <div class="metric-sub">~25% decline during active integration</div>
+      </div>
+      <div class="metric-card red">
+        <span class="metric-icon">🔁</span>
+        <div class="metric-label">Synergy Realization<br>Shortfall</div>
+        <div class="metric-value" id="metric-synergy-miss">$0</div>
+        <div class="metric-sub">Industry avg: 40% of synergies realized in year 1</div>
+      </div>
+      <div class="metric-card gold">
+        <span class="metric-icon">⚡</span>
+        <div class="metric-label">Leadership Misalignment<br>Execution Cost</div>
+        <div class="metric-value" id="metric-leadership">$0</div>
+        <div class="metric-sub">5–8% deal value in rework & delays</div>
+      </div>
+      <div class="metric-card gold">
+        <span class="metric-icon">📡</span>
+        <div class="metric-label">Communication Failure<br>Estimated Cost</div>
+        <div class="metric-value" id="metric-comms">$0</div>
+        <div class="metric-sub">Misaligned messaging amplifies fear response</div>
+      </div>
+    </div>
+
+    <!-- TOTAL EXPOSURE -->
+    <div class="total-exposure">
+      <div class="exposure-left">
+        <div class="exposure-eyebrow">Integration Risk Breakdown</div>
+        <div class="exposure-headline">Where your deal value is being quietly destroyed</div>
+        <div class="exposure-breakdown" id="breakdown-rows">
+          <!-- populated by JS -->
+        </div>
+      </div>
+      <div class="exposure-right">
+        <div class="total-label">Total Value at Risk</div>
+        <div class="total-number" id="total-exposure">$0</div>
+        <div class="total-sub" id="total-pct-deal">— % of deal value</div>
+        <div style="margin-top: 12px; font-size: 0.7rem; color: var(--grey); max-width: 180px; line-height: 1.5; text-align: right;">Conservative estimate. Actual exposure typically higher.</div>
+      </div>
+    </div>
+
+    <!-- ROI SECTION -->
+    <div class="roi-section">
+      <div class="roi-left">
+        <div class="roi-eyebrow">The Integration Intelligence Calculation</div>
+        <div class="roi-headline">What it costs to address this — vs. what it costs to ignore it</div>
+        <div class="roi-breakdown">
+          <div class="roi-row">
+            <span class="roi-label">Estimated value at risk (above)</span>
+            <span class="roi-val" id="roi-risk" style="color: var(--red);">$0</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">Integration Risk Assessment</span>
+            <span class="roi-val dim" id="roi-assessment">~$10K</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">Full Integration Intelligence engagement</span>
+            <span class="roi-val dim" id="roi-full-engagement">~$65K</span>
+          </div>
+          <div class="roi-row">
+            <span class="roi-label">Estimated value protected (conservative)</span>
+            <span class="roi-val green" id="roi-protected">$0</span>
+          </div>
+          <div class="roi-row" style="border-bottom:none;">
+            <span class="roi-label" style="color: var(--gold); font-weight: 600;">Net return on engagement</span>
+            <span class="roi-val gold" id="roi-net">$0</span>
+          </div>
+        </div>
+      </div>
+      <div class="roi-right">
+        <span class="roi-multiplier-label">Return Multiple</span>
+        <span class="roi-multiplier" id="roi-multiplier">0<span class="roi-x">×</span></span>
+        <div class="roi-note">estimated return on Amy's engagement fee</div>
+      </div>
+    </div>
+
+    <!-- INSIGHT -->
+    <div class="insight-strip" id="insight-strip">
+      <div class="insight-icon">💡</div>
+      <div class="insight-text" id="insight-text">
+        <strong>The critical window:</strong> The highest-leverage moment to address integration risk is <strong>before close</strong> — when leadership teams are still forming, communication norms haven't calcified, and fear hasn't yet distorted the first wave of decisions. A 30-day Integration Risk Assessment identifies exactly where your plan is most exposed.
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <div class="cta-headline">This isn't theoretical risk.<br>It's what's already in your plan.</div>
+      <div class="cta-sub">
+        These projections are based on peer-reviewed M&A research. Every number above represents value that integrations routinely lose — and that Amy's methodology is specifically designed to protect. A conversation costs nothing. The alternative might cost everything.
+      </div>
+      <div class="cta-actions">
+        <a href="https://amybirks.com" class="btn-gold">Request Your Risk Assessment</a>
+        <a href="https://amybirks.com" class="btn-outline">See How It Works</a>
+      </div>
+    </div>
+
+    <!-- STATS FOOTNOTE -->
+    <div class="stats-note">
+      <div class="stats-note-title">Research Sources</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-num">70–90%</span>
+          <div class="stat-desc">of M&A deals fail to deliver expected shareholder value<br><em style="font-size:0.65rem; color:#5a6070;">McKinsey & KPMG</em></div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">35–47%</span>
+          <div class="stat-desc">average talent attrition during the first 24 months post-close<br><em style="font-size:0.65rem; color:#5a6070;">Mercer / Aon Hewitt</em></div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">2×</span>
+          <div class="stat-desc">longer than planned for synergies to reach projected run-rate<br><em style="font-size:0.65rem; color:#5a6070;">Deloitte M&A Survey</em></div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">#1</span>
+          <div class="stat-desc">cause of integration failure cited by CEOs: people and culture issues<br><em style="font-size:0.65rem; color:#5a6070;">Harvard Business Review</em></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="calc-footer">
+      <div class="footer-brand">Amy <span>Birks</span> · Integration Risk Intelligence</div>
+      <div>Projections are conservative estimates based on industry research. Actual risk varies by engagement context.<br><span style="font-size:0.65rem; opacity:0.5;">Created with love by Snyper Agency for Amy Birks</span></div>
+    </div>
+
+  </div><!-- /results-panel -->
+</div><!-- /main -->
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  deal: 250,        // $M
+  synergies: 35,    // $M
+  employees: 750,
+  salary: 95,       // $K
+  timeline: 18,     // months
+  countries: 2,     // multiplier tier
+  alignment: 'medium',
+  experience: 'medium'
+};
+
+// ============================================================
+// FORMATTERS
+// ============================================================
+function fmtM(n) {
+  if (n >= 1000) return '$' + (n/1000).toFixed(1) + 'B';
+  if (n >= 100) return '$' + Math.round(n) + 'M';
+  if (n >= 10) return '$' + n.toFixed(1) + 'M';
+  return '$' + n.toFixed(1) + 'M';
+}
+
+function fmtK(n) {
+  if (n >= 1000) return '$' + (n/1000).toFixed(1) + 'B';
+  if (n >= 100) return '$' + Math.round(n/1000) + 'M';
+  return '$' + Math.round(n) + 'K';
+}
+
+function fmtNum(n) {
+  return n.toLocaleString();
+}
+
+// ============================================================
+// RISK SCORE CALCULATION
+// ============================================================
+function calcRiskScore() {
+  let score = 0;
+
+  // Deal scale (0-20)
+  if (state.deal > 1000) score += 20;
+  else if (state.deal > 500) score += 16;
+  else if (state.deal > 200) score += 12;
+  else if (state.deal > 50) score += 8;
+  else score += 4;
+
+  // Employee count (0-20)
+  if (state.employees > 5000) score += 20;
+  else if (state.employees > 2000) score += 16;
+  else if (state.employees > 1000) score += 12;
+  else if (state.employees > 500) score += 8;
+  else score += 4;
+
+  // Cross-border (0-20)
+  if (state.countries >= 7) score += 20;
+  else if (state.countries >= 4) score += 16;
+  else if (state.countries >= 2) score += 10;
+  else score += 4;
+
+  // Leadership alignment (0-20)
+  if (state.alignment === 'low') score += 20;
+  else if (state.alignment === 'medium') score += 12;
+  else score += 4;
+
+  // Integration experience (0-20)
+  if (state.experience === 'low') score += 18;
+  else if (state.experience === 'medium') score += 10;
+  else score += 3;
+
+  return Math.min(score, 100);
+}
+
+// ============================================================
+// FINANCIAL CALCULATIONS
+// ============================================================
+function calcFinancials() {
+  const dealM = state.deal;
+  const synM = state.synergies;
+  const emp = state.employees;
+  const salK = state.salary;
+  const months = state.timeline;
+
+  // Multipliers from qualitative inputs
+  const countryMult = state.countries >= 7 ? 1.4 : state.countries >= 4 ? 1.25 : state.countries >= 2 ? 1.1 : 1.0;
+  const alignMult = state.alignment === 'low' ? 1.35 : state.alignment === 'medium' ? 1.15 : 0.9;
+  const expMult = state.experience === 'low' ? 1.25 : state.experience === 'medium' ? 1.1 : 0.85;
+  const totalMult = countryMult * alignMult * expMult;
+
+  // 1. Talent Attrition (35% of workforce over 24 months, avg 1.5x salary to replace)
+  const attritionRate = Math.min(0.35 * totalMult, 0.65);
+  const attritionCount = Math.round(emp * attritionRate);
+  const attritionCostM = (attritionCount * salK * 1000 * 1.5) / 1e6;
+
+  // 2. Synergy delay (industry avg: synergies take 2x planned timeline)
+  // Cost = synergies/12 × additional months delayed
+  const delayMonths = months * 0.8 * (totalMult > 1.2 ? 1.2 : 1.0);
+  const synergyDelayM = (synM / 12) * delayMonths;
+
+  // 3. Synergy realization shortfall (60% of yr-1 synergies typically missed)
+  const shortfallPct = Math.min(0.60 * totalMult, 0.80);
+  const synergyMissM = synM * shortfallPct;
+
+  // 4. Productivity loss (25% decline during integration period)
+  const productivityDropPct = 0.25 * (totalMult > 1.3 ? 1.2 : 1.0);
+  const productiveLossM = (emp * salK * 1000 * productivityDropPct * (months/12)) / 1e6;
+
+  // 5. Leadership misalignment (5% of deal value)
+  const leadershipPct = 0.05 * alignMult;
+  const leadershipM = dealM * leadershipPct;
+
+  // 6. Communication failure (1.5% of deal value)
+  const commsPct = 0.015 * countryMult;
+  const commsM = dealM * commsPct;
+
+  // TOTAL
+  const totalM = attritionCostM + synergyDelayM + synergyMissM + productiveLossM + leadershipM + commsM;
+
+  // AMY'S FEES (scaled by deal size)
+  let assessmentK = 10;
+  let fullEngK = 65;
+  if (dealM > 1000) { assessmentK = 20; fullEngK = 180; }
+  else if (dealM > 500) { assessmentK = 15; fullEngK = 120; }
+  else if (dealM > 100) { assessmentK = 12; fullEngK = 85; }
+
+  // Value protected (conservative: 40% of total risk)
+  const protectedM = totalM * 0.40;
+  const netReturnM = protectedM - (fullEngK / 1000);
+  const roiMultiplier = Math.round(protectedM / (fullEngK / 1000));
+
+  return {
+    attritionCostM, attritionCount, attritionRate,
+    synergyDelayM, delayMonths,
+    synergyMissM, shortfallPct,
+    productiveLossM,
+    leadershipM,
+    commsM,
+    totalM,
+    assessmentK, fullEngK,
+    protectedM, netReturnM, roiMultiplier
+  };
+}
+
+// ============================================================
+// GAUGE UPDATE
+// ============================================================
+function updateGauge(score) {
+  const svg = document.getElementById('gauge-svg');
+  const arc = document.getElementById('gauge-arc');
+  const needle = document.getElementById('gauge-needle');
+  const scoreEl = document.getElementById('gauge-score');
+  const labelEl = document.getElementById('gauge-risk-label');
+
+  // Arc path from 20,90 sweeping 180deg based on score
+  const angle = (score / 100) * 180; // 0-180 degrees
+  const rad = (angle - 180) * Math.PI / 180;
+  const cx = 80, cy = 90, r = 70;
+  const ex = cx + r * Math.cos(rad);
+  const ey = cy + r * Math.sin(rad);
+  const largeArc = angle > 180 ? 1 : 0;
+  arc.setAttribute('d', `M 20 90 A 70 70 0 ${largeArc} 1 ${ex.toFixed(1)} ${ey.toFixed(1)}`);
+
+  // Needle
+  const needleRad = (angle - 180) * Math.PI / 180;
+  const nx = cx + 62 * Math.cos(needleRad);
+  const ny = cy + 62 * Math.sin(needleRad);
+  needle.setAttribute('x2', nx.toFixed(1));
+  needle.setAttribute('y2', ny.toFixed(1));
+
+  // Color
+  let color, label, category;
+  if (score < 35) {
+    color = 'var(--green)'; label = 'LOW RISK'; category = 'Manageable Exposure';
+  } else if (score < 55) {
+    color = 'var(--amber)'; label = 'MODERATE'; category = 'Elevated Exposure';
+  } else if (score < 75) {
+    color = 'var(--red)'; label = 'HIGH RISK'; category = 'Significant Exposure';
+  } else {
+    color = '#e02020'; label = 'CRITICAL'; category = 'Critical Exposure';
+  }
+
+  arc.setAttribute('stroke', color);
+  scoreEl.textContent = score;
+  scoreEl.style.color = color;
+  labelEl.textContent = label;
+  labelEl.style.color = color;
+
+  document.getElementById('risk-category').textContent = category;
+
+  // Risk factors
+  const factors = document.getElementById('risk-factors');
+  const descriptions = {
+    low: "Your integration profile shows below-average risk. Maintaining proactive human dynamics oversight will help protect the timeline and synergy case.",
+    moderate: "Several risk factors could quietly compound during integration. Proactive human dynamics work now is significantly cheaper than reactive fixes later.",
+    high: "Multiple compounding risk factors are present. This profile is consistent with integrations that miss synergy targets and experience meaningful talent loss.",
+    critical: "This integration presents critical human dynamics risk across multiple dimensions. The probability of significant value leakage without intervention is very high."
+  };
+
+  const d = document.getElementById('risk-description');
+  if (score < 35) d.textContent = descriptions.low;
+  else if (score < 55) d.textContent = descriptions.moderate;
+  else if (score < 75) d.textContent = descriptions.high;
+  else d.textContent = descriptions.critical;
+
+  // Factor tags
+  const f = calcRiskFactors(score);
+  factors.innerHTML = f.map(x =>
+    `<span class="risk-factor rf-${x.level}">${x.label}</span>`
+  ).join('');
+}
+
+function calcRiskFactors(score) {
+  const f = [];
+  if (state.employees > 500) f.push({label:'Talent Attrition', level: state.employees > 2000 ? 'high' : 'med'});
+  if (state.synergies > 10) f.push({label:'Synergy Delay', level: score > 60 ? 'high' : 'med'});
+  f.push({label:'Leadership Alignment', level: state.alignment === 'low' ? 'high' : state.alignment === 'medium' ? 'med' : 'low'});
+  if (state.countries >= 4) f.push({label:'Cross-Border Risk', level: state.countries >= 7 ? 'high' : 'med'});
+  else if (state.countries >= 2) f.push({label:'Multi-Country', level: 'med'});
+  f.push({label:'Communication Risk', level: score > 65 ? 'high' : 'med'});
+  if (state.experience === 'low') f.push({label:'First Integration', level: 'high'});
+  return f.slice(0, 5);
+}
+
+// ============================================================
+// ANIMATED COUNTER
+// ============================================================
+function animateValue(el, newVal, formatter) {
+  el.classList.add('updating');
+  setTimeout(() => { el.textContent = formatter(newVal); el.classList.remove('updating'); }, 150);
+}
+
+// ============================================================
+// MAIN UPDATE
+// ============================================================
+function update() {
+  const score = calcRiskScore();
+  const fin = calcFinancials();
+
+  updateGauge(score);
+
+  // Metrics
+  animateValue(document.getElementById('metric-attrition'), fin.attritionCostM, fmtM);
+  document.getElementById('metric-attrition-sub').textContent =
+    `~${fin.attritionCount} employees projected to exit (${Math.round(fin.attritionRate*100)}%)`;
+
+  animateValue(document.getElementById('metric-synergy-delay'), fin.synergyDelayM, fmtM);
+  document.getElementById('metric-synergy-sub').textContent =
+    `~${Math.round(fin.delayMonths)} months avg delay on $${state.synergies}M synergy target`;
+
+  animateValue(document.getElementById('metric-productivity'), fin.productiveLossM, fmtM);
+  animateValue(document.getElementById('metric-synergy-miss'), fin.synergyMissM, fmtM);
+  animateValue(document.getElementById('metric-leadership'), fin.leadershipM, fmtM);
+  animateValue(document.getElementById('metric-comms'), fin.commsM, fmtM);
+
+  // Breakdown rows
+  const breakdown = [
+    {label: 'Talent attrition & replacement', val: fin.attritionCostM},
+    {label: 'Synergy realization shortfall', val: fin.synergyMissM},
+    {label: 'Synergy timeline delay cost', val: fin.synergyDelayM},
+    {label: 'Productivity loss (integration period)', val: fin.productiveLossM},
+    {label: 'Leadership misalignment & rework', val: fin.leadershipM},
+    {label: 'Communication failure amplification', val: fin.commsM},
+  ];
+
+  const maxVal = Math.max(...breakdown.map(b => b.val));
+  const rowsEl = document.getElementById('breakdown-rows');
+  rowsEl.innerHTML = breakdown.map(b => `
+    <div class="breakdown-row">
+      <span class="breakdown-label">${b.label}</span>
+      <div class="breakdown-row-inner">
+        <span class="breakdown-val">${fmtM(b.val)}</span>
+        <div class="breakdown-bar-wrap">
+          <div class="breakdown-bar" style="width:${Math.round((b.val/maxVal)*100)}%"></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Total
+  animateValue(document.getElementById('total-exposure'), fin.totalM, fmtM);
+  document.getElementById('total-pct-deal').textContent =
+    `${(fin.totalM / state.deal * 100).toFixed(1)}% of deal value at risk`;
+
+  // ROI
+  document.getElementById('roi-risk').textContent = fmtM(fin.totalM);
+  document.getElementById('roi-assessment').textContent = `~$${fin.assessmentK}K`;
+  document.getElementById('roi-full-engagement').textContent = `~$${fin.fullEngK}K`;
+  document.getElementById('roi-protected').textContent = fmtM(fin.protectedM);
+  document.getElementById('roi-net').textContent = fmtM(fin.netReturnM);
+  document.getElementById('roi-multiplier').innerHTML =
+    `${fin.roiMultiplier}<span class="roi-x">×</span>`;
+
+  // Insight
+  let insight = '';
+  if (score > 70) {
+    insight = `<strong>Critical window alert:</strong> With a risk score of ${score}/100, this integration is tracking toward a pattern consistent with deals that miss synergy targets by 40–60%. The most effective intervention point is <strong>before close</strong> — where Amy's methodology can reshape leadership dynamics, communication architecture, and cultural alignment before they calcify.`;
+  } else if (score > 50) {
+    insight = `<strong>Pre-close advantage:</strong> The compounding effect of unaddressed human dynamics grows exponentially after close. Addressing the identified risk factors now — while the organization is still forming — yields 3–4× the impact of the same investment made 6 months post-close.`;
+  } else {
+    insight = `<strong>Protect what's working:</strong> Lower baseline risk doesn't mean zero risk. Organizations that maintain proactive human dynamics oversight during integration consistently outperform those who react to problems after they surface. A 30-day Risk Assessment confirms where you're strong — and where to watch.`;
+  }
+  document.getElementById('insight-text').innerHTML = insight;
+}
+
+// ============================================================
+// SLIDER WIRING
+// ============================================================
+function wireSlider(id, stateKey, displayId, formatter) {
+  const el = document.getElementById(id);
+  const disp = document.getElementById(displayId);
+
+  el.addEventListener('input', function() {
+    state[stateKey] = parseFloat(this.value);
+    disp.textContent = formatter(parseFloat(this.value));
+    update();
+  });
+}
+
+wireSlider('slider-deal', 'deal', 'display-deal', v => fmtM(v));
+wireSlider('slider-synergies', 'synergies', 'display-synergies', v => fmtM(v));
+wireSlider('slider-employees', 'employees', 'display-employees', v => fmtNum(v));
+wireSlider('slider-salary', 'salary', 'display-salary', v => `$${v}K`);
+wireSlider('slider-timeline', 'timeline', 'display-timeline', v => `${v} mo`);
+
+// ============================================================
+// TOGGLE WIRING
+// ============================================================
+function setToggle(btn, key, val) {
+  document.querySelectorAll(`[data-key="${key}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  state[key] = val;
+  update();
+}
+
+// ============================================================
+// INIT
+// ============================================================
+update();
+</script>
+</body>
+</html>

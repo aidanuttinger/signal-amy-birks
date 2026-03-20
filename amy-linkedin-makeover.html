@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your LinkedIn Makeover — Amy Birks</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0b0f1e;--navy-mid:#141929;--navy-card:#1a2236;
+  --gold:#c9a84c;--gold-bg:#fffcf3;--gold-border:rgba(201,168,76,0.25);
+  --white:#fdfcf8;--warm:#f5f2eb;--text:#1a1a2e;--muted:#6b6b8a;--border:#e8e4da;
+  --red:#dc2626;--red-bg:#fef2f2;--green:#166534;--green-bg:#f0fdf4;
+}
+body{font-family:'Inter',sans-serif;background:var(--warm);color:var(--text);padding:0 0 80px}
+.top-stripe{height:4px;background:linear-gradient(90deg,var(--navy),var(--gold),var(--navy))}
+.page-header{background:var(--navy);padding:40px 60px;border-bottom:1px solid rgba(201,168,76,0.15)}
+.page-header-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.header-eyebrow{font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.header-eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
+.header-title{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;color:#f0eee8;line-height:1.2}
+.header-sub{font-size:.85rem;color:#8a94aa;margin-top:8px;max-width:480px;line-height:1.7}
+.header-badge{background:rgba(201,168,76,.1);border:1px solid var(--gold-border);border-radius:4px;padding:16px 24px;text-align:center;flex-shrink:0}
+.badge-text{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.badge-action{font-size:.82rem;color:#9ba3b8;margin-top:4px}
+
+.content{max-width:1100px;margin:0 auto;padding:40px 60px}
+
+.section-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);max-width:60px}
+
+/* COMPARISON COLUMNS */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+.compare-col{}
+.col-header{padding:14px 20px;border-radius:4px 4px 0 0;display:flex;align-items:center;gap:10px;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.col-header.before{background:var(--red-bg);color:var(--red);border:1px solid #fecaca;border-bottom:none}
+.col-header.after{background:var(--green-bg);color:var(--green);border:1px solid #86efac;border-bottom:none}
+.col-body{border:1px solid var(--border);border-radius:0 0 4px 4px;overflow:hidden}
+.col-header.after + .col-body{border-color:#86efac}
+.col-header.before + .col-body{border-color:#fecaca}
+
+/* LINKEDIN CARD */
+.li-card{background:white;font-family:'Inter',sans-serif}
+.li-banner{height:100px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.banner-before{background:linear-gradient(135deg,#e8e6e0,#d4d0c8)}
+.banner-after{background:var(--navy);position:relative;overflow:hidden}
+.banner-after::before{content:'';position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:400px;height:200px;background:radial-gradient(ellipse,rgba(201,168,76,.1) 0%,transparent 70%)}
+.banner-text-before{font-size:.75rem;color:#9ba3b8;letter-spacing:.1em}
+.banner-text-after{font-family:'Playfair Display',serif;font-size:.9rem;color:rgba(240,238,232,.8);font-style:italic;text-align:center;padding:0 20px;position:relative;z-index:1;line-height:1.5}
+.banner-text-after strong{color:var(--gold);font-style:normal;display:block;font-size:1rem;margin-bottom:4px}
+
+.li-profile{padding:0 20px 16px}
+.li-avatar{width:60px;height:60px;border-radius:50%;margin-top:-30px;margin-bottom:10px;border:3px solid white;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:white}
+.avatar-before{background:#c4bdb0}
+.avatar-after{background:var(--navy)}
+
+.li-name{font-size:1rem;font-weight:700;color:#000;margin-bottom:3px}
+.li-headline{font-size:.82rem;color:#444;line-height:1.4;margin-bottom:8px}
+.li-location{font-size:.75rem;color:#666}
+
+.li-section{padding:14px 20px;border-top:1px solid #e0e0e0}
+.li-section-title{font-size:.75rem;font-weight:700;color:#000;margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em}
+.li-section-body{font-size:.8rem;color:#333;line-height:1.65}
+.li-section-body.muted{color:#666;font-style:italic}
+
+.li-featured{padding:14px 20px;border-top:1px solid #e0e0e0}
+.li-featured-title{font-size:.75rem;font-weight:700;color:#000;margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+.featured-cards{display:flex;gap:8px}
+.featured-card{flex:1;border:1px solid #e0e0e0;border-radius:4px;overflow:hidden}
+.featured-card-img{height:40px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:.6rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.featured-card-text{padding:6px 8px;font-size:.7rem;font-weight:600;color:#000;line-height:1.3}
+.featured-card-sub{padding:0 8px 6px;font-size:.65rem;color:#666}
+
+/* CHANGE CALLOUTS */
+.change-callouts{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.callout{background:var(--green-bg);border:1px solid #86efac;border-radius:4px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start}
+.callout-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+.callout-text{font-size:.82rem;color:var(--green);line-height:1.55}
+.callout-text strong{color:#0f4c2a;display:block;margin-bottom:2px;font-size:.8rem}
+
+/* COPY BUTTON */
+.copy-section{background:white;border:1px solid var(--border);border-radius:6px;padding:24px;margin-bottom:24px}
+.copy-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:10px}
+.copy-text{background:#f7f5f0;border:1px solid var(--border);border-radius:4px;padding:14px;font-size:.83rem;color:var(--text);line-height:1.75;font-family:'Inter',sans-serif;cursor:text;white-space:pre-wrap}
+.btn-copy{margin-top:12px;background:var(--navy);color:white;padding:10px 20px;font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;border-radius:3px;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-copy:hover{background:var(--navy-card)}
+
+.note-box{background:var(--gold-bg);border-left:3px solid var(--gold);padding:14px 18px;border-radius:0 4px 4px 0;font-size:.83rem;color:#5a4a20;line-height:1.7;margin-bottom:24px}
+.note-box strong{color:#3a2e10}
+
+footer{max-width:1100px;margin:40px auto 0;padding:20px 60px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted)}
+.footer-brand{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--navy);font-weight:600}
+.footer-brand span{color:var(--gold)}
+
+@media(max-width:800px){
+  .content,.page-header{padding:28px 20px}
+  .compare-grid{grid-template-columns:1fr}
+  footer{padding:20px}
+}
+</style>
+</head>
+<body>
+<div class="top-stripe"></div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <div class="header-eyebrow">LinkedIn Transformation</div>
+      <div class="header-title">Your Profile, Repositioned.</div>
+      <div class="header-sub">The fastest way to start reaching Corporate Development Directors and PE Operating Partners — before the website is even built. Update this today.</div>
+    </div>
+    <div class="header-badge">
+      <div class="badge-text">Time to implement</div>
+      <div class="badge-action">⏱️ 15 minutes</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <div class="note-box">
+    <strong>Why LinkedIn first:</strong> Corporate Development Directors, PE Operating Partners, and CHROs actively use LinkedIn — it's where they vet advisors before agreeing to a call. Your profile is your first impression with the buyers who matter most. The new positioning works here <em>immediately</em>, before anything else gets built.
+  </div>
+
+  <!-- COMPARISON -->
+  <div class="section-label">Before & After</div>
+
+  <div class="compare-grid">
+
+    <!-- BEFORE -->
+    <div class="compare-col">
+      <div class="col-header before">✗ Current Profile — What It's Saying Now</div>
+      <div class="col-body">
+        <div class="li-card">
+          <div class="li-banner banner-before">
+            <span class="banner-text-before">No banner copy / generic background</span>
+          </div>
+          <div class="li-profile">
+            <div class="li-avatar avatar-before">A</div>
+            <div class="li-name">Amy Birks</div>
+            <div class="li-headline">Strategic advisor and facilitator for high-stakes transitions — M&A integration, organizational transformation, and rapid growth</div>
+            <div class="li-location">📍 United States</div>
+          </div>
+          <div class="li-section">
+            <div class="li-section-title">About</div>
+            <div class="li-section-body muted">20+ years across corporate finance strategy, organizational change, and performance consulting. Helping organizations navigate high-stakes transitions through culture-led approaches...</div>
+          </div>
+          <div class="li-section">
+            <div class="li-section-title">Featured</div>
+            <div class="li-section-body muted" style="font-size:.75rem">[No featured content / generic posts]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AFTER -->
+    <div class="compare-col">
+      <div class="col-header after">✓ New Profile — Integration Risk Intelligence</div>
+      <div class="col-body">
+        <div class="li-card">
+          <div class="li-banner banner-after">
+            <div class="banner-text-after">
+              <strong>"Your integration plan is technically sound."</strong>
+              That's not what will determine its outcome.
+            </div>
+          </div>
+          <div class="li-profile">
+            <div class="li-avatar avatar-after">A</div>
+            <div class="li-name">Amy Birks</div>
+            <div class="li-headline">Integration Risk Intelligence · I protect the deal thesis when human dynamics are quietly destroying it · M&A · PE · Corporate Development</div>
+            <div class="li-location">📍 United States · <span style="color:#0a66c2">amybirks.com</span></div>
+          </div>
+          <div class="li-section">
+            <div class="li-section-title">About</div>
+            <div class="li-section-body">
+              The performance dip everyone expects during M&A integration isn't inevitable. It's a symptom of an unaddressed variable that appears on no project plan: <strong>fear distorting the plan.</strong><br><br>
+              I work upstream of traditional change management — addressing the human dynamics that determine whether your integration strategy actually performs as designed. My methodology, Integration Intelligence, sits at the intersection of deal mechanics and human behaviour.<br><br>
+              I've lived inside major mergers from the finance side. I've spent 20 years watching integrations succeed and fail. The difference is almost never the plan. It's whether the people executing it are operating from safety or threat.<br><br>
+              📊 Current: IQVIA / Charles River carve-out — 750 employees, 4 European countries<br>
+              🏢 Past: Wells Fargo · Xerox · Dallas Mavericks · Pennsylvania Turnpike Commission<br><br>
+              If you're leading an integration and want to know what your plan is quietly costing you — let's talk.
+            </div>
+          </div>
+          <div class="li-featured">
+            <div class="li-featured-title">Featured</div>
+            <div class="featured-cards">
+              <div class="featured-card">
+                <div class="featured-card-img">Calculator</div>
+                <div class="featured-card-text">Integration Risk Calculator</div>
+                <div class="featured-card-sub">What is your integration plan actually costing you?</div>
+              </div>
+              <div class="featured-card">
+                <div class="featured-card-img">Article</div>
+                <div class="featured-card-text">Why the Performance Dip Isn't Inevitable</div>
+                <div class="featured-card-sub">The hidden variable no one is accounting for</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="change-callouts">
+          <div class="callout"><div class="callout-icon">✓</div><div class="callout-text"><strong>Banner becomes a billboard</strong>Your opening line to every visitor — in 3 seconds.</div></div>
+          <div class="callout"><div class="callout-icon">✓</div><div class="callout-text"><strong>Headline names the category</strong>"Integration Risk Intelligence" — searchable, ownable, unmistakable.</div></div>
+          <div class="callout"><div class="callout-icon">✓</div><div class="callout-text"><strong>About speaks to the buyer</strong>CFO language, deal language, proof points upfront.</div></div>
+          <div class="callout"><div class="callout-icon">✓</div><div class="callout-text"><strong>Featured = lead magnet entry point</strong>Risk Calculator as the first click.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COPY-PASTE SECTIONS -->
+  <div class="section-label">Ready to Copy & Paste</div>
+
+  <div class="copy-section">
+    <div class="copy-title">📌 New LinkedIn Headline</div>
+    <div class="copy-text">Integration Risk Intelligence · I protect the deal thesis when human dynamics are quietly destroying it · M&A · PE · Corporate Development</div>
+    <button class="btn-copy" onclick="copyText(this)">Copy Headline</button>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-title">📝 New LinkedIn About Section</div>
+    <div class="copy-text">The performance dip everyone expects during M&A integration isn't inevitable. It's a symptom of an unaddressed variable that appears on no project plan: fear distorting the plan.
+
+I work upstream of traditional change management — addressing the human dynamics that determine whether your integration strategy actually performs as designed. My methodology, Integration Intelligence, sits at the intersection of deal mechanics and human behaviour.
+
+I've lived inside major mergers from the finance side. I've spent 20 years watching integrations succeed and fail. The difference is almost never the plan. It's whether the people executing it are operating from safety or threat.
+
+📊 Current: IQVIA / Charles River carve-out — 750 employees, 4 European countries
+🏢 Past: Wells Fargo · Xerox · Dallas Mavericks · Pennsylvania Turnpike Commission
+
+If you're leading an integration and want to know what your plan is quietly costing you — run your numbers: [YOUR CALCULATOR LINK]
+
+Or just reach out. The most valuable conversations I have start with: "Something feels off and I can't name what it is yet."</div>
+    <button class="btn-copy" onclick="copyText(this)">Copy About Section</button>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-title">🖼️ Banner Design Brief <span style="font-size:.72rem;color:var(--muted);font-weight:400">(for your designer or Canva)</span></div>
+    <div class="copy-text">Background: Deep navy (#0b0f1e)
+Accent: Gold (#c9a84c)
+Font: Playfair Display (serif) for headline / Inter for body
+
+Left side: Large serif headline in white —
+  "Your integration plan is technically sound."
+  (below, slightly smaller, in gold italic:)
+  "That's not what will determine its outcome."
+
+Right side: Subtle — "Integration Risk Intelligence" in tiny gold caps
+
+Dimensions: 1584 × 396px (LinkedIn banner standard)</div>
+    <button class="btn-copy" onclick="copyText(this)">Copy Design Brief</button>
+  </div>
+
+  <div class="copy-section">
+    <div class="copy-title">📬 LinkedIn Creator Mode — Recommended Post Topics to Pin</div>
+    <div class="copy-text">1. "The integration performance dip everyone expects isn't inevitable — here's why" (thought leadership)
+2. "I walked into a room last week and knew within 20 minutes exactly where this merger was going to fail. Here's what I saw." (story-led)
+3. "Run your numbers: What is your integration plan actually costing you?" (Risk Calculator link)
+4. "Why I stopped calling myself a change manager — and what I call myself instead" (category defining)
+5. "The $X million question nobody asks before closing a deal" (provocation)</div>
+    <button class="btn-copy" onclick="copyText(this)">Copy Post Ideas</button>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-brand">Snyper <span>Agency</span></div>
+  <div>Created with love for you · Pay only for results.</div>
+</footer>
+
+<script>
+function copyText(btn) {
+  const text = btn.previousElementSibling.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    btn.style.background = '#166534';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 2000);
+  });
+}
+</script>
+</body>
+</html>

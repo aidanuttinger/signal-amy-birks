@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amy Birks — Positioning Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0b0f1e;
+    --navy-mid: #141929;
+    --navy-light: #1e2640;
+    --gold: #c9a84c;
+    --gold-bg: #fff8e7;
+    --white: #f5f4f0;
+    --grey: #9ba3b8;
+    --body-bg: #fafaf8;
+    --text: #1a1e2e;
+    --muted: #6b7290;
+    --border: #e8e6e0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--body-bg);
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 40px 100px;
+  }
+
+  /* HEADER */
+  .doc-header {
+    border-bottom: 2px solid var(--navy);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .doc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  .doc-subtitle {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .doc-meta {
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .doc-meta strong {
+    color: var(--navy);
+    display: block;
+    font-size: 0.8rem;
+  }
+
+  /* LIVE NOTES SECTION */
+  .live-notes {
+    background: var(--gold-bg);
+    border: 1.5px solid var(--gold);
+    border-radius: 6px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+  }
+
+  .live-notes-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .live-badge {
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .live-notes-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7a6020;
+  }
+
+  .live-notes-body {
+    font-size: 0.9rem;
+    color: #5a4a20;
+    line-height: 1.8;
+  }
+
+  .live-notes-body p { margin-bottom: 8px; }
+  .live-notes-body p:last-child { margin-bottom: 0; }
+
+  .note-item {
+    padding: 8px 0;
+    border-top: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 0.88rem;
+    color: #5a4a20;
+  }
+
+  .note-item:first-child { border-top: none; }
+
+  .note-tag {
+    background: rgba(201,168,76,0.3);
+    color: #7a6020;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+
+  .empty-state {
+    font-size: 0.85rem;
+    color: rgba(90,74,32,0.5);
+    font-style: italic;
+  }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-num::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 60px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: var(--navy);
+    color: var(--white);
+    padding: 28px 32px;
+    border-radius: 4px;
+    margin: 20px 0;
+  }
+
+  .highlight-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .highlight-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  /* COMPARISON TABLE */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .comp-col {
+    background: white;
+    padding: 24px 28px;
+  }
+
+  .comp-col.old .comp-header { color: #c94c4c; }
+  .comp-col.new .comp-header { color: #2a7a3b; }
+
+  .comp-header {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .comp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .comp-list li {
+    font-size: 0.87rem;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .comp-list li::before {
+    position: absolute;
+    left: 0;
+  }
+
+  .old .comp-list li::before { content: '✗'; color: #c94c4c; font-size: 0.8rem; }
+  .new .comp-list li::before { content: '✓'; color: #2a7a3b; font-size: 0.8rem; }
+  .new .comp-list li { color: var(--text); }
+
+  /* CARDS GRID */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--gold); }
+
+  .card-icon {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .card-body {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* NUMBERED STEPS */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    background: white;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .step-content {
+    padding: 20px 24px;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .step-body {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  .step-tag {
+    display: inline-block;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 6px;
+  }
+
+  .tag-now { background: #fee2e2; color: #991b1b; }
+  .tag-soon { background: #fef3c7; color: #92400e; }
+  .tag-later { background: #d1fae5; color: #065f46; }
+
+  /* USP BOX */
+  .usp-box {
+    background: var(--gold-bg);
+    border-left: 4px solid var(--gold);
+    padding: 24px 28px;
+    border-radius: 0 4px 4px 0;
+    margin: 20px 0;
+  }
+
+  .usp-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #7a6020;
+    margin-bottom: 8px;
+  }
+
+  .usp-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--navy);
+    line-height: 1.6;
+    font-weight: 600;
+  }
+
+  /* BUYER TABLE */
+  .buyer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.84rem;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .buyer-table th {
+    background: var(--navy);
+    color: var(--gold);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .buyer-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .buyer-table tr:last-child td { border-bottom: none; }
+
+  .buyer-table td:first-child {
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .buyer-table tr:hover td { background: #f7f5f0; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .price-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .price-card.featured {
+    border-color: var(--gold);
+    background: var(--gold-bg);
+  }
+
+  .price-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .price-featured-label { color: #7a6020; }
+
+  .price-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .price-period {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .price-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* DIVIDER */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0;
+  }
+
+  /* FOOTER */
+  .doc-footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 2px solid var(--navy);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .doc-footer strong { color: var(--navy); }
+
+  /* PRINT */
+  @media print {
+    body { padding: 24px; }
+    .live-notes { break-inside: avoid; }
+    .section { break-inside: avoid; }
+  }
+
+  @media (max-width: 700px) {
+    body { padding: 24px 20px; }
+    .comparison, .cards, .pricing-grid { grid-template-columns: 1fr; }
+    .doc-header { flex-direction: column; align-items: flex-start; }
+    .doc-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DOCUMENT HEADER -->
+<div class="doc-header">
+  <div>
+    <div class="doc-title">Amy Birks<br>Positioning Strategy</div>
+    <div class="doc-subtitle">Integration Risk Intelligence — Category Design &amp; Go-to-Market Framework</div>
+  </div>
+  <div class="doc-meta">
+    <strong>Session Date</strong>
+    Friday, March 13, 2026
+    <br>Prepared by: Snyper Agency for Amy Birks
+    <br>Status: <span style="color: var(--gold); font-weight: 600;">Live / In Progress</span>
+  </div>
+</div>
+
+<!-- LIVE NOTES — updated in real time during session -->
+<div class="live-notes">
+  <div class="live-notes-header">
+    <span class="live-badge">● Live</span>
+    <span class="live-notes-title">Session Notes &amp; Live Updates</span>
+  </div>
+  <div class="live-notes-body">
+    <div class="empty-state">Session in progress — notes will appear here as we go. Feed insights back to the AI in real time.</div>
+  </div>
+</div>
+
+<!-- SECTION 1: THE CORE REPOSITIONING -->
+<div class="section">
+  <div class="section-num">01 · Core Repositioning</div>
+  <h2 class="section-title">From "Change Management" to "Integration Risk Intelligence"</h2>
+
+  <p style="font-size:0.92rem; color:var(--muted); margin-bottom:20px; line-height:1.75;">
+    You currently occupy the "change management and culture" category — a space crowded with commoditized practitioners and large consulting firms. The repositioning moves you into a category you can own: the upstream advisor who protects the financial thesis of the deal.
+  </p>
+
+  <div class="comparison">
+    <div class="comp-col old">
+      <div class="comp-header">✗ Current Positioning</div>
+      <ul class="comp-list">
+        <li>Change management consultant</li>
+        <li>"People and culture" workstream</li>
+        <li>Runs parallel to the integration plan</li>
+        <li>Cost center framing — tolerated by CFOs</li>
+        <li>Competes with Prosci, internal HR, large firms</li>
+        <li>Buyers: HR Directors, Project Managers</li>
+      </ul>
+    </div>
+    <div class="comp-col new">
+      <div class="comp-header">✓ New Positioning</div>
+      <ul class="comp-list">
+        <li>Integration Risk Intelligence advisor</li>
+        <li>Protects the deal thesis and synergy case</li>
+        <li>Works upstream — before the playbook, not beside it</li>
+        <li>ROI framing — valued by CFOs and deal directors</li>
+        <li>Unclaimed white space — no direct category competitors</li>
+        <li>Buyers: Corporate Dev Directors, CHROs, PE Operating Partners</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: THE USP -->
+<div class="section">
+  <div class="section-num">02 · The USP</div>
+  <h2 class="section-title">The Core Statement That Changes Every Conversation</h2>
+
+  <div class="usp-box">
+    <div class="usp-label">Primary USP Statement</div>
+    <div class="usp-text">"I protect the synergy assumptions that justified your deal — by addressing the hidden variable that determines whether your integration plan actually performs as designed."</div>
+  </div>
+
+  <div class="highlight">
+    <div class="highlight-label">The Core Thesis (in her words)</div>
+    <div class="highlight-text">"The performance dip that organizations expect during integration isn't inevitable. It's a symptom of unaddressed fear distorting the plan. Address the fear — and you get rocket fuel instead of drag."</div>
+  </div>
+
+  <p style="font-size:0.88rem; color:var(--muted); line-height:1.75; margin-top:16px;">
+    The key reframe: Fear is not a soft concept — it's the neurological mechanism that determines decision quality, communication effectiveness, and talent retention during an integration. It has a measurable cost. You are the only person in the market who addresses it at the strategic level rather than the HR level.
+  </p>
+</div>
+
+<!-- SECTION 3: THE CATEGORY -->
+<div class="section">
+  <div class="section-num">03 · Category Design</div>
+  <h2 class="section-title">Owning "Integration Risk Intelligence"</h2>
+
+  <p style="font-size:0.92rem; color:var(--muted); margin-bottom:20px; line-height:1.75;">
+    Category design is the highest-leverage positioning move available to an independent advisor. You don't compete in a category — you define one. Here's what that looks like in practice.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🏷️</div>
+      <div class="card-title">Name It Consistently</div>
+      <div class="card-body">Use "Integration Risk Intelligence" on every surface — website, LinkedIn, proposals, conversations. Repetition creates the category. You are the one who names the thing no one else was naming.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <div class="card-title">Own the Framework</div>
+      <div class="card-body">Integration Intelligence (the methodology) is the proprietary system that delivers Integration Risk Intelligence (the category). The framework is the proof that the category is real and structured.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Speak in Deal Language</div>
+      <div class="card-body">Every conversation should anchor to deal value: synergy capture, talent retention, integration timeline. Not "culture" or "engagement." Those are outputs — you are protecting inputs to financial performance.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Choose the Right Buyers</div>
+      <div class="card-body">Corporate Development Directors, PE Operating Partners, CHROs at acquiring orgs. Not HR generalists or project managers. These buyers have budget tied to deal outcomes and understand the risk you are mitigating.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: THE DIAGNOSTIC PRODUCT -->
+<div class="section">
+  <div class="section-num">04 · The Entry Product</div>
+  <h2 class="section-title">The 30-Day Integration Risk Assessment</h2>
+
+  <p style="font-size:0.92rem; color:var(--muted); margin-bottom:20px; line-height:1.75;">
+    This is the single highest-leverage addition to your business model. A standalone diagnostic that creates an easy "yes" entry point before the full engagement — and proves value before asking for a larger commitment.
+  </p>
+
+  <div class="highlight">
+    <div class="highlight-label">The Pitch</div>
+    <div class="highlight-text">"Before your deal closes, let's run a 30-day Integration Risk Assessment. We surface where the human dynamics are most likely to distort your plan — so you go into the integration with eyes open, not fire-fighting."</div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <span class="step-tag tag-now">Deliverable</span>
+        <div class="step-title">Documentation Review</div>
+        <div class="step-body">You review existing integration strategy, communications plan, org design proposals, and leadership alignment materials through a human-dynamics lens.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <span class="step-tag tag-now">Deliverable</span>
+        <div class="step-title">Key Stakeholder Interviews</div>
+        <div class="step-body">5–8 targeted conversations with integration leads and senior stakeholders to surface what's being said in the room vs. what's in the plan.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <span class="step-tag tag-now">Deliverable</span>
+        <div class="step-title">Integration Risk Report</div>
+        <div class="step-body">A concise diagnostic: the 3–5 human dynamics dimensions where the current plan is most at risk, with prioritized recommendations. The first deliverable that speaks CFO language.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <span class="step-tag tag-soon">Outcome</span>
+        <div class="step-title">Natural Lead-In to Full Engagement</div>
+        <div class="step-body">The diagnostic reveals exactly the problems you address. Most clients who see the report want Phase 1. This isn't a sales trick — it's the logical next step.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="price-card featured">
+      <div class="price-label price-featured-label">Entry Product</div>
+      <div class="price-name">Integration Risk Assessment</div>
+      <div class="price-amount">$5–15K</div>
+      <div class="price-period">30 days · standalone</div>
+      <div class="price-desc">Low-risk yes. Pre-close or early integration. Delivers immediate value and proves the methodology.</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">Phase 1</div>
+      <div class="price-name">Assessment + Co-Design</div>
+      <div class="price-amount">$35K+</div>
+      <div class="price-period">~6 months</div>
+      <div class="price-desc">Deep assessment, leadership summit facilitation, communications architecture, regional session design.</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">Phase 2</div>
+      <div class="price-name">Advisory + Optimization</div>
+      <div class="price-amount">$30K+</div>
+      <div class="price-period">12+ months retained</div>
+      <div class="price-desc">Ongoing strategic counsel, real-time troubleshooting, feedback loop maintenance, communications refinement.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: TARGET BUYERS -->
+<div class="section">
+  <div class="section-num">05 · Target Buyers</div>
+  <h2 class="section-title">Who Has Budget, Urgency, and Authority</h2>
+
+  <table class="buyer-table">
+    <thead>
+      <tr>
+        <th>Buyer</th>
+        <th>Their Problem</th>
+        <th>Why You</th>
+        <th>Entry Point</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Corporate Development Director</td>
+        <td>Deal thesis at risk; synergies taking twice as long as projected</td>
+        <td>She speaks finance + human dynamics — rare combination</td>
+        <td>Risk Assessment before close</td>
+      </tr>
+      <tr>
+        <td>PE Operating Partner</td>
+        <td>Portfolio company integration failing to create value; talent walking</td>
+        <td>Results-based framing maps to PE value creation logic</td>
+        <td>Phase 1 for active integration</td>
+      </tr>
+      <tr>
+        <td>CHRO (Acquiring Company)</td>
+        <td>Responsible for workforce integration; needs credible methodology</td>
+        <td>Framework is rigorous enough to sit alongside financial workstreams</td>
+        <td>Methodology briefing → Phase 1</td>
+      </tr>
+      <tr>
+        <td>Integration Program Lead</td>
+        <td>Human friction slowing every workstream; no strategic frame to address it</td>
+        <td>Gives them language and structure to take upward</td>
+        <td>Diagnostic → internal champion</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 6: GO-TO-MARKET -->
+<div class="section">
+  <div class="section-num">06 · Go-to-Market</div>
+  <h2 class="section-title">The Sequence That Builds Momentum</h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <span class="step-tag tag-now">Now</span>
+        <div class="step-title">Finalize the IQVIA Engagement</div>
+        <div class="step-body">This is the proof of concept. Execute flawlessly. The case study from IQVIA — specific deal size, specific outcomes, specific scope — is the foundation of everything that comes next.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <span class="step-tag tag-now">Now</span>
+        <div class="step-title">Rebuild the Website Around the New Positioning</div>
+        <div class="step-body">The redesign concept is ready. "Integration Risk Intelligence" positioning, deal-maker language throughout, diagnostic CTA, IQVIA as lead social proof. This becomes her primary sales tool.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <span class="step-tag tag-soon">Next 30 Days</span>
+        <div class="step-title">Launch the Integration Risk Assessment as a Product</div>
+        <div class="step-body">Price it, name it, and start offering it to companies in active M&A. This is the easiest "yes" in the market — a company spending $100M+ on a deal will pay $10K to understand their risk profile.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <span class="step-tag tag-soon">Next 60 Days</span>
+        <div class="step-title">Develop the Diagnostic Framework</div>
+        <div class="step-body">The 3–5 dimensions you actually assess when you walk into a room. Build this through Socratic exploration — then make it proprietary. This becomes the heart of Integration Intelligence.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <span class="step-tag tag-soon">Next 90 Days</span>
+        <div class="step-title">Target PE Firms and Corporate Development Teams</div>
+        <div class="step-body">3–5 new engagements per year at $65K+ average = $200–325K. Start with warm referrals, then outbound to Corporate Dev Directors at active acquirers and PE operating partners.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <span class="step-tag tag-later">6 Months</span>
+        <div class="step-title">IQVIA Case Study + Thought Leadership</div>
+        <div class="step-body">Publish the IQVIA outcome as a case study (with permission). Write one piece of thought leadership that names the category — "Integration Risk Intelligence" — and why it's different. LinkedIn + direct outreach to corporate dev networks.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7: KEY TALKING POINTS -->
+<div class="section">
+  <div class="section-num">07 · Key Talking Points</div>
+  <h2 class="section-title">Language That Lands With Deal-Makers</h2>
+
+  <p style="font-size:0.92rem; color:var(--muted); margin-bottom:20px; line-height:1.75;">
+    These are the phrases that open doors with CFOs and Corporate Development Directors. Use them verbatim until they feel natural.
+  </p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">→</div>
+      <div class="step-content">
+        <div class="step-title">"I protect the deal thesis."</div>
+        <div class="step-body">Not "I help with culture." Not "I manage change." This is the opening line that changes the conversation from cost center to risk mitigation.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">→</div>
+      <div class="step-content">
+        <div class="step-title">"The performance dip everyone expects isn't inevitable — it's a symptom."</div>
+        <div class="step-body">This immediately differentiates from every other practitioner who accepts the dip as given. It's a provocative claim that demands explanation — and you have the explanation.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">→</div>
+      <div class="step-content">
+        <div class="step-title">"Fear is running through every line item in your integration plan — whether you're accounting for it or not."</div>
+        <div class="step-body">This reframes fear from a soft concept to a structural element that's already in the plan. The question isn't whether to address it — it's whether to address it intentionally.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">→</div>
+      <div class="step-content">
+        <div class="step-title">"I work upstream of change management — I'm addressing the conditions that determine whether your integration plan executes as designed."</div>
+        <div class="step-body">Positions her as above and before, not beside or below. Creates a new category rather than competing in an existing one.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">→</div>
+      <div class="step-content">
+        <div class="step-title">"You paid $X for synergies. Here's what's quietly destroying them."</div>
+        <div class="step-body">This is the opening for the diagnostic conversation. Anchors to the deal price, creates urgency, and positions the assessment as insurance, not overhead.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 8: OPEN QUESTIONS -->
+<div class="section">
+  <div class="section-num">08 · Open Questions</div>
+  <h2 class="section-title">Things to Explore in the Session</h2>
+
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🔬</div>
+      <div class="card-title">The Diagnostic Framework</div>
+      <div class="card-body">What are the 3–5 dimensions you are actually assessing when you walk into a room? This should come from your own Socratic exploration, not be prescribed. It's the most proprietary element of Integration Intelligence.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <div class="card-title">Quantifying the Cost of Fear</div>
+      <div class="card-body">Can you build even a directional number — "unaddressed human dynamics costs integrations X% of expected synergy capture"? A rough number changes every boardroom conversation.</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Non-M&A Applications</div>
+      <div class="card-body">How does Integration Intelligence apply to rapid growth, reorgs, or strategic transformation? Is the methodology flexible enough — and how does she position it without losing M&A specificity?</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📣</div>
+      <div class="card-title">Thought Leadership Strategy</div>
+      <div class="card-body">Where do you want to show up? LinkedIn? Speaking? Publications? The category needs a voice and a platform. What's your preferred medium and what would make you most credible to deal-makers specifically?</div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div><strong>Amy Birks — Integration Risk Intelligence</strong><br>Confidential Strategy Document · Session March 13, 2026</div>
+  <div style="text-align:right;">Created with love by Snyper Agency<br>for Amy Birks</div>
+</div>
+
+</body>
+</html>
