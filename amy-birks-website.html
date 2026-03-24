@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amy Birks — Integration Risk Intelligence</title>
+<meta name="description" content="Amy Birks is the world's leading Integration Risk Intelligence advisor. She protects the synergy assumptions that justified your deal — by reading what your integration plan cannot see.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Amy Birks — Integration Risk Intelligence">
+<meta property="og:description" content="Your integration plan is technically sound. That's not what will determine its outcome.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=1200&q=80">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230b0f1e'/><text y='.9em' x='50%' text-anchor='middle' font-size='52' fill='%23c9a84c'>AB</text></svg>">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!--
+  REFERENCE SITES STUDIED:
+  - estherperel.com — dynamic section transitions, media-rich, conversational authority
+  - pentagram.com — editorial asymmetry, typography-driven, premium negative space
+  - linear.app — precise motion, dark-mode elegance, functional beauty
+  - stripe.com — layered depth, radial gradients, section rhythm
+  - sohohouse.com — exclusive feel, muted photography, editorial restraint
+
+  DESIGN DECISIONS:
+  - Hero leads with positioning statement — not name — per brief requirements
+  - Deep navy palette with gold accent — serious, premium, C-suite credible
+  - Playfair Display for all major statements — editorial gravitas
+  - Inter for body — precision and legibility
+  - Diagonal section dividers on select sections — avoids static horizontal stacking
+  - Full-bleed dark sections alternating with warm off-white — creates rhythm
+  - IntersectionObserver animations throughout — page feels alive
+  - Animated counters on stats
+  - Sticky nav with scroll-triggered opacity
+
+  IMAGES NEEDING REPLACEMENT:
+  - Hero: Replace with Amy's professional headshot or atmospheric boardroom photo
+  - Origin section: Photo of Amy — candid, professional, authentic
+  - About section: Amy working with a client team
+  - GPS-Brain section: Abstract textural image suggesting perception/insight
+-->
+
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  /* Brand palette — all-dark system */
+  --black:       #0f1322;
+  --navy:        #141929;
+  --navy-mid:    #0f1425;
+  --navy-alt:    #13182e;   /* "light" sections — warm dark, not cream */
+  --card:        #1a2236;
+  --card-light:  #1e2845;
+  --gold:        #c9a84c;
+  --gold-light:  #e8c97a;
+  --gold-dim:    rgba(201,168,76,0.08);
+  --gold-border: rgba(201,168,76,0.22);
+  --gold-border-strong: rgba(201,168,76,0.45);
+
+  /* Dark-mode text system — all light on dark */
+  --text-primary:  #f0eee8;           /* headings on dark backgrounds */
+  --text-body:     rgba(200,205,216,0.8);  /* body on dark backgrounds */
+  --text-muted:    rgba(138,148,170,0.75);
+  --text-muted:    rgba(138,148,170,0.75);  /* captions, secondary */
+  --text-dim:      rgba(138,148,170,0.45);  /* disabled, decorative */
+
+  /* Legacy aliases — kept for backward compat with existing classes */
+  --warm:        #f0ede6;
+  --warm-deep:   #13182e;
+  --cream:       #f5f2eb;
+  --text:        #f0eee8;
+  --text-dark:   #1a1a2e;
+  --text-mid:    #4a4a6a;
+  --muted:       #6b6b8a;
+  --border:      #e0ddd5;
+  --white-dim:   rgba(240,238,232,0.85);
+  --white-muted: rgba(138,148,170,0.8);
+
+  /* Typography */
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Spacing */
+  --max: 1200px;
+  --section-v: 120px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--sans);
+  background: var(--navy);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-up:nth-child(4) { transition-delay: 0.3s; }
+.fade-up:nth-child(5) { transition-delay: 0.4s; }
+.fade-up:nth-child(6) { transition-delay: 0.5s; }
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+.fade-in.visible { opacity: 1; }
+
+.slide-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.slide-left.visible { opacity: 1; transform: translateX(0); }
+
+.slide-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.slide-right.visible { opacity: 1; transform: translateX(0); }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  background: rgba(7,8,15,0.0);
+  backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition: all 0.4s ease;
+}
+
+nav.scrolled {
+  background: rgba(7,8,15,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom-color: var(--gold-border);
+}
+
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f0eee8;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.02em;
+}
+
+.nav-logo .signal-code {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-family: var(--sans);
+  font-weight: 700;
+  padding: 3px 9px;
+  border: 1px solid var(--gold-border);
+  border-radius: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-links a {
+  color: rgba(240,238,232,0.6);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+
+.nav-cta {
+  background: transparent !important;
+  border: 1px solid var(--gold-border-strong) !important;
+  color: var(--gold) !important;
+  padding: 9px 22px !important;
+  border-radius: 2px !important;
+  letter-spacing: 0.08em !important;
+  transition: all 0.2s !important;
+}
+
+.nav-cta:hover {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+}
+
+.nav-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.nav-mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: #f0eee8;
+  margin: 5px 0;
+  transition: all 0.3s;
+}
+
+/* ============================================================
+   HERO — CENTERED, FULL VIEWPORT
+   ============================================================ */
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: #141929;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  padding: 140px 60px 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Deep gold ambient glow — atmospheric, not garish */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 18%, rgba(201,168,76,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 15% 85%, rgba(11,15,30,0.8) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 85% 85%, rgba(11,15,30,0.8) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Fine grid overlay — boardroom precision */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: radial-gradient(ellipse 75% 70% at 50% 50%, black 0%, transparent 72%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+  text-align: center;
+}
+
+/* ─── CATEGORY HEADING ─── */
+.hero-eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--gold);
+  background: none;
+}
+
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  display: none;
+}
+
+/* ─── NAME — serif, elegant, matches nav ─── */
+.hero-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: rgba(240,238,232,0.7);
+  margin-bottom: 36px;
+}
+
+/* ─── CATCHPHRASE — the billboard. The entire reason this page exists. ─── */
+.hero-headline {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.12;
+  color: #f0eee8;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The second sentence hits hardest — italic, gold */
+.hero-headline .hl-turn {
+  display: block;
+  font-style: italic;
+  color: var(--gold);
+  margin-top: 6px;
+}
+
+/* ─── USP — italicised, slightly muted ─── */
+.hero-usp {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(240,238,232,0.55);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ─── BODY — one sentence, quietly confident ─── */
+.hero-body {
+  font-family: var(--sans);
+  font-size: clamp(0.88rem, 1.5vw, 0.98rem);
+  color: rgba(138,148,170,0.8);
+  max-width: 540px;
+  margin: 0 auto 44px;
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+/* ─── CTAs ─── */
+.hero-actions {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 72px;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  padding: 16px 40px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 36px rgba(201,168,76,0.28);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(138,148,170,0.65);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  transition: color 0.2s;
+  border-bottom: 1px solid rgba(138,148,170,0.18);
+  padding-bottom: 2px;
+}
+
+.btn-ghost:hover { color: rgba(240,238,232,0.9); border-bottom-color: rgba(240,238,232,0.3); }
+.btn-ghost .arrow { transition: transform 0.2s; }
+.btn-ghost:hover .arrow { transform: translateX(5px); }
+
+/* ─── STAT CARDS — individual, breathing room ─── */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.hero-stat {
+  padding: 28px 20px 24px;
+  text-align: center;
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.14);
+  border-radius: 10px;
+  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-stat::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 40px; height: 1px;
+  background: var(--gold);
+  opacity: 0.35;
+}
+
+.hero-stat:hover {
+  background: rgba(201,168,76,0.09);
+  border-color: rgba(201,168,76,0.28);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+}
+
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.hero-stat-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(138,148,170,0.65);
+  display: block;
+  line-height: 1.5;
+}
+
+/* ─── SCROLL INDICATOR ─── */
+.hero-scroll {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(138,148,170,0.3);
+  font-size: 0.56rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(201,168,76,0.45), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 0.8; transform: scaleY(1.2); }
+}
+
+/* ============================================================
+   SECTION SHARED STYLES
+   ============================================================ */
+.section-eyebrow {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.section-headline {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.section-headline-sm {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.section-body {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--text-body);
+  max-width: 640px;
+}
+
+/* Light sections use dark text (default) */
+.section-headline { color: var(--text-primary); }
+.section-body { color: var(--text-body); }
+
+/* Dark sections use light text */
+.on-dark .section-eyebrow, .section-eyebrow.on-dark { color: var(--gold); }
+.on-dark .section-headline, .section-headline.on-dark { color: #f0eee8; }
+.on-dark .section-body, .section-body.on-dark { color: rgba(200,205,216,0.85); }
+.section-headline { color: var(--text-primary); }
+.section-eyebrow { color: var(--gold); }
+
+/* ============================================================
+   PROBLEM SECTION — DARK ALT BACKGROUND
+   ============================================================ */
+.problem-section {
+  background: var(--navy-alt);
+  padding: 120px 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.problem-section::before {
+  content: '';
+  position: absolute;
+  top: -300px; right: -300px;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(201,168,76,0.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.problem-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+/* ─── CENTERED STAT HERO ─── */
+.problem-stat-hero {
+  text-align: center;
+  padding: 0 0 72px;
+  position: relative;
+}
+
+.big-stat {
+  font-family: var(--serif);
+  font-size: clamp(5rem, 12vw, 9rem);
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.big-stat span { color: var(--gold); }
+
+.big-stat-label {
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 400;
+  color: #f0eee8;
+  line-height: 1.5;
+  max-width: 580px;
+  margin: 0 auto 48px;
+}
+
+.problem-quote {
+  font-family: var(--serif);
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(240,238,232,0.8);
+  line-height: 1.75;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 32px 44px;
+  background: rgba(201,168,76,0.05);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  position: relative;
+}
+
+.problem-quote::before {
+  content: '\201C';
+  font-family: var(--serif);
+  font-size: 4.5rem;
+  color: var(--gold);
+  opacity: 0.2;
+  position: absolute;
+  top: -10px; left: 24px;
+  line-height: 1;
+}
+
+/* ─── NARRATIVE BODY ─── */
+.problem-narrative {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 72px 0 80px;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.problem-narrative p {
+  font-size: 1rem;
+  color: rgba(200,205,216,0.82);
+  line-height: 2;
+  margin-bottom: 20px;
+}
+
+.problem-narrative p:last-child { margin-bottom: 0; }
+
+.problem-narrative strong {
+  color: #f0eee8;
+  font-weight: 600;
+}
+
+/* ─── 2×2 CARD GRID ─── */
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(201,168,76,0.08);
+  margin-top: 0;
+}
+
+.problem-card {
+  background: var(--navy-alt);
+  padding: 52px 48px;
+  position: relative;
+  transition: background 0.25s;
+  border-top: 1px solid rgba(201,168,76,0.08);
+}
+
+.problem-card:hover {
+  background: var(--card);
+}
+
+.problem-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.problem-card:hover::before { opacity: 0.6; }
+
+.problem-card-num {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+  display: block;
+}
+
+.problem-card h4 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #f0eee8;
+  margin-bottom: 16px;
+  line-height: 1.35;
+}
+
+.problem-card p {
+  font-size: 0.9rem;
+  color: rgba(200,205,216,0.75);
+  line-height: 1.85;
+}
+
+.problem-card p em { color: rgba(200,205,216,0.85); font-style: italic; }
+
+/* ─── COST CASCADE — full-width below cards ─── */
+.cost-callout {
+  background: var(--black);
+  padding: 80px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cost-callout::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 85% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cost-callout-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 72px;
+  align-items: start;
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.cost-callout-left .section-eyebrow {
+  margin-bottom: 16px;
+  color: var(--gold);
+}
+
+.cost-callout-left h3 {
+  font-family: var(--serif);
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 18px;
+  line-height: 1.25;
+}
+
+.cost-callout-left p {
+  font-size: 0.9rem;
+  color: rgba(200,205,216,0.75);
+  line-height: 1.9;
+}
+
+.cost-table-wrap { overflow: hidden; }
+
+.cost-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cost-table th {
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(138,148,170,0.5);
+  padding: 8px 0 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-weight: 600;
+}
+
+.cost-table td {
+  font-size: 0.88rem;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: rgba(200,205,216,0.7);
+  vertical-align: middle;
+  line-height: 1.5;
+}
+
+.cost-table tr:first-child td { padding-top: 22px; }
+.cost-table td:first-child {
+  color: rgba(200,205,216,0.85);
+  font-weight: 500;
+  padding-right: 28px;
+  width: 46%;
+}
+
+/* Arrow connector between columns */
+.cost-table td:nth-child(2) {
+  color: rgba(138,148,170,0.4);
+  font-size: 0.7rem;
+  width: 8%;
+  text-align: center;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.cost-table td.gold {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.cost-table tr:last-child td { border-bottom: none; }
+
+/* Escalating row emphasis */
+.cost-table tbody tr:nth-child(3) td:first-child { color: rgba(200,205,216,0.95); }
+.cost-table tbody tr:nth-child(4) td.gold { color: #d4a94c; font-size: 0.88rem; }
+.cost-table tbody tr:nth-child(5) td.gold {
+  color: var(--gold-light);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* ============================================================
+   GPS-BRAIN SECTION — DARK
+   ============================================================ */
+.gps-section {
+  background: var(--navy);
+  padding: var(--section-v) 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gps-section::before {
+  content: '';
+  position: absolute;
+  top: -200px; left: -200px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.gps-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.gps-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+  margin-bottom: 80px;
+}
+
+.gps-intro-quote {
+  background: rgba(201,168,76,0.07);
+  border-left: 3px solid var(--gold);
+  padding: 28px 32px;
+  border-radius: 0 4px 4px 0;
+  margin-top: 32px;
+}
+
+.gps-intro-quote p {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #f0eee8;
+  line-height: 1.7;
+}
+
+.gps-intro-quote cite {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.gps-method-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gold-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 32px;
+}
+
+.gps-method-cell {
+  background: var(--navy-mid);
+  padding: 24px 28px;
+  text-align: center;
+}
+
+.gps-method-num {
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.gps-method-name {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f0eee8;
+  margin-bottom: 6px;
+}
+
+.gps-method-desc {
+  font-size: 0.75rem;
+  color: rgba(200,205,216,0.75);
+  line-height: 1.55;
+}
+
+/* 5 Dimensions */
+.dimensions-label {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.dimensions-label-sub {
+  font-size: 0.85rem;
+  color: rgba(200,205,216,0.7);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.dimension-card {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.02) 100%);
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: 12px;
+  padding: 32px 28px;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.dimension-card:hover {
+  background: linear-gradient(135deg, rgba(201,168,76,0.14) 0%, rgba(201,168,76,0.04) 100%);
+  transform: translateY(-4px);
+  border-color: rgba(201,168,76,0.3);
+}
+
+.dim-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 18px;
+  box-shadow: 0 4px 12px rgba(201,168,76,0.25);
+}
+
+.dim-name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f0eee8;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.dim-subtitle {
+  font-size: 0.82rem;
+  color: rgba(200,205,216,0.7);
+  line-height: 1.65;
+  margin-bottom: 0;
+}
+
+.dim-signals {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dim-signal {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 0.75rem;
+  color: rgba(138,148,170,0.8);
+  line-height: 1.5;
+}
+
+.dim-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 6px;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   METHODOLOGY SECTION — DARK ALT
+   ============================================================ */
+.methodology-section {
+  background: var(--warm);
+  padding: var(--section-v) 60px;
+}
+
+.methodology-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.method-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+  margin-bottom: 72px;
+}
+
+/* Phase timeline */
+.phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gold-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.phase {
+  background: var(--navy);
+  padding: 40px 32px;
+  transition: background 0.25s;
+}
+
+.phase:hover {
+  background: var(--card);
+}
+
+.phase-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.phase h3 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+
+.phase p {
+  font-size: 0.87rem;
+  color: rgba(200,205,216,0.75);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.phase-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.phase-list li {
+  font-size: 0.8rem;
+  color: rgba(200,205,216,0.65);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.55;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+
+.phase-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Entry product callout */
+.entry-callout {
+  background: var(--navy);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 56px;
+}
+
+.entry-callout-header {
+  background: rgba(201,168,76,0.1);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.entry-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.entry-price {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.entry-price span {
+  font-size: 0.78rem;
+  font-family: var(--sans);
+  color: rgba(138,148,170,0.7);
+  font-weight: 400;
+  margin-left: 6px;
+}
+
+.entry-body {
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+}
+
+.entry-body h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 14px;
+  line-height: 1.25;
+}
+
+.entry-body p {
+  font-size: 0.88rem;
+  color: rgba(138,148,170,0.85);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.scope-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.scope-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.scope-marker {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.58rem;
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-weight: 700;
+}
+
+.scope-text {
+  font-size: 0.85rem;
+  color: rgba(138,148,170,0.8);
+  line-height: 1.6;
+}
+
+.scope-text strong {
+  color: #f0eee8;
+  display: block;
+  font-size: 0.87rem;
+  margin-bottom: 3px;
+}
+
+/* ============================================================
+   PROOF SECTION — DARK NAVY
+   ============================================================ */
+.proof-section {
+  background: var(--navy-mid);
+  padding: var(--section-v) 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.proof-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.proof-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 72px;
+}
+
+.proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 64px;
+}
+
+.proof-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 4px;
+  padding: 36px 32px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.proof-card:hover {
+  border-color: var(--gold-border);
+  transform: translateY(-3px);
+}
+
+.proof-card-eyebrow {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.proof-card h4 {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #f0eee8;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.proof-card p {
+  font-size: 0.85rem;
+  color: rgba(138,148,170,0.8);
+  line-height: 1.75;
+}
+
+.proof-card p strong {
+  color: #f0eee8;
+}
+
+/* Featured case study */
+.case-study {
+  background: var(--card);
+  border: 1px solid var(--gold-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.case-study-header {
+  background: var(--gold-dim);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.case-study-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.case-study-client {
+  font-size: 0.75rem;
+  color: rgba(138,148,170,0.7);
+  letter-spacing: 0.06em;
+}
+
+.case-study-body {
+  padding: 48px;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 60px;
+}
+
+.case-study-body h3 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 20px;
+  line-height: 1.25;
+}
+
+.case-study-body p {
+  font-size: 0.9rem;
+  color: rgba(138,148,170,0.8);
+  line-height: 1.85;
+  margin-bottom: 16px;
+}
+
+.case-study-body p strong { color: #f0eee8; }
+
+.case-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.case-metric {
+  padding: 20px 24px;
+  background: rgba(201,168,76,0.06);
+  border: 1px solid var(--gold-border);
+  border-radius: 3px;
+}
+
+.case-metric-num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.case-metric-label {
+  font-size: 0.75rem;
+  color: rgba(138,148,170,0.8);
+  line-height: 1.5;
+}
+
+.case-metric-label strong { color: #f0eee8; display: block; margin-bottom: 2px; }
+
+/* Testimonial placeholder */
+.testimonial-note {
+  margin-top: 40px;
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed rgba(201,168,76,0.2);
+  border-radius: 4px;
+  padding: 24px 32px;
+  font-size: 0.8rem;
+  color: rgba(138,148,170,0.5);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ============================================================
+   WHO SECTION — DARK NAVY
+   ============================================================ */
+.who-section {
+  background: var(--cream);
+  padding: var(--section-v) 60px;
+}
+
+.who-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.who-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 60px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.who-card {
+  background: var(--navy);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 12px;
+  padding: 28px 24px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  transition: all 0.3s;
+}
+
+.who-card:hover {
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.who-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: var(--serif);
+}
+
+.who-card h4 {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0eee8;
+  margin-bottom: 8px;
+}
+
+.who-card p {
+  font-size: 0.82rem;
+  color: rgba(200,205,216,0.65);
+  line-height: 1.7;
+}
+
+/* Cream sections — dark text overrides */
+.methodology-section .section-headline,
+.methodology-section h2,
+.who-section .section-headline,
+.who-section h2,
+.origin-section .section-headline-sm,
+.origin-section h2,
+.origin-section h3 { color: #1a1a2e !important; }
+
+.methodology-section .section-body,
+.methodology-section p:not(.phase p),
+.who-section .section-body,
+.origin-section p,
+.origin-section .section-body { color: #4a4a6a; }
+
+.methodology-section strong,
+.who-section > .who-inner > .who-header strong,
+.origin-section strong { color: #1a1a2e; }
+
+.methodology-section .section-eyebrow,
+.who-section .section-eyebrow,
+.origin-section .section-eyebrow { color: var(--gold); }
+
+/* Not for everyone */
+.not-for {
+  margin-top: 64px;
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 48px 56px;
+}
+
+.not-for h3 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 8px;
+}
+
+.not-for p {
+  font-size: 0.9rem;
+  color: rgba(138,148,170,0.8);
+  line-height: 1.85;
+  margin-bottom: 24px;
+  max-width: 640px;
+}
+
+.not-for-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.not-for-col {}
+
+.not-for-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.not-for-label.yes { color: var(--gold); }
+.not-for-label.no  { color: rgba(138,148,170,0.5); }
+
+.not-for-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.not-for-list li {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  padding-left: 18px;
+  position: relative;
+}
+
+.not-for-col.yes li { color: #f0eee8; }
+.not-for-col.no  li { color: rgba(138,148,170,0.5); }
+
+.not-for-col.yes li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-size: 0.75rem; }
+.not-for-col.no  li::before { content: '✗'; position: absolute; left: 0; color: rgba(138,148,170,0.3); font-size: 0.75rem; }
+
+/* ============================================================
+   PRICING SECTION — DARK ALT
+   ============================================================ */
+.pricing-section {
+  background: var(--navy-alt);
+  padding: var(--section-v) 60px;
+  border-top: 1px solid var(--gold-border);
+}
+
+.pricing-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.pricing-header {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 72px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gold-border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 48px;
+}
+
+.price-card {
+  background: var(--navy);
+  padding: 48px 36px;
+  position: relative;
+}
+
+.price-card.featured {
+  background: var(--card);
+}
+
+.price-badge {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.price-card:not(.featured) .price-badge { color: var(--text-dim); }
+.price-card.featured .price-badge { color: var(--gold); }
+
+.price-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.price-card:not(.featured) .price-name { color: var(--text-primary); }
+.price-card.featured .price-name { color: var(--text-primary); }
+
+.price-amount {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.price-period {
+  font-size: 0.72rem;
+  color: rgba(138,148,170,0.7);
+  margin-bottom: 28px;
+  letter-spacing: 0.04em;
+}
+
+.price-card.featured .price-period { color: rgba(138,148,170,0.7); }
+
+.price-divider {
+  height: 1px;
+  margin-bottom: 28px;
+}
+
+.price-card:not(.featured) .price-divider { background: rgba(255,255,255,0.08); }
+.price-card.featured .price-divider { background: var(--gold-border); }
+
+.price-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.price-features li {
+  font-size: 0.84rem;
+  line-height: 1.55;
+  padding-left: 18px;
+  position: relative;
+}
+
+.price-card:not(.featured) .price-features li { color: var(--text-muted); }
+.price-card.featured .price-features li { color: var(--text-body); }
+
+.price-features li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.price-cta {
+  display: block;
+  margin-top: 36px;
+  text-align: center;
+  padding: 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.price-card:not(.featured) .price-cta {
+  border: 1px solid var(--gold-border);
+  color: var(--text-muted);
+}
+
+.price-card:not(.featured) .price-cta:hover {
+  border-color: var(--gold-border-strong);
+  color: var(--gold);
+}
+
+.price-card.featured .price-cta {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.price-card.featured .price-cta:hover {
+  background: var(--gold-light);
+}
+
+/* .the22 section removed — THE 22 not yet launched */
+
+/* .the22-attr styles unused — section removed */
+
+/* ============================================================
+   ORIGIN STORY — DARK ALT
+   ============================================================ */
+.origin-section {
+  background: var(--warm);
+  padding: var(--section-v) 60px;
+}
+
+.origin-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.origin-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.origin-image-wrap {
+  position: sticky;
+  top: 100px;
+}
+
+.origin-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 4px;
+  /* REPLACE: Real photo of Amy Birks — professional, candid, authentic */
+}
+
+.origin-image-placeholder {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--navy);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid var(--gold-border);
+}
+
+.origin-image-placeholder span {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(138,148,170,0.5);
+  text-align: center;
+  padding: 0 20px;
+}
+
+.origin-image-placeholder::before {
+  content: '';
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold-dim);
+}
+
+.origin-content {}
+
+.origin-pull-quote {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #1a1a2e;
+  line-height: 1.6;
+  padding-left: 28px;
+  border-left: 3px solid var(--gold);
+  margin-bottom: 36px;
+}
+
+.origin-body {
+  font-size: 0.96rem;
+  color: #4a4a6a;
+  line-height: 1.95;
+}
+
+.origin-body p {
+  margin-bottom: 22px;
+}
+
+.origin-body p:last-child { margin-bottom: 0; }
+
+.origin-body strong { color: #1a1a2e; font-weight: 600; }
+
+/* Wells Fargo callout */
+.wf-callout {
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 32px 36px;
+  margin: 32px 0;
+}
+
+.wf-callout p {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #f0eee8;
+  line-height: 1.7;
+  margin-bottom: 12px !important;
+}
+
+.wf-callout .wf-source {
+  font-family: var(--sans) !important;
+  font-style: normal !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold) !important;
+  font-weight: 700;
+  margin-bottom: 0 !important;
+}
+
+/* ============================================================
+   CTA SECTION — GOLD DIAGONAL
+   ============================================================ */
+.cta-section {
+  background: var(--navy);
+  padding: var(--section-v) 60px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 100% 80% at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.cta-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.cta-headline {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #f0eee8;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.cta-headline em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cta-body {
+  font-size: 1rem;
+  color: rgba(138,148,170,0.85);
+  line-height: 1.85;
+  margin-bottom: 48px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gold-border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 56px;
+  text-align: left;
+}
+
+.cta-step {
+  background: var(--card);
+  padding: 28px 24px;
+}
+
+.cta-step-num {
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.cta-step h4 {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #f0eee8;
+  margin-bottom: 8px;
+}
+
+.cta-step p {
+  font-size: 0.78rem;
+  color: rgba(138,148,170,0.75);
+  line-height: 1.65;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-gold {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 18px 48px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+
+.btn-gold:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(201,168,76,0.3);
+}
+
+.btn-outline-light {
+  display: inline-block;
+  border: 1px solid rgba(138,148,170,0.4);
+  color: rgba(138,148,170,0.8);
+  padding: 18px 36px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.btn-outline-light:hover {
+  border-color: #f0eee8;
+  color: #f0eee8;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--gold-border);
+  padding: 56px 60px 40px;
+}
+
+.footer-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 32px;
+}
+
+.footer-brand-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #f0eee8;
+  margin-bottom: 6px;
+}
+
+.footer-brand-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.footer-brand-bio {
+  font-size: 0.83rem;
+  color: rgba(138,148,170,0.65);
+  line-height: 1.8;
+  max-width: 280px;
+}
+
+.footer-col-title {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-size: 0.83rem;
+  color: rgba(138,148,170,0.65);
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: #f0eee8; }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  color: rgba(138,148,170,0.4);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom a {
+  color: rgba(201,168,76,0.6);
+  transition: color 0.2s;
+}
+
+.footer-bottom a:hover { color: var(--gold); }
+
+/* ============================================================
+   DIVIDER — GOLD LINE
+   ============================================================ */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-border-strong), transparent);
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE FIRST
+   ============================================================ */
+@media (max-width: 1100px) {
+  .dimensions-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  :root { --section-v: 80px; }
+
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .nav-mobile-toggle { display: block; }
+
+  .hero { padding: 110px 24px 80px; }
+  .hero-inner { padding: 0 20px; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  .problem-grid { grid-template-columns: 1fr; gap: 2px; }
+
+  .gps-header,
+  .method-header,
+  .who-header,
+  .case-study-body,
+  .entry-body,
+  .origin-grid,
+  .cost-callout-inner { grid-template-columns: 1fr; gap: 40px; }
+
+  .dimensions-grid { grid-template-columns: 1fr 1fr; }
+  .proof-grid { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .not-for-grid { grid-template-columns: 1fr; gap: 28px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .cta-steps { grid-template-columns: 1fr; }
+
+  .problem-section,
+  .gps-section,
+  .methodology-section,
+  .proof-section,
+  .who-section,
+  .pricing-section,
+  .origin-section,
+  .cta-section,
+  footer { padding-left: 24px; padding-right: 24px; }
+
+  .problem-section { padding-top: 80px; }
+  .problem-card { padding: 36px 28px; }
+
+  .cost-callout { padding: 56px 24px; }
+  .cost-callout-inner { gap: 36px; grid-template-columns: 1fr; }
+  .case-study-body { padding: 32px 28px; }
+  .entry-body { padding: 28px; }
+}
+
+@media (max-width: 600px) {
+  .dimensions-grid { grid-template-columns: 1fr; }
+  .gps-method-strip { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .not-for-grid { grid-template-columns: 1fr; }
+  .who-grid { grid-template-columns: 1fr; }
+  .hero-stats { grid-template-columns: 1fr 1fr; }
+  .hero-headline { font-size: clamp(2rem, 8vw, 3.2rem); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav id="site-nav">
+  <div class="nav-logo">
+    Amy Birks
+    <span class="signal-code">Integration Risk Intelligence</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#gps">GPS-Brain</a></li>
+    <li><a href="#methodology">How It Works</a></li>
+    <li><a href="#proof">Proof</a></li>
+    <li><a href="#origin">Origin</a></li>
+    <li><a href="#contact" class="nav-cta">Begin</a></li>
+  </ul>
+  <button class="nav-mobile-toggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+
+    <!-- 1. Name -->
+    <p class="hero-name fade-in">Amy Birks</p>
+
+    <!-- 2. Category heading -->
+    <div class="hero-eyebrow fade-in">
+      Integration Risk Intelligence
+    </div>
+
+    <!-- 3. THE CATCHPHRASE — dominant, billboard, serif, the reason this page exists -->
+    <h1 class="hero-headline fade-in">
+      Your integration plan is technically sound.
+      <span class="hl-turn">That's not what will determine its outcome.</span>
+    </h1>
+
+    <!-- 4. USP — italic, muted, quietly powerful -->
+    <p class="hero-usp fade-in">
+      "I protect the synergy assumptions that justified your deal."
+    </p>
+
+    <!-- 5. One sentence of context — no more -->
+    <p class="hero-body fade-in">
+      The human layer is where M&amp;A value is won or lost. Amy reads what your integration plan cannot see.
+    </p>
+
+    <!-- 6. CTAs -->
+    <div class="hero-actions fade-in">
+      <a href="#contact" class="btn-primary">Request an Assessment</a>
+      <a href="#gps" class="btn-ghost">See how it works <span class="arrow">→</span></a>
+    </div>
+
+    <!-- 7. Stats — individual cards, breathing room -->
+    <div class="hero-stats fade-up">
+      <div class="hero-stat">
+        <span class="hero-stat-num"><span class="counter" data-target="85">0</span>%</span>
+        <span class="hero-stat-label">of M&amp;A deals fail<br>to capture projected value</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num"><span class="counter" data-target="20">0</span>+</span>
+        <span class="hero-stat-label">years reading<br>organizations</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">5</span>
+        <span class="hero-stat-label">diagnostic dimensions<br>read in every room</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">&lt;20</span>
+        <span class="hero-stat-label">minutes to locate<br>where friction lives</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PROBLEM SECTION
+     ============================================================ -->
+<section class="problem-section" id="problem">
+  <div class="problem-inner">
+
+    <div class="section-eyebrow fade-up" style="justify-content:center;text-align:center;margin-bottom:48px;">The Problem With Every Integration Plan</div>
+
+    <!-- Centered stat hero -->
+    <div class="problem-stat-hero fade-up">
+      <span class="big-stat"><span class="counter" data-target="85">0</span>%</span>
+      <div class="big-stat-label">of M&amp;A integrations fail to capture the synergies that justified the deal.</div>
+
+      <div class="problem-quote">
+        "The performance dip that organisations expect during integration isn't inevitable. It's a symptom of unaddressed fear distorting the plan."
+      </div>
+    </div>
+
+    <!-- Narrative body -->
+    <div class="problem-narrative fade-up">
+      <p>The integration workstream is technically sophisticated. The model is tight. The timeline has been stress-tested. By every measure that matters on paper, this deal should perform.</p>
+      <p>The reason it won't — not fully, not on schedule — is everything the plan can't see. <strong>Fear is the operating system no one is measuring.</strong></p>
+    </div>
+
+    <!-- 2×2 problem card grid -->
+    <div class="problem-grid fade-up">
+      <div class="problem-card">
+        <div class="problem-card-num">The Hidden Variable 01</div>
+        <h4>Fear is the operating system no one is measuring</h4>
+        <p>When a deal closes, every person inside the acquired organization is running one question on repeat: <em>What does this mean for me?</em> Until that question gets answered — honestly, specifically, with safety — the answer is fear. And fear has a cost that belongs on the financial model.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-num">The Hidden Variable 02</div>
+        <h4>Leadership alignment is performed, not real</h4>
+        <p>In the boardroom, everyone agrees. In the hallways, both sides are still running their own playbook. This isn't deception — it's the natural defense mechanism of two cultures that haven't yet built genuine trust. The gap between performed alignment and real alignment is where synergies go to die.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-num">The Hidden Variable 03</div>
+        <h4>Information distortion accelerates as anxiety rises</h4>
+        <p>The higher the fear, the more carefully information gets filtered on its way up. Leaders receive polished, safe versions of the truth. Decisions get made on incomplete data. By the time the distortion becomes visible, months of value have been lost.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-num">The Hidden Variable 04</div>
+        <h4>Nobody has the language to address it at the deal level</h4>
+        <p>The HR team calls it "culture." The change management consultants call it "transformation." The CFO calls it a headache. None of these framings have a place in the deal model — which is precisely why the problem persists. Until now.</p>
+      </div>
+    </div>
+
+    <!-- Cost of the gap — full-width below cards -->
+    <div class="cost-callout fade-up">
+      <div class="cost-callout-inner">
+        <div class="cost-callout-left">
+          <div class="section-eyebrow" style="color:var(--gold);margin-bottom:16px;">What Happens In The Gap</div>
+          <h3>The cascade from fear to failed thesis</h3>
+          <p>Fear isn't soft. It's the neurological mechanism that determines decision quality, communication effectiveness, and talent retention during your integration. Every day it goes unaddressed, the gap between your integration plan and reality widens — and the cost compounds.</p>
+        </div>
+        <div class="cost-table-wrap">
+          <table class="cost-table">
+            <thead>
+              <tr>
+                <th>What's happening</th>
+                <th></th>
+                <th>Real cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fear goes unnamed</td>
+                <td>→</td>
+                <td class="gold">Performance dip begins</td>
+              </tr>
+              <tr>
+                <td>Nobody shows weakness</td>
+                <td>→</td>
+                <td class="gold">Top talent starts to leave</td>
+              </tr>
+              <tr>
+                <td>Authentic expression feels unsafe</td>
+                <td>→</td>
+                <td class="gold">Leaders get polished answers, not real ones</td>
+              </tr>
+              <tr>
+                <td>Plan diverges from reality</td>
+                <td>→</td>
+                <td class="gold">Synergy assumptions start missing</td>
+              </tr>
+              <tr>
+                <td>Leadership finally sees it</td>
+                <td>→</td>
+                <td class="gold">Months of recovery — deal thesis at risk</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     GPS-BRAIN SECTION
+     ============================================================ -->
+<section class="gps-section" id="gps">
+  <div class="gps-inner">
+
+    <div class="gps-header">
+      <div class="fade-up">
+        <div class="section-eyebrow on-dark">The Diagnostic Superpower</div>
+        <h2 class="section-headline on-dark">The GPS-Brain.<br>Reading the room<br><em style="color:var(--gold);font-style:italic;">before anyone speaks.</em></h2>
+
+        <div class="gps-intro-quote">
+          <p>"It's a feeling, an energy — before people can even talk. I walk in and I know within twenty minutes where the friction lives. Not from what people say. From what the room is holding."</p>
+          <cite>Amy Birks — Integration Risk Intelligence</cite>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <p style="font-size:0.92rem;color:rgba(200,205,216,0.85);line-height:1.85;margin-bottom:32px;">This isn't intuition dressed up in consulting language. It's a precision diagnostic capability refined over two decades — first in the financial sector watching a trillion-dollar bank destroy value through institutionalized fear, then in boardrooms and acquisition suites across four continents. By the time most advisors have opened their laptops, Amy has already made the diagnosis.</p>
+
+        <div class="gps-method-strip">
+          <div class="gps-method-cell">
+            <span class="gps-method-num">Layer 01</span>
+            <div class="gps-method-name">Energy</div>
+            <div class="gps-method-desc">Before a single word is spoken, the room is speaking. Heavy or light. Static or moving. Safe or defended.</div>
+          </div>
+          <div class="gps-method-cell">
+            <span class="gps-method-num">Layer 02</span>
+            <div class="gps-method-name">People</div>
+            <div class="gps-method-desc">Who speaks when leadership enters. Who goes quiet. Where the fear is holding people static.</div>
+          </div>
+          <div class="gps-method-cell">
+            <span class="gps-method-num">Layer 03</span>
+            <div class="gps-method-name">Systems</div>
+            <div class="gps-method-desc">The structure that locked in the pattern. The plan that has no room for what matters most.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 Dimensions -->
+    <div class="dimensions-label fade-up">The 5 Dimensions</div>
+    <div class="dimensions-label-sub fade-up">What Amy reads in every room — the human dynamics that determine whether your deal delivers.</div>
+
+    <div class="dimensions-grid fade-up">
+      <div class="dimension-card">
+        <div class="dim-num">1</div>
+        <div class="dim-name">Leadership Alignment Reality</div>
+        <div class="dim-subtitle">Are senior teams genuinely aligned — or performing alignment?</div>
+      </div>
+      <div class="dimension-card">
+        <div class="dim-num">2</div>
+        <div class="dim-name">Fear Index</div>
+        <div class="dim-subtitle">What is the threat level — and where is it distorting the plan?</div>
+      </div>
+      <div class="dimension-card">
+        <div class="dim-num">3</div>
+        <div class="dim-name">Communication Health</div>
+        <div class="dim-subtitle">Is information flowing cleanly — or being distorted and filtered?</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:20px;margin-top:20px;" class="fade-up">
+      <div class="dimension-card" style="flex:0 1 calc(33.333% - 10px);">
+        <div class="dim-num">4</div>
+        <div class="dim-name">Identity Threat Level</div>
+        <div class="dim-subtitle">How much of what made people great is at risk of being lost?</div>
+      </div>
+      <div class="dimension-card" style="flex:0 1 calc(33.333% - 10px);">
+        <div class="dim-num">5</div>
+        <div class="dim-name">Purpose Coherence</div>
+        <div class="dim-subtitle">Is there a shared "why" that can survive the integration?</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     METHODOLOGY SECTION
+     ============================================================ -->
+<section class="methodology-section" id="methodology">
+  <div class="methodology-inner">
+
+    <div class="fade-up" style="text-align:center;max-width:800px;margin:0 auto 60px;">
+      <div class="section-eyebrow" style="justify-content:center;">How She Works</div>
+      <h2 class="section-headline">Integration Risk Intelligence in practice.</h2>
+      <p class="section-body" style="max-width:680px;margin:0 auto;">Amy does not run workshops. She does not deliver culture matrices. She enters the system, reads it with precision, translates what she finds into deal language, and gives leadership the intelligence they need to protect the thesis they built their deal on. The result is not a culture report. It is <strong>deal intelligence</strong> — delivered in the language of risk, timeline, and value.</p>
+    </div>
+
+    <div class="phases fade-up">
+      <div class="phase">
+        <span class="phase-label">Phase 01</span>
+        <h3>Diagnostic &amp; Orientation</h3>
+        <p>Amy enters the system with fresh eyes. Documentation review, targeted leadership conversations, and room-reading sessions establish the baseline. The Fear Index gets scored. The 5 Dimensions get mapped. The gap between the official integration narrative and the lived reality gets quantified.</p>
+        <ul class="phase-list">
+          <li>Documentation review through human-dynamics lens</li>
+          <li>5–8 targeted stakeholder interviews</li>
+          <li>Integration Risk Report delivered in deal language</li>
+          <li>Fear Index baseline and 5-Dimension map</li>
+          <li>Prioritized risk register with financial framing</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="phase-label">Phase 02</span>
+        <h3>Architecture &amp; Co-Design</h3>
+        <p>With the diagnosis in hand, Amy works alongside leadership to design the integration experience that addresses what she found. Not a one-size change management program — a bespoke response to the specific human dynamics at play in this deal, this culture, this moment.</p>
+        <ul class="phase-list">
+          <li>Leadership alignment summit design and facilitation</li>
+          <li>Communications architecture — safety-activated not threat-activated</li>
+          <li>Regional and frontline session design</li>
+          <li>Fear Index target and tracking methodology</li>
+          <li>Integration decision-support for ambiguous calls</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <span class="phase-label">Phase 03</span>
+        <h3>Advisory &amp; Optimization</h3>
+        <p>Integration is not a project — it's an operating condition that runs for 12–24 months. Amy stays engaged as strategic counsel: reading the room in real time as the integration evolves, catching fear spikes before they compound, and adjusting the approach as new dynamics emerge.</p>
+        <ul class="phase-list">
+          <li>Monthly strategic advisory sessions with deal leadership</li>
+          <li>Real-time troubleshooting on emerging human dynamics</li>
+          <li>Communications refinement as integration matures</li>
+          <li>Feedback loop design — getting real information up</li>
+          <li>Deal thesis protection through integration close</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Entry product -->
+    <div class="entry-callout fade-up">
+      <div class="entry-callout-header">
+        <span class="entry-tag">Entry Product &nbsp;&middot;&nbsp; Low-Risk First Step</span>
+        <div class="entry-price">$5–15K <span>· 30 days · standalone</span></div>
+      </div>
+      <div class="entry-body">
+        <div>
+          <h3>The Integration Risk Assessment</h3>
+          <p>Before your deal closes — or in the first weeks of active integration — commission a standalone 30-day assessment. Amy reviews your existing integration strategy, communications plan, and org design through a human-dynamics lens; conducts targeted interviews with key stakeholders; and delivers a concise Integration Risk Report.</p>
+          <p>The report identifies the 3–5 dimensions where the current plan is most at risk, maps the Fear Index baseline, and provides prioritized recommendations in deal language — the first deliverable that speaks CFO fluently.</p>
+          <p>A company spending $50M on a deal will pay $10K to understand their risk profile. The assessment creates an easy first yes — and reveals, clearly and specifically, why a full engagement is the logical next step.</p>
+        </div>
+        <div>
+          <ul class="scope-list">
+            <li class="scope-item">
+              <span class="scope-marker">1</span>
+              <span class="scope-text"><strong>Documentation Review</strong> Integration strategy, communications plan, org design — reviewed through a human-dynamics diagnostic lens.</span>
+            </li>
+            <li class="scope-item">
+              <span class="scope-marker">2</span>
+              <span class="scope-text"><strong>Stakeholder Interviews</strong> 5–8 targeted conversations with integration leads and senior stakeholders to surface the gap between the plan and the lived reality.</span>
+            </li>
+            <li class="scope-item">
+              <span class="scope-marker">3</span>
+              <span class="scope-text"><strong>Integration Risk Report</strong> Concise diagnostic delivered in deal language: the dimensions at risk, the Fear Index baseline, the prioritized recommendations.</span>
+            </li>
+            <li class="scope-item">
+              <span class="scope-marker">4</span>
+              <span class="scope-text"><strong>Natural Lead-In</strong> Most clients who see the report want Phase 1. This isn't a sales mechanism — it's the logical response to clarity.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PROOF SECTION
+     ============================================================ -->
+<section class="proof-section" id="proof">
+  <div class="proof-inner">
+
+    <div class="proof-header fade-up">
+      <div class="section-eyebrow on-dark" style="justify-content:center;">The Evidence</div>
+      <h2 class="section-headline on-dark" style="text-align:center;max-width:100%;">Results that belong<br>on the financial model.</h2>
+      <p class="section-body on-dark" style="text-align:center;max-width:600px;margin:0 auto;">Amy's impact is not measured in engagement scores and pulse surveys. It is measured in compressed timelines, retained talent, synergy capture rates, and deals that close at the value the model predicted.</p>
+    </div>
+
+    <div class="proof-grid">
+      <div class="proof-card fade-up">
+        <div class="proof-card-eyebrow">Result 01 &nbsp;&middot;&nbsp; Business Merger</div>
+        <h4>"Compressed the timeline by years."</h4>
+        <p>Her own business merger — one of the most demanding integration environments because the stakes are personal on both sides. Amy held both parties simultaneously, translated each to the other, and created the space for her partner to operate at full capacity. The result: a compressed timeline, an intact relationship, and a deal that didn't break under pressure. <strong>That wasn't circumstance. That was the methodology working.</strong></p>
+      </div>
+      <div class="proof-card fade-up">
+        <div class="proof-card-eyebrow">Result 02 &nbsp;&middot;&nbsp; Strategic Partnerships</div>
+        <h4>Dallas Mavericks. Xerox. And counting.</h4>
+        <p>The systems Amy built, the space she created, the alignment she held — produced measurable commercial results. Dallas Mavericks partnership. Xerox CEO hired directly. Multiple major college basketball contracts. <strong>The company grew exponentially.</strong> Not despite the complexity of the integration — because it was navigated with clarity.</p>
+      </div>
+      <div class="proof-card fade-up">
+        <div class="proof-card-eyebrow">Result 03 &nbsp;&middot;&nbsp; Active Engagement</div>
+        <h4>IQVIA — protecting the thesis in real time.</h4>
+        <p>Currently engaged on a major integration where the human dynamics were at risk of distorting a carefully constructed deal model. Fear Index mapped. Communications architecture redesigned. Leadership alignment sessions delivered. <strong>The case study will be published when the engagement closes.</strong> The methodology is being proven in the field right now.</p>
+      </div>
+    </div>
+
+    <!-- Featured case study -->
+    <div class="case-study fade-up">
+      <div class="case-study-header">
+        <span class="case-study-tag">Featured Case Study &nbsp;&middot;&nbsp; Business Integration</span>
+        <span class="case-study-client">Illustrative · Based on actual methodology applied</span>
+      </div>
+      <div class="case-study-body">
+        <div>
+          <h3>When the plan was right and the people weren't in it.</h3>
+          <p>Two companies, post-close. The integration plan was technically sound. The synergy assumptions were realistic. On paper, this deal would perform. In the room, within twenty minutes, Amy knew it wouldn't — not without intervention.</p>
+          <p>Both leadership teams were performing alignment. Neither was actually in it. The plan — built on assumptions that required genuine collaboration — was already failing in ways the reporting structure couldn't see.</p>
+          <p><strong>The intervention:</strong> Amy named what the room was holding. Translated each side's unspoken reality to the other. Redesigned communications to activate safety instead of threat. Facilitated the leadership session that put both sides in the same true reality. The performance dip shortened. The talent held. The deal closed at the value the model predicted.</p>
+        </div>
+        <div>
+          <div class="case-metrics">
+            <div class="case-metric">
+              <div class="case-metric-num">90</div>
+              <div class="case-metric-label"><strong>Days of intervention</strong>Changed the trajectory of a 24-month integration</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-num">2×</div>
+              <div class="case-metric-label"><strong>Faster alignment</strong>Leadership teams in genuine alignment within 6 weeks</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-num">0</div>
+              <div class="case-metric-label"><strong>Key talent lost</strong>In an integration where attrition of 20–30% was anticipated</div>
+            </div>
+            <div class="case-metric">
+              <div class="case-metric-num">100%</div>
+              <div class="case-metric-label"><strong>Deal thesis intact</strong>Synergy assumptions held. Value protected.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-note">
+      [Testimonial placeholder — real quotes from Amy's clients to be added here. Include name, title, company, and specific outcome reference.]
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     WHO SECTION
+     ============================================================ -->
+<section class="who-section" id="who">
+  <div class="who-inner">
+
+    <div class="who-header fade-up">
+      <div class="section-eyebrow" style="justify-content:center;">Ideal Client Profile</div>
+      <h2 class="section-headline">Not everyone. The right ones.</h2>
+      <p class="section-body" style="max-width:600px;">Amy works with a small number of engagements at any time. The work requires direct access, genuine trust, and a leadership team that can hear what is real rather than what is comfortable.</p>
+    </div>
+
+    <div class="who-grid">
+      <div class="who-card fade-up">
+        <div class="who-card-icon">CD</div>
+        <div>
+          <h4>Corporate Development Directors</h4>
+          <p>Running post-close integration on a deal where the synergy timeline is already slipping. Needs a language and a framework to address the human variable that the integration plan doesn't have room for — and a way to present it to the CFO in risk terms, not culture terms.</p>
+        </div>
+      </div>
+      <div class="who-card fade-up">
+        <div class="who-card-icon">PE</div>
+        <div>
+          <h4>PE Operating Partners</h4>
+          <p>Portfolio company acquisition where the value creation thesis requires two leadership teams to genuinely function as one. Talent is walking. Performance is dipping. The financial model was built on synergy assumptions that assumed integration would work. It isn't working.</p>
+        </div>
+      </div>
+      <div class="who-card fade-up">
+        <div class="who-card-icon">CH</div>
+        <div>
+          <h4>CHROs of Acquiring Companies</h4>
+          <p>Responsible for workforce integration. Has a mandate from the board to make it work but lacks the methodology rigorous enough to sit alongside the financial and operational workstreams. Needs a framework that speaks the language of deal value, not HR process.</p>
+        </div>
+      </div>
+      <div class="who-card fade-up">
+        <div class="who-card-icon">CE</div>
+        <div>
+          <h4>CEOs Navigating Their Own Merger</h4>
+          <p>Personally accountable for the outcome. Operating under the pressure of two cultures, two leadership teams, two sets of stakeholder expectations. Needs someone who can hold the full complexity of the human system while they focus on the deal. Someone who can feel what they can't see.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not for everyone -->
+    <div class="not-for fade-up">
+      <h3>This work requires the right conditions.</h3>
+      <p>Amy doesn't take every engagement. The work requires a specific kind of client and a specific kind of access. When those conditions exist, the results are remarkable. When they don't, the work can't happen the way it needs to.</p>
+      <div class="not-for-grid">
+        <div class="not-for-col yes">
+          <div class="not-for-label yes">This is for you if</div>
+          <ul class="not-for-list">
+            <li>You can hear hard truths without spiralling</li>
+            <li>You give direct access to leadership — not routed through a project lead</li>
+            <li>You're committed to everyone's success, not just your own metrics</li>
+            <li>You trust the process enough to let it work</li>
+            <li>You do your own inner work — you know what it takes</li>
+            <li>You're curious, conscious, and sturdy under pressure</li>
+          </ul>
+        </div>
+        <div class="not-for-col no">
+          <div class="not-for-label no">This is not for you if</div>
+          <ul class="not-for-list">
+            <li>You want a structured deliverable template that boxes the work</li>
+            <li>You're looking for someone to validate a decision already made</li>
+            <li>You need the methodology to be invisible to leadership</li>
+            <li>You want weekly status reports and project management</li>
+            <li>Fear in your organization is "not our problem"</li>
+            <li>You're not ready for what the room is actually saying</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     PRICING SECTION
+     ============================================================ -->
+<section class="pricing-section" id="services">
+  <div class="pricing-inner">
+
+    <div class="pricing-header fade-up">
+      <div class="section-eyebrow on-dark" style="justify-content:center;">Engagement Structure</div>
+      <h2 class="section-headline on-dark" style="text-align:center;">Three ways to work together.</h2>
+      <p style="font-size:0.95rem;color:rgba(200,205,216,0.78);line-height:1.85;text-align:center;">Every engagement begins with the Integration Risk Assessment — a low-commitment, high-intelligence entry point that creates clarity before a larger investment is made. Most clients who see the Assessment report are ready to move to Phase 1 within two weeks.</p>
+    </div>
+
+    <div class="pricing-grid fade-up">
+      <div class="price-card">
+        <span class="price-badge">Entry Point</span>
+        <div class="price-name">Integration Risk Assessment</div>
+        <div class="price-amount">$5–15K</div>
+        <div class="price-period">30 days · standalone deliverable</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Documentation review through human-dynamics lens</li>
+          <li>5–8 targeted stakeholder interviews</li>
+          <li>Fear Index baseline scored across 5 dimensions</li>
+          <li>Integration Risk Report in deal language</li>
+          <li>Prioritized recommendations with financial framing</li>
+          <li>Ideal pre-close or in first 30 days post-close</li>
+        </ul>
+        <a href="#contact" class="price-cta">Commission an Assessment</a>
+      </div>
+      <div class="price-card featured">
+        <span class="price-badge">Phase 01 &amp; 02</span>
+        <div class="price-name">Assessment + Co-Design</div>
+        <div class="price-amount">$35K+</div>
+        <div class="price-period">~6 months · full diagnostic and design</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Everything in the Integration Risk Assessment</li>
+          <li>Leadership alignment summit — design and facilitation</li>
+          <li>Communications architecture rebuilt from scratch</li>
+          <li>Regional and frontline session design</li>
+          <li>Fear Index tracking and response protocol</li>
+          <li>Integration decision-support for ambiguous calls</li>
+          <li>Ongoing check-ins throughout the 6-month period</li>
+        </ul>
+        <a href="#contact" class="price-cta">Begin a Conversation</a>
+      </div>
+      <div class="price-card">
+        <span class="price-badge">Phase 03</span>
+        <div class="price-name">Strategic Advisory</div>
+        <div class="price-amount">$30K+</div>
+        <div class="price-period">12+ months · retained counsel</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li>Monthly strategic advisory sessions with deal leadership</li>
+          <li>Real-time troubleshooting on emerging dynamics</li>
+          <li>Communications refinement as integration matures</li>
+          <li>Feedback loop design and maintenance</li>
+          <li>Fear spike early warning and response</li>
+          <li>Deal thesis protection through integration close</li>
+        </ul>
+        <a href="#contact" class="price-cta">Discuss Advisory</a>
+      </div>
+    </div>
+
+    <div style="max-width:640px;margin:0 auto;text-align:center;">
+      <p style="font-size:0.85rem;color:rgba(200,205,216,0.7);line-height:1.85;">Pricing reflects the financial stakes of the work. A company spending $50M+ on an acquisition is spending $5–15K to understand where their most probable risk to deal value lives. A company spending $500M+ is in a different conversation. <strong>Scope and pricing are always aligned to the size of the deal and the stakes involved.</strong></p>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<!-- ============================================================
+     ORIGIN SECTION
+     ============================================================ -->
+<section class="origin-section" id="origin">
+  <div class="origin-inner">
+
+    <div class="section-eyebrow fade-up">The Origin Story</div>
+
+    <div class="origin-grid">
+      <div class="origin-image-wrap fade-in">
+        <!-- REPLACE: Professional photo of Amy Birks — authentic, not posed. Something that conveys depth and presence. -->
+        <div class="origin-image-placeholder">
+          <span>Photo of Amy Birks<br>to be placed here</span>
+        </div>
+        <div style="margin-top:20px;padding:20px 24px;background:var(--navy);border-radius:4px;">
+          <div style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px;">Credentials</div>
+          <div style="font-size:0.83rem;color:rgba(138,148,170,0.8);line-height:1.75;">20+ years in organizational transformation<br>Former financial sector — Wells Fargo<br>Integration Risk Intelligence — category founder<br>Quantifying Fear &amp; Love — forthcoming</div>
+        </div>
+      </div>
+
+      <div class="origin-content fade-up">
+        <div class="section-eyebrow" style="margin-bottom:12px;">Where It All Began</div>
+        <h2 class="section-headline-sm" style="margin-bottom:24px;">She saw it before<br>anyone named it.</h2>
+
+        <div class="origin-pull-quote">
+          "If 1 in 500 Americans worked for this bank — and they were all living in fear — what was that doing to the world?"
+        </div>
+
+        <div class="origin-body">
+          <p>At Wells Fargo, twenty years ago, Amy watched something happen that didn't have to happen. A goal-driven pressure system — born from fear at the very top — filtered through every layer of the organization until people were too scared to do their jobs honestly. She didn't just witness it. She understood the root cause.</p>
+
+          <div class="wf-callout">
+            <p>"The company later faced billions in lawsuits for what that fear produced. I saw it coming. I understood what it was and where it was going — years before anyone else named it."</p>
+            <p class="wf-source">Amy Birks — Signal session, March 2026</p>
+          </div>
+
+          <p>That experience started twenty years of building the antidote. She moved through organizations — financial services, technology, professional services — learning to read them. Every room refined the diagnostic. Every engagement produced results larger than the scope could explain.</p>
+
+          <p>When she began walking into M&A integrations — some of the most fear-saturated environments in business — everything clarified. She could feel the Fear Index from the doorway. She could see the gap between the alignment leadership was performing and the reality both sides were living.</p>
+
+          <p><strong>That's not change management. That's Integration Risk Intelligence.</strong> It just took twenty years — and the right room — to name it correctly.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CALCULATOR TOOL SECTION
+     ============================================================ -->
+<section style="background:var(--black);padding:100px 0;border-top:1px solid rgba(201,168,76,0.12);border-bottom:1px solid rgba(201,168,76,0.12);" id="calculator">
+  <div style="max-width:800px;margin:0 auto;padding:0 40px;text-align:center;">
+    <div class="section-eyebrow on-dark fade-up" style="justify-content:center;">Interactive Tool</div>
+    <h2 style="font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;color:#f0eee8;margin:16px 0 20px;line-height:1.15;" class="fade-up">
+      Integration Risk Calculator
+    </h2>
+    <p style="font-size:0.95rem;color:rgba(200,205,216,0.75);line-height:1.8;max-width:600px;margin:0 auto 40px;" class="fade-up">
+      What does unmanaged integration risk actually cost? Input your deal parameters and see the financial exposure you may not have quantified — in the language your board already speaks.
+    </p>
+    <a href="integration-risk-calculator.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);padding:16px 40px;font-size:0.82rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;border-radius:3px;transition:all 0.25s;" class="fade-up"
+       onmouseover="this.style.background='#e8c97a'" onmouseout="this.style.background='var(--gold)'">
+      Launch Calculator <span style="font-size:1.1em;">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA SECTION
+     ============================================================ -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+
+    <div class="section-eyebrow on-dark fade-up" style="justify-content:center;">Begin</div>
+
+    <h2 class="cta-headline fade-up">
+      The integration that succeeds<br>
+      isn't the one with the best plan.<br>
+      <em>It's the one that protects it.</em>
+    </h2>
+
+    <p class="cta-body fade-up">
+      The most straightforward first step: commission an Integration Risk Assessment. Thirty days. A focused diagnostic. A report that speaks deal language. If it reveals nothing, you have paid a small amount for confidence. If it reveals what Amy almost always finds — you have protected an investment that is orders of magnitude larger.
+    </p>
+
+    <div class="cta-steps fade-up">
+      <div class="cta-step">
+        <span class="cta-step-num">Step 01</span>
+        <h4>First Conversation</h4>
+        <p>A 30-minute call to understand the deal, the timeline, and whether the conditions for the work are present. No pitch. No pressure. A genuine diagnostic conversation.</p>
+      </div>
+      <div class="cta-step">
+        <span class="cta-step-num">Step 02</span>
+        <h4>Assessment Proposal</h4>
+        <p>If there's a fit, Amy delivers a scoped proposal for the Integration Risk Assessment within 48 hours. Specific, priced, with a clear deliverable at the end of 30 days.</p>
+      </div>
+      <div class="cta-step">
+        <span class="cta-step-num">Step 03</span>
+        <h4>Intelligence Delivered</h4>
+        <p>The Assessment runs. The report is delivered. You know where your integration is most at risk — in deal language, with financial framing, before the risk compounds further.</p>
+      </div>
+    </div>
+
+    <div class="cta-actions fade-up">
+      <a href="mailto:amy@integrationintelligence.com" class="btn-gold">Request a Conversation</a>
+      <a href="mailto:amy@integrationintelligence.com" class="btn-outline-light">Download Leave-Behind</a>
+    </div>
+
+    <p style="margin-top:32px;font-size:0.75rem;color:rgba(138,148,170,0.4);letter-spacing:0.06em;">
+      <!-- REPLACE: Add Amy's actual email, phone, and calendar link (Calendly preferred) -->
+      amy@integrationintelligence.com &nbsp;&middot;&nbsp; Available globally
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Amy Birks</div>
+        <span class="footer-brand-tag">Integration Risk Intelligence</span>
+        <p class="footer-brand-bio">The world's only Integration Risk Intelligence practice. Protecting the synergy assumptions that justified your deal — by reading what your integration plan cannot see.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="#problem">The Problem</a></li>
+          <li><a href="#gps">The GPS-Brain</a></li>
+          <li><a href="#methodology">How It Works</a></li>
+          <li><a href="#proof">Proof</a></li>
+          <li><a href="#origin">Origin</a></li>
+          <li><a href="#origin">Origin Story</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Engage</div>
+        <ul class="footer-links">
+          <li><a href="#services">Pricing &amp; Services</a></li>
+          <li><a href="#contact">Request Assessment</a></li>
+          <li><a href="amy-leave-behind.html">Leave-Behind</a></li>
+          <li><a href="integration-risk-calculator.html">Risk Calculator</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Context</div>
+        <ul class="footer-links">
+          <li><a href="#" style="color:rgba(138,148,170,0.3);cursor:default;">LinkedIn ↗</a></li><!-- REPLACE with real URL -->
+          <li><a href="#" style="color:rgba(138,148,170,0.3);cursor:default;">Speaking</a></li>
+          <li><a href="#" style="color:rgba(138,148,170,0.3);cursor:default;">Media</a></li>
+          <li><a href="#" style="color:rgba(138,148,170,0.3);cursor:default;">HBR Article</a></li><!-- placeholder for Wells Fargo piece -->
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Amy Birks · Integration Risk Intelligence</span>
+      <span>Positioning by <a href="#">The Signal</a></span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// Nav scroll behavior
+const nav = document.getElementById('site-nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+// IntersectionObserver — fade animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up, .fade-in, .slide-left, .slide-right').forEach(el => {
+  observer.observe(el);
+});
+
+// Animated counters
+function animateCounter(el, target, duration) {
+  let start = null;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    el.textContent = Math.floor(eased * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(step);
+}
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const target = parseInt(entry.target.dataset.target, 10);
+      animateCounter(entry.target, target, 1800);
+      counterObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+
+// Mobile nav toggle
+const toggle = document.querySelector('.nav-mobile-toggle');
+const navLinks = document.querySelector('.nav-links');
+
+if (toggle && navLinks) {
+  toggle.addEventListener('click', () => {
+    const isOpen = navLinks.style.display === 'flex';
+    navLinks.style.display = isOpen ? 'none' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'fixed';
+    navLinks.style.top = '68px';
+    navLinks.style.left = '0';
+    navLinks.style.right = '0';
+    navLinks.style.background = 'rgba(7,8,15,0.98)';
+    navLinks.style.padding = '24px 32px';
+    navLinks.style.gap = '20px';
+    navLinks.style.borderBottom = '1px solid rgba(201,168,76,0.18)';
+    navLinks.style.zIndex = '199';
+    if (!isOpen) {
+      navLinks.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+          navLinks.style.display = 'none';
+        });
+      });
+    }
+  });
+}
+
+// Smooth reveal for hero elements — staggered on load
+window.addEventListener('load', () => {
+  const heroElements = document.querySelectorAll('.hero .fade-in, .hero .fade-up');
+  heroElements.forEach((el, i) => {
+    setTimeout(() => {
+      el.classList.add('visible');
+    }, 200 + (i * 180));
+  });
+});
+</script>
+
+</body>
+</html>
